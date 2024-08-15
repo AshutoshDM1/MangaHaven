@@ -12,9 +12,9 @@ const Navbar: React.FC<NavbarProps> = () => {
             <h1 className="text-white text-base font-bold">Follow Us:</h1>
             <h1 className="text-white text-base">Reddit</h1>
             <h1 className="text-white text-base">Twitter</h1>
-            <div className="flex " >
-            <h1 className="text-white text-base">Discord</h1>
-            <FaDiscord className="ml-2 text-white    text-2xl" />
+            <div className="flex ">
+              <h1 className="text-white text-base">Discorddd</h1>
+              <FaDiscord className="ml-2 text-white    text-2xl" />
             </div>
           </div>
         </div>

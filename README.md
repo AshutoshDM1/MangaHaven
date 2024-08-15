@@ -1,6 +1,6 @@
-## Manga Haven
+# Manga Haven
 
-### A modern manga reading platform that blends stunning visuals with seamless Performance.
+### A Modern Manga reading platform that blends stunning visuals with seamless Performance.
 
 ## Tech Stack 
 
@@ -11,16 +11,32 @@
 
 First, run the development server:
 
+### Start Using Nextjs Server:
+
 ```bash
 npm run dev
 # or
 npm run build
 ```
+### Use Docker To Start Server :
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```bash
+# Build Your Image :
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+docker build -f Dockerfile.dev -t mangahavendev .
+
+#  Run Your Image / Container:
+docker run -p 3000:3000 -v $(pwd):/app -v /app/node_modules mangahavendev
+
+```
+
+### Use Docker Compose To Start Server :
+
+```bash
+docker-compose up -d
+```
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the Vercel Platform
+The easiest way to deploy your Next.js app is to use the Vercel Platform.
+That Why Our Site Is also Deployed On Vercel .

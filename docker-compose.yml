@@ -1,3 +1,44 @@
+# version: '3.8'
+
+# services:
+#   app:
+#     image: node:18-alpine
+#     container_name: nextjs-app
+#     working_dir: /app
+#     volumes:
+#       - .:/app
+#       - /app/node_modules
+#     ports:
+#       - '3000:3000'
+#     environment:
+#       DATABASE_URL: postgres://postgres:password@db:5432/mangahaven
+#     depends_on:
+#       - db
+#     command: sh -c "npm install && npx prisma migrate deploy && npm run dev"
+#     networks:
+#       - mangahaven-network
+
+#   db:
+#     image: postgres:15-alpine
+#     container_name: postgres-db
+#     volumes:
+#       - postgres-data:/var/lib/postgresql/data
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: password
+#       POSTGRES_DB: mangahaven
+#     ports:
+#       - '5432:5432'
+#     networks:
+#       - mangahaven-network
+
+# networks:
+#   mangahaven-network:
+#     driver: bridge
+
+# volumes:
+#   postgres-data:
+
 version: '3.8'
 
 services:
@@ -11,30 +52,6 @@ services:
     ports:
       - '3000:3000'
     environment:
-      DATABASE_URL: postgres://postgres:password@db:5432/mangahaven
-    depends_on:
-      - db
-    command: sh -c "npm install && npx prisma migrate deploy && npm run dev"
-    networks:
-      - mangahaven-network
+      - CHOKIDAR_USEPOLLING=true  # This can help with file watching in Docker
+    command: sh -c "npm install && npm run dev"
 
-  db:
-    image: postgres:15-alpine
-    container_name: postgres-db
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mangahaven
-    ports:
-      - '5432:5432'
-    networks:
-      - mangahaven-network
-
-networks:
-  mangahaven-network:
-    driver: bridge
-
-volumes:
-  postgres-data:

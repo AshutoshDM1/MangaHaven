@@ -1,6 +1,8 @@
+#Dockerfile.dev
+
 FROM node:18-alpine
 
-WORKDIR /app
+WORKDIR /nextapp
 
 COPY package*.json ./
 
