@@ -1,12 +1,14 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import type { Config } from "tailwindcss"
+const { fontFamily } = require("tailwindcss/defaultTheme")
+
+const config = {
   darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-  ],
+	],
   prefix: "",
   theme: {
     container: {
@@ -17,91 +19,66 @@ module.exports = {
       },
     },
     extend: {
-
-      boxShadow: {
-        box: '0 0 1rem rgba(0, 0, 0, 0.3)',
+      fontFamily: {
+        sans: ["var(--font-sans)", ...fontFamily.sans],
       },
-      height: {
-        "5h": "5%",
-        "6h": "6%",
-        "6vh": "6vh",
-        "7h": "7%",
-        "8h": "8%",
-        "10h": "10%",
-        "15h": "15%",
-        "20h": "20%",
-        "30h": "30%",
-        "40h": "40%",
-        "50h": "50%",
-        "60h": "60%",
-        "70h": "70%",
-        "80h": "80%",
-        "90h": "90%",
-        "94h": "94%",
-        "95h": "95%",
-        "98h": "98%",
-      },
-      width: {
-        "10w": "10%",
-        "15w": "15%",
-        "20w": "20%",
-        "30w": "30%",
-        "40w": "40%",
-        "50w": "50%",
-        "60w": "60%",
-        "70w": "70%",
-        "80w": "80%",
-        "88w": "88%",
-        "90w": "90%",
-        "95w": "95%",
-        "98w": "98%",
-        "12vw": "12vw",
-        "8vw": "8vw",
-        "6vw": "6vw",
-        "5vw": "5vw",
-        "4vw": "4vw",
-        "3vw": "3vw",
-        "2vw": "2vw",
-        "1.5vw": "1.5vw",
-        "1vw": "1vw",
-        "0.5vw": "0.5vw",
-        "px": "170px",
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
       },
       borderRadius: {
-        "50r": "50px",
-        "30r": "30px",
-        "15r": "15px",
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
-      fontSize: {
-        "0.5vh": "0.5vh",
-        "1vh": "1vh",
-        "1.2vw": "1.2vh",
-        "1.3vh": "1.3vh",
-        "1.5vh": "1.5vh",
-        "1.7vh": "1.7vh",
-        "2vh": "2vh",
-        "2.5vh": "2.5vh",
-        "3vh": "3vh",
-        "4vh": "4vh",
-        "5vh": "5vh",
-        "8vh": "8vh",
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
       },
-      backgroundColor  : {
-        "main" : "#0f0f0f"
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
-
-      marginTop : {
-        "10vh" : "10vh",
-        "30vh" : "30vh"
-      },
-      gap : {
-        "1vw" : "1vw",
-        "2vw" : "2vw",
-        "3vw" : "3vw",
-        "4vw" : "4vw",
-      },
-      
     },
   },
+  plugins: [require("tailwindcss-animate")],
+} satisfies Config
 
-}
+export default config

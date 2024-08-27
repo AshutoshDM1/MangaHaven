@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter as FontSans } from "next/font/google"
+import { cn } from "@/lib/utils"
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 
-const inter = Inter({ subsets: ["latin"] });
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
+
 export const metadata: Metadata = {
   title: "MangaHaven",
   description: "Your go-to place for All mangas.",
   icons: {
-    icon: "/MH Favicon HD.png", // This points to your favicon
+    icon: "/MH Favicon HD.png",
   },
 };
+
 
 export default function RootLayout({
   children,
@@ -22,7 +29,21 @@ export default function RootLayout({
         <link rel="icon" href="/MH Favicon HD.png" />
         <title>MangaHaven</title>
       </head>
-      <body className={inter.className}>{children}</body>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+      >
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+      </body>
     </html>
   );
 }
