@@ -16,8 +16,8 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
 
   return (
     <>
-      <div className="min-h-[8vh] max-h-fit flex justify-center items-center px-4">
-        <div className="h-full w-full md:w-[70%] flex flex-wrap justify-between items-center gap-4 ">
+      <div className="min-h-[8vh] max-h-fit flex justify-center items-center px-0 md:px-4  ">
+        <div className="h-full w-full md:w-full flex flex-wrap justify-between items-center gap-4 ">
           <div className="h-full flex gap-8 items-center justify-center lg:justify-start w-full lg:w-fit mt-5 md:mt-0 ">
             <div className="h-full flex justify-center items-center">
               <img className="h-[60px]" src="./MangaHaven Logo.png" />
@@ -29,7 +29,7 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
               <button className="font-semibold text-base ml-4">A-Z List</button>
             </div>
           </div>
-          <div className="h-full flex justify-center items-center gap-3 w-full lg:w-[50%]">
+          <div className="h-full flex justify-between items-center gap-3 w-full lg:w-[50%]">
             <div className="w-[70%] h-full flex justify-center items-center">
               <input
                 className="h-[5vh] w-full text-black dark:text-white bg-zinc-200 dark:bg-zinc-900 rounded-md border-none focus:border focus:outline-none pl-6"
