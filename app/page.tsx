@@ -1,5 +1,6 @@
 import BackGround from "@/components/BackGround";
 import BackGroundMain from "@/components/BackGroundMain";
+import Footer from "@/components/Footer";
 import { ModeToggle } from "@/components/ModeToggle";
 import Navbar from "@/components/Navbar";
 import NavbarMain from "@/components/NavbarMain";
@@ -15,6 +16,7 @@ export default function Home() {
           <BackGroundMain />
         </div>
       </div>
+      <Footer/>
     </>
   );
 }

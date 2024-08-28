@@ -47,11 +47,12 @@ services:
     container_name: nextjs-app
     working_dir: /app
     volumes:
-      - .:/app
+      - .:/app:cached
       - /app/node_modules
     ports:
       - '3000:3000'
     environment:
-      - CHOKIDAR_USEPOLLING=true  # This can help with file watching in Docker
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=100 
     command: sh -c "npm install && npm run dev"
 
