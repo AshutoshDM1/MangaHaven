@@ -18,6 +18,11 @@ npm run dev
 ```
 ## OR
 
+# Contributing
+
+We welcome contributions from the community! Please read our [contributing guidelines](CONTRIBUTING.md) before   
+making a pull request.
+
 ### Use Docker To Start Server :
 
 #### Note - Currently Bind Mount is Not Working :
