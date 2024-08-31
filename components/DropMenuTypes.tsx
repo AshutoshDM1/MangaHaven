@@ -9,16 +9,18 @@ import {
 
 interface DropMenuProps {}
 
-const DropMenu: React.FC<DropMenuProps> = () => {
+const DropMenuTypes: React.FC<DropMenuProps> = () => {
   return (
     <>
       <div className="ml-4 font-semibold text-base flex justify-center items-center ">
         <DropdownMenu>
-          <DropdownMenuTrigger>Type</DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Choose Manga</DropdownMenuLabel>
-            <DropdownMenuSeparator />
+          <DropdownMenuTrigger>Types</DropdownMenuTrigger>
+          <DropdownMenuContent className="ml-4 w-[5vw]">
+            {/* <DropdownMenuLabel>Choose Manga</DropdownMenuLabel> */}
+            {/* <DropdownMenuSeparator /> */}
             <DropdownMenuItem>Manga</DropdownMenuItem>
+            <DropdownMenuItem>oneShot</DropdownMenuItem>
+            <DropdownMenuItem>Novel</DropdownMenuItem>
             <DropdownMenuItem>One-Short</DropdownMenuItem>
             <DropdownMenuItem>Manhwa</DropdownMenuItem>
             <DropdownMenuItem>Manhua</DropdownMenuItem>
@@ -29,4 +31,4 @@ const DropMenu: React.FC<DropMenuProps> = () => {
   );
 };
 
-export default DropMenu;
+export default DropMenuTypes;
