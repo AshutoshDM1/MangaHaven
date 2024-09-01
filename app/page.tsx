@@ -16,7 +16,7 @@ export default function Home() {
       <div className="max-w-full mx-auto flex flex-col gap-4 min-h-[95vh] ">
         <div className="flex flex-col gap-10">
           <NavbarMain />
-          {/* <BackGroundMain /> */}
+          <BackGroundMain />
           <MangaCarousel items={mangaItems}/>
         </div>
         <MangaSection/>
