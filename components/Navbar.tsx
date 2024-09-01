@@ -8,7 +8,7 @@ const Navbar: React.FC<NavbarProps> = () => {
   return (
     <>
       <div className="h-[5vh] w-full flex justify-center items-center px-3">
-        <div className="w-full md:max-w-full flex justify-between items-center lg:px-7 ">
+        <div className="w-full md:max-w-full flex justify-between items-center lg:px-1 ">
           <h1 className="cursor-pointer font-bold text-base">Read Random</h1>
           <div className="flex justify-between items-center gap-5">
             <h1 className="cursor-pointer text-base font-bold">Follow Us:</h1>

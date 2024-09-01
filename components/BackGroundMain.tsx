@@ -1,13 +1,13 @@
 const BackGroundMain = () => {
   return (
     <>
-      <div className="w-full min-h-[60vh]  flex justify-center items-center px-0 md:px-4 relative">
+      <div className="w-full min-h-[60vh]  flex justify-center items-center px-0 md:px-4 relative">   
         <div className="h-full w-full p-0 pt-40 ease-in duration-700 md:p-5 flex flex-col justify-start items-start gap-5 relative z-10 ">
           <h1 className="text-xl font-bold text-[#A977E7] ">#1 Fav Anime</h1>
-          <h1 className="text-6xl font-bold text-[#A977E7] md:w-[120%] w-full ">
+          <h1 className="text-4xl md:text-6xl font-bold text-[#A977E7] md:w-[120%] w-full ">
             One Punch Man
           </h1>
-          <h1 className=" md:w-[150%]w-full">
+          <h1 className="hidden md:block  md:w-[150%]w-full">
             Saitama started out being a hero just for fun. After three years of
             “special” training, he became so powerful that he can defeat
             opponents with a single punch. Now, alongside Genos, his faithful
