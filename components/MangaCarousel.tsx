@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { MangaItem } from './data/mangaData';
 
@@ -7,14 +7,55 @@ interface MangaCarouselProps {
 }
 
 const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(3);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Clone the array for infinite effect
+  const extendedItems = [...items.slice(-3), ...items, ...items.slice(0, 3)];
 
   const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
+    if (!isTransitioning) {
+      setIsTransitioning(true);
+      setCurrentIndex((prevIndex) => prevIndex + 1);
+    }
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + items.length) % items.length);
+    if (!isTransitioning) {
+      setIsTransitioning(true);
+      setCurrentIndex((prevIndex) => prevIndex - 1);
+    }
+  };
+
+  // Automatically slide every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 3000);
+    return () => clearInterval(interval); // Clean up the interval on unmount
+  }, [isTransitioning]);
+
+  // Handle transition end to reset the index for infinite effect
+  useEffect(() => {
+    if (isTransitioning) {
+      const transitionEnd = () => {
+        setIsTransitioning(false);
+
+        // Wrap around logic
+        if (currentIndex === extendedItems.length - 3) {
+          setCurrentIndex(3); // Reset to the original start
+        } else if (currentIndex === 0) {
+          setCurrentIndex(extendedItems.length - 6); // Reset to the original end
+        }
+      };
+      
+      const carousel = document.getElementById('carousel');
+      carousel?.addEventListener('transitionend', transitionEnd);
+      
+      return () => carousel?.removeEventListener('transitionend', transitionEnd);
+    }
+  }, [currentIndex, isTransitioning, extendedItems.length]);
+
+  const getTransformValue = () => {
+    return `translateX(-${currentIndex * 33.33}%)`;
   };
 
   return (
@@ -47,6 +88,20 @@ const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
           If you enjoy the website, please consider sharing it with your friends. Thank you!
         </p> */}
       </div>
+      <button
+        onClick={prevSlide}
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 p-2 rounded-r z-10"
+        style={{ left: '2%' }}
+      >
+        <ChevronLeft className="text-white" />
+      </button>
+      <button
+        onClick={nextSlide}
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 p-2 rounded-l z-10"
+        style={{ right: '2%' }}
+      >
+        <ChevronRight className="text-white" />
+      </button>
     </div>
   );
 };
