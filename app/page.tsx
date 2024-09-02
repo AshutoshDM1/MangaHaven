@@ -18,8 +18,6 @@ export default function Home() {
           <NavbarMain />
           <BackGroundMain />
           <MangaCarousel items={mangaItems}/>
-          <BackGroundMain />
-          <MangaCarousel items={mangaItems} />
         </div>
         <MangaSection />
       </div>

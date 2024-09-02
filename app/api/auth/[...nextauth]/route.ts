@@ -11,7 +11,7 @@ const handler = NextAuth({
           password: { label: 'password', type: 'password', placeholder: '' },
         },
         async authorize(credentials: any) {
-            console.log("asdf")
+            
             return {
                 id: "user1"
             };

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { MangaItem } from './data/mangaData';
+import React, { useEffect, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { MangaItem } from "./data/mangaData";
 
 interface MangaCarouselProps {
   items: MangaItem[];
@@ -46,61 +46,104 @@ const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
           setCurrentIndex(extendedItems.length - 6); // Reset to the original end
         }
       };
-      
-      const carousel = document.getElementById('carousel');
-      carousel?.addEventListener('transitionend', transitionEnd);
-      
-      return () => carousel?.removeEventListener('transitionend', transitionEnd);
+
+      const carousel = document.getElementById("carousel");
+      carousel?.addEventListener("transitionend", transitionEnd);
+
+      return () =>
+        carousel?.removeEventListener("transitionend", transitionEnd);
     }
   }, [currentIndex, isTransitioning, extendedItems.length]);
 
   const getTransformValue = () => {
-    return `translateX(-${currentIndex * 33.33}%)`;
+    if (typeof window !== "undefined" && window.innerWidth < 1000) {
+      // Below md
+      return `translateX(-${currentIndex * 100}%)`;
+    } else {
+      // Full width
+      return `translateX(-${currentIndex * 33.33}%)`;
+    }
   };
+  
+  // Add a resize event listener to update the transform value on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setCurrentIndex((prevIndex) => prevIndex); // Trigger re-render
+    };
+  
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <div className='w-full flex justify-center'>
-      <div className="w-full max-w-[90vw] md:max-w-[80vw] lg:max-w-[70vw] text-white p-4 relative">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {items.slice(currentIndex, currentIndex + 3).map((item, index) => (
-            <div key={index} className="bg-gray-800 rounded-xl overflow-hidden">
-              <img src={item.imageUrl} alt={item.title} className="w-full h-48 object-cover" />
-              <div className="p-4">
-                <h3 className="text-lg font-bold mb-2">{item.title}</h3>
-                <p className="text-sm mb-2 text-gray-400">{item.description}</p>
-                <p className="text-sm mb-1">{`${item.chapter} - ${item.volume}`}</p>
-                <div className="flex flex-wrap gap-1">
-                  {item.genres.map((genre, i) => (
-                    <span key={i} className="text-xs bg-gray-700 px-2 py-1 rounded">{genre}</span>
-                  ))}
+    <div className="relative w-full overflow-hidden p-4 flex justify-center items-center">
+      <div className="w-full md:w-[80vw] relative overflow-hidden">
+        <div
+          id="carousel"
+          className={`flex transition-transform duration-500 ease-in-out ${
+            isTransitioning ? "" : "transition-none"
+          }`}
+          style={{ transform: getTransformValue() }}
+        >
+          {extendedItems.map((item, index) => (
+            <div key={index} className="w-full lg:w-1/3 flex-shrink-0 px-2">
+              <div
+                style={{ boxShadow: '0 0 1rem rgba(0, 0, 0, 0.5)' }}
+                className="dark:border-[#3a3a3a] border dark:border h-[25vh] flex rounded-lg overflow-hidden"
+              >
+                <div className="w-[60%] flex flex-col justify-between">
+                  <div className="p-3 h-[40%]">
+                    <h3 className="text-lg font-normal  opacity-70">
+                      {item.status}
+                    </h3>
+                    <h3 className="text-lg font-semibold ">{item.title}</h3>
+                  </div>
+                  <div className="text-xs h-[60%] flex flex-col justify-between px-3 pb-2 ">
+                    <p className="text-sm text-gray-400  line-clamp-2  lg:hidden 2xl:block ">
+                      {item.description}
+                    </p>
+                    <div>
+                      <span>{item.volume}</span>
+                      <span className="mx-2">•</span>
+                      <span>{item.chapter}</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1 text-white mt-2 ">
+                      {item.genres.map((genre, i) => (
+                        <span
+                          key={i}
+                          className="text-xs  font-semibold bg-[#b341ff] px-2 py-1 rounded"
+                        >
+                          {genre}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="relative w-[40%]">
+                  <img
+                    src={item.imageUrl}
+                    alt={item.title}
+                    className="w-full h-full  object-cover"
+                  />
                 </div>
               </div>
             </div>
           ))}
         </div>
-        <button onClick={prevSlide} className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 p-2 rounded-r">
-          <ChevronLeft size={24} />
-        </button>
-        <button onClick={nextSlide} className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 p-2 rounded-l">
-          <ChevronRight size={24} />
-        </button>
-        {/* <p className="text-center mt-4 text-sm text-gray-400">
-          If you enjoy the website, please consider sharing it with your friends. Thank you!
-        </p> */}
       </div>
       <button
         onClick={prevSlide}
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 p-2 rounded-r z-10"
-        style={{ left: '2%' }}
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 shadow-md bg-opacity-50 p-2 rounded-md z-10 dark:bg-foreground/10 "
+        style={{ left: "2%" }}
       >
-        <ChevronLeft className="text-white" />
+        <ChevronLeft className="" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 p-2 rounded-l z-10"
-        style={{ right: '2%' }}
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 dark:bg-foreground/10 shadow-md bg-opacity-50 p-2 rounded-md z-10"
+        style={{ right: "2%" }}
       >
-        <ChevronRight className="text-white" />
+        <ChevronRight className="" />
       </button>
     </div>
   );

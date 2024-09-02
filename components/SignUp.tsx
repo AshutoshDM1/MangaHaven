@@ -39,7 +39,7 @@ const SignUp: React.FC = () => {
                 password: "asdfasdfasdf",
                 redirect: false,
             });
-            console.log(res);
+
         }}>Login with email</Button>
 
           <div className="mt-4">

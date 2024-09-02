@@ -12,7 +12,7 @@ interface NavbarMainProps {}
 const NavbarMain: React.FC<NavbarMainProps> = () => {
   const [showList, setShowList] = useState<Boolean>(false);
   const session = useSession();
-  console.log(session.data?.user)
+
 
   const handleClick = () => {
     setShowList((prevState) => !prevState);
