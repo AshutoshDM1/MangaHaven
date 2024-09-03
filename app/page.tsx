@@ -1,10 +1,8 @@
-"use client"
-
+"use client";
 import BackGroundMain from "@/components/BackGroundMain";
 import Footer from "@/components/Footer";
 import MangaCarousel from "@/components/MangaCarousel";
 import MangaSection from "@/components/MangaSection";
-import { ModeToggle } from "@/components/ModeToggle";
 import Navbar from "@/components/Navbar";
 import NavbarMain from "@/components/NavbarMain";
 import { Button } from "@/components/ui/button";
@@ -13,7 +11,7 @@ import { mangaBackgroundData } from "@/components/data/mangaBackgroundData";
 export default function Home() {
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
       <div className="max-w-full mx-auto flex flex-col">
         <div className="flex flex-col">
           <NavbarMain />
@@ -24,9 +22,9 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <MangaSection/>
+        <MangaSection />
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }

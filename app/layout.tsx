@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google"
-import { cn } from "@/lib/utils"
+import { Inter as FontSans } from "next/font/google";
+import { cn } from "@/lib/utils";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Providers } from "./providers";
 
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
-})
+});
 
 export const metadata: Metadata = {
   title: "MangaHaven",
@@ -16,7 +17,6 @@ export const metadata: Metadata = {
     icon: "/MH Favicon HD.png",
   },
 };
-
 
 export default function RootLayout({
   children,
@@ -35,14 +35,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

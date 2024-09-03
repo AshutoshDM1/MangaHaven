@@ -66,6 +66,16 @@ const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
       return `translateX(-${currentIndex * 33.33}%)`;
     }
   };
+  
+  // Add a resize event listener to update the transform value on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setCurrentIndex((prevIndex) => prevIndex); // Trigger re-render
+    };
+  
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div className="relative w-full overflow-hidden p-4 flex justify-center items-center">
@@ -97,7 +107,7 @@ const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
                       <span className="mx-2">•</span>
                       <span>{item.chapter}</span>
                     </div>
-                    <div className="flex flex-wrap gap-1">
+                    <div className="flex flex-wrap gap-1 text-white mt-2 ">
                       {item.genres.map((genre, i) => (
                         <span key={i} className="md:text-md text-[12px] pr-2 text-white">{genre}</span>
                       ))}
@@ -105,7 +115,11 @@ const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
                   </div>
                 </div>
                 <div className="relative w-[40%]">
-                  <img src={item.imageUrl} alt={item.title} className="w-full h-full h-48 object-cover" />
+                  <img
+                    src={item.imageUrl}
+                    alt={item.title}
+                    className="w-full h-full  object-cover"
+                  />
                 </div>
               </div>
             </div>
@@ -116,15 +130,16 @@ const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
         onClick={prevSlide}
         className="absolute left-0 top-1/2 transform -translate-y-1 shadow-md bg-opacity-50 p-2 rounded-md z-10 dark:bg-foreground/10"
         style={{ left: '2%' }}
+
       >
-        <ChevronLeft className="text-white" />
+        <ChevronLeft className="" />
       </button>
       <button
         onClick={nextSlide}
         className="absolute right-0 top-1/2 transform -translate-y-1 dark:bg-foreground/10 shadow-md bg-opacity-50 p-2 rounded-md z-10"
         style={{ right: '2%' }}
       >
-        <ChevronRight className="text-white" />
+        <ChevronRight className="" />
       </button>
     </div>
   );

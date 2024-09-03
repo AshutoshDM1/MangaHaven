@@ -5,10 +5,10 @@ const MangaSection = () => {
     <>
       <div className="min-h-[60vh] w-full flex justify-center items-center " >
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-8">
-          {[1, 2, 3, 4, 5].map((item) => (
+          {[1, 2, 3, 4, 5 , 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((item) => (
             <div
               key={item}
-              className="bg-card rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform hover:scale-105 w-fit "
+              className="bg-card rounded-lg shadow-xl overflow-hidden cursor-pointer transition-transform hover:scale-105 w-fit bg-[#161616] "
             >
               <img
                 src={`https://img.mreadercdn.com/_m/300x400/100/3e/c1/3ec1028a31fa8dc8d67c4cd511b14b55/3ec1028a31fa8dc8d67c4cd511b14b55.jpg`}
@@ -20,7 +20,6 @@ const MangaSection = () => {
                   Manga Title {item}
                 </h3>
                 <p className="text-sm text-muted-foreground">Chapter 1</p>
-                <Button className="w-full mt-4">Read Now</Button>
               </div>
             </div>
           ))}

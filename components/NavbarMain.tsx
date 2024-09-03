@@ -5,11 +5,14 @@ import { Avatar } from "./ui/avatar";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import DropMenuTypes from "./DropMenuTypes";
 import DropMenuGenres from "./ui/DropMenuGenres";
+import { useSession } from "next-auth/react";
 
 interface NavbarMainProps {}
 
 const NavbarMain: React.FC<NavbarMainProps> = () => {
   const [showList, setShowList] = useState<Boolean>(false);
+  const session = useSession();
+
 
   const handleClick = () => {
     setShowList((prevState) => !prevState);
@@ -17,8 +20,8 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
 
   return (
     <>
-      <div className="min-h-[8vh] py-3 max-h-fit flex justify-center items-center px-0 md:px-4 border-white border-b-[1px]">
-        <div className="h-full w-full md:w-full max-w-[70vw] flex flex-wrap justify-between items-center gap-4 ">
+      <div className="min-h-[8vh] py-3 max-h-fit flex justify-center items-center px-0 md:px-4 border-[#828282] border-b-[1px]">
+        <div className="h-full w-full md:w-full flex flex-wrap justify-between items-center gap-4 ">
           <div className="h-full flex gap-8 items-center justify-center lg:justify-start w-full lg:w-fit mt-5 md:mt-0 ">
             <div className="h-full flex justify-center items-center">
               <img className="h-[50px]" src="./MangaHaven Logo.png" />
@@ -43,12 +46,12 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
               />
             </div>
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarImage src={session.data?.user?.image || "https://github.com/shadcn.png"} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            {/* <div>
+            <div>
               <ModeToggle />
-            </div> */}
+            </div>
           </div>
         </div>
       </div>

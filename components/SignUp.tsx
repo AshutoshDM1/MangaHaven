@@ -3,9 +3,13 @@ import React from 'react';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-
+import { signIn } from 'next-auth/react'
 
 const SignUp: React.FC = () => {
+  const handleGoogleSignIn = () => {
+    signIn('google', { callbackUrl: '/' })
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-md border border-zinc-200">
@@ -16,7 +20,7 @@ const SignUp: React.FC = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form className="space-y-4">
+
             <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-medium ">Email</label>
               <Input id="email" placeholder="Enter your email" className="" />
@@ -29,10 +33,20 @@ const SignUp: React.FC = () => {
               <label htmlFor="confirmPassword" className="text-sm font-medium ">Confirm Password</label>
               <Input id="confirmPassword" type="password" placeholder="Confirm your password" className="border-zinc-300" />
             </div>
-            <Button type="submit" className="w-full">
-              Create Account
+            <Button onClick={async () => {
+            const res = await signIn("credentials", {
+                username: "Ashutosh@gmail.com",
+                password: "asdfasdfasdf",
+                redirect: false,
+            });
+
+        }}>Login with email</Button>
+
+          <div className="mt-4">
+            <Button onClick={handleGoogleSignIn} variant="outline" className="w-full">
+              Sign in with Google
             </Button>
-          </form>
+          </div>
           <div className="mt-4 text-center text-sm ">
             Already have an account?{" "}
             <a href="#" className="font-semibold hover:underline">
