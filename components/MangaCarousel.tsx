@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { MangaItem } from './data/mangaData';
+import { MangaItem } from './data/mangaCarouselData';
 
 interface MangaCarouselProps {
   items: MangaItem[];
@@ -70,6 +70,7 @@ const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
   return (
     <div className="relative w-full overflow-hidden p-4 flex justify-center items-center">
       <div className="md:w-[70vw] w-full relative overflow-hidden">
+        <h5 className='md:text-3xl text-xl font-bold text-white opacity-90 md:p-3 p-2 md:mb-3'>Most Viewed</h5>
         <div
           id="carousel"
           className={`flex ${isAnimating ? 'transition-transform duration-500 ease-in-out' : ''}`}
@@ -78,10 +79,13 @@ const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
           {extendedItems.map((item, index) => (
             <div key={index} className="lg:w-1/3 w-full flex-shrink-0 px-2">
               <div 
-                style={{ boxShadow: '0 0 1rem rgba(0, 0, 0, 0.5)' }}
-                className="dark:border-[#3a3a3a] border dark:border md:h-[25vh] h-[20vh] flex rounded-lg overflow-hidden"
+                style={{ 
+                  boxShadow: '0 0 1rem rgba(0, 0, 0, 0.5)',
+                  transition: 'background-color 0.3s ease, transform 0.3s ease'
+                }}
+                className="dark:border-[#3a3a3a] border dark:border md:h-[25vh] h-[20vh] flex rounded-lg overflow-hidden hover:bg-zinc-900 transform cursor-pointer"
               >
-                <div className="w-[60%] flex flex-col justify-center">
+                <div className="w-[60%] flex flex-col justify-center border-l-2 border-white">
                   <div className="md:p-3 p-2 md:h-[40%] h-[30%]">
                     <h3 className="md:text-lg text-sm font-normal text-white opacity-70">{item.status}</h3>
                     <h3 className="md:text-xl text-md font-semibold text-white">{item.title}</h3>
@@ -110,14 +114,14 @@ const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
       </div>
       <button
         onClick={prevSlide}
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 shadow-md bg-opacity-50 p-2 rounded-md z-10 dark:bg-foreground/10"
+        className="absolute left-0 top-1/2 transform -translate-y-1 shadow-md bg-opacity-50 p-2 rounded-md z-10 dark:bg-foreground/10"
         style={{ left: '2%' }}
       >
         <ChevronLeft className="text-white" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 dark:bg-foreground/10 shadow-md bg-opacity-50 p-2 rounded-md z-10"
+        className="absolute right-0 top-1/2 transform -translate-y-1 dark:bg-foreground/10 shadow-md bg-opacity-50 p-2 rounded-md z-10"
         style={{ right: '2%' }}
       >
         <ChevronRight className="text-white" />
