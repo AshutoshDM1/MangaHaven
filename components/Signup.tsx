@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -9,21 +9,46 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { toast } from "sonner";
 
-const Signin: React.FC = () => {
+const Signup: React.FC = () => {
+  const [email, setEmail] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-  const handleGoogleSignIn = () => {
-    signIn("google", { callbackUrl: "/" });
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setEmail((prev) => ({ ...prev, [name]: value }));
   };
+
+  const session = useSession();
+  const handleGoogleSignIn = () => {
+    signIn("google", { callbackUrl: "/signin" });
+  };
+
   const handleEmailSignIn = async () => {
-    console.log(1)
-    const res = await signIn("credentials", {
-      email : "ashutosh@gmail.com", // Use the email state
-      password : "asdfasdfasdf", // Use the password state
-      redirect: true,
-      callbackUrl: "/"
-    });
+    if (email.password !== "" && email.password === email.confirmPassword) {
+      const res = await signIn("credentials", {
+        email: email.email, // Use the email state
+        password: email.password, // Use the password state
+        name: email.name,
+        redirect: false,
+        callbackUrl: "/",
+        action: "signup",
+      });
+      if (res?.error) {
+        toast.error(res.error);
+      }
+      if (res?.status === 200) {
+        toast.success("Signup successful");
+      }
+    } else {
+      toast.error("Password do not match");
+    }
   };
 
   return (
@@ -38,18 +63,38 @@ const Signin: React.FC = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="h-[45vh] w-full flex flex-col gap-3 ">
+          <div className="h-[55vh] w-full flex flex-col gap-3 ">
+            <div className="space-y-2">
+              <label htmlFor="name" className="text-sm font-medium ">
+                User Name
+              </label>
+              <Input
+                name="name"
+                onChange={handleInputChange}
+                id="name"
+                placeholder="Enter your username"
+                className=""
+              />
+            </div>
             <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-medium ">
                 Email
               </label>
-              <Input id="email" placeholder="Enter your email" className="" />
+              <Input
+                name="email"
+                onChange={handleInputChange}
+                id="email"
+                placeholder="Enter your email"
+                className=""
+              />
             </div>
             <div className="space-y-2">
               <label htmlFor="password" className="text-sm font-medium ">
                 Password
               </label>
               <Input
+                onChange={handleInputChange}
+                name="password"
                 id="password"
                 type="password"
                 placeholder="Create a password"
@@ -61,16 +106,15 @@ const Signin: React.FC = () => {
                 Confirm Password
               </label>
               <Input
+                onChange={handleInputChange}
                 id="confirmPassword"
+                name="confirmPassword"
                 type="password"
                 placeholder="Confirm your password"
                 className="border-zinc-300"
               />
             </div>
-            <Button
-              className="mt-4  "
-              onClick={handleEmailSignIn}
-            >
+            <Button className="mt-4  " onClick={handleEmailSignIn}>
               Login with email
             </Button>
 
@@ -84,9 +128,9 @@ const Signin: React.FC = () => {
               </Button>
             </div>
             <div className="mt-4 text-center text-sm ">
-              Already have an account?{" "}
-              <a href="#" className="font-semibold hover:underline">
-                Sign in
+              Already have an account ?{" "}
+              <a href="/login" className="font-semibold hover:underline">
+                Login
               </a>
             </div>
           </div>
@@ -96,4 +140,4 @@ const Signin: React.FC = () => {
   );
 };
 
-export default Signin;
+export default Signup;
