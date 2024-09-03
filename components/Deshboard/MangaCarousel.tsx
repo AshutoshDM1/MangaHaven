@@ -67,7 +67,6 @@ const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
     }
   };
   
-  // Add a resize event listener to update the transform value on window resize
   useEffect(() => {
     const handleResize = () => {
       setCurrentIndex((prevIndex) => prevIndex); // Trigger re-render
@@ -79,7 +78,7 @@ const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
 
   return (
     <div className="relative w-full overflow-hidden p-4 flex justify-center items-center">
-      <div className="md:w-[70vw] w-full relative overflow-hidden">
+      <div className="md:w-[90vw] w-full relative overflow-hidden">
         <h5 className='md:text-3xl text-xl font-bold  opacity-90 md:p-3 p-2 md:mb-3'>Most Viewed</h5>
         <div
           id="carousel"
@@ -95,12 +94,12 @@ const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
                 }}
                 className="dark:border-[#3a3a3a] border dark:border md:h-[25vh] h-[20vh] flex rounded-lg overflow-hidden dark:hover:bg-zinc-900 hover:bg-[#d7d7d788]  transform cursor-pointer"
               >
-                <div className="w-[60%] flex flex-col justify-center border-l-4  border-[#A977E7] dark:border-white">
+                <div className="w-[60%] flex flex-col justify-center border-l-4  border-[#A977E7] dark:border-[#ffffffe0] ">
                   <div className="md:p-3 p-2 md:h-[40%] h-[30%]">
                     <h3 className="md:text-lg text-sm font-normal  opacity-70">{item.status}</h3>
                     <h3 className="md:text-xl text-md font-semibold ">{item.title}</h3>
                   </div>
-                  <div className="md:h-[60%] h-[70%] flex flex-col justify-between md:p-3 p-2 md:pt-6 mt-4">
+                  <div className="md:h-[60%] h-[70%] flex flex-col justify-between md:p-3 p-2 md:pt-2 ">
                     <p className=" opacity-70 md:text-md text-sm line-clamp-2">{item.description}</p>
                     <div className=' opacity-70 md:text-md text-sm'>
                       <span>{item.volume}</span>
@@ -109,7 +108,7 @@ const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
                     </div>
                     <div className="flex flex-wrap gap-1  mt-2 ">
                       {item.genres.map((genre, i) => (
-                        <span key={i} className="md:text-md text-[12px] pr-2 ">{genre}</span>
+                        <span key={i} className="md:text-md text-[12px] pr-2 bg-[#A977E7] px-[6px] py-[2px]  rounded-md  ">{genre}</span>
                       ))}
                     </div>
                   </div>

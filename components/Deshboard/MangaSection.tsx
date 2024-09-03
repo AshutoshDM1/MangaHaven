@@ -1,11 +1,11 @@
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 const MangaSection = () => {
   return (
     <>
-      <div className="min-h-[60vh] w-full flex justify-center items-center " >
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-8">
-          {[1, 2, 3, 4, 5 , 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((item) => (
+      <div className="min-h-[60vh] w-full flex justify-center items-center  px-4" >
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4 mt-8  transition-all duration-300">
+          {[1, 2, 3, 4, 5 , 6, 7, 8, 9, 10, 11, 12, 13, 14].map((item) => (
             <div
               key={item}
               className="bg-card rounded-lg shadow-xl overflow-hidden cursor-pointer transition-transform hover:scale-105 w-fit bg-[#161616] "
@@ -13,7 +13,7 @@ const MangaSection = () => {
               <img
                 src={`https://img.mreadercdn.com/_m/300x400/100/3e/c1/3ec1028a31fa8dc8d67c4cd511b14b55/3ec1028a31fa8dc8d67c4cd511b14b55.jpg`}
                 alt={`Manga ${item}`}
-                className="w-full h-[300px] object-cover"
+                className="w-full h-[230px] md:h-[250px] object-cover"
               />
               <div className="p-4">
                 <h3 className="font-semibold text-lg mb-2">

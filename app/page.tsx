@@ -12,9 +12,9 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <div className="max-w-full mx-auto flex flex-col">
+      <NavbarMain />
+      <div className="max-w-7xl mx-auto flex flex-col">
         <div className="flex flex-col">
-          <NavbarMain />
           <div className="relative">
             <BackGroundMain items={mangaBackgroundData} />
             <div className="md:-mt-1 -mt-36">

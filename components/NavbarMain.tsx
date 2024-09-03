@@ -19,9 +19,9 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
 
   return (
     <>
-      <div className="min-h-[8vh] py-3 max-h-fit flex justify-center items-center px-0 md:px-4 border-[#828282a8] border-b-[1px] sticky top-0 z-50 backdrop-blur-md ">
+      <div className="min-h-[5vh]  md:min-h-[8vh]  py-1 md:py-3 max-h-fit flex justify-center items-center px-0 md:px-4 border-[#828282a8] border-b-[1px] sticky top-0 z-50 backdrop-blur-md ">
         <div className="h-full w-full md:w-full flex flex-wrap justify-between items-center gap-4 ">
-          <div className="h-full flex gap-8 items-center justify-center lg:justify-start w-full lg:w-fit mt-5 md:mt-0 ">
+          <div className="h-full flex gap-8 items-center justify-center lg:justify-start w-full lg:w-fit ">
             <div 
             onClick={()=>router.push("/home")}
             className="h-full flex justify-center items-center cursor-pointer ">
