@@ -1,5 +1,5 @@
-import Home_Main_Card from "@/components/ui/Home_Main_Card";
-import Home_NavBar from "@/components/ui/Home_NavBar";
+import Home_Main_Card from "@/components/Home/Home_Main_Card";
+import Home_NavBar from "@/components/Home/Home_NavBar";
 
 export default function Home() {
   return (

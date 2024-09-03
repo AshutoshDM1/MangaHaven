@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { MangaItem } from "./data/mangaData";
+import { MangaItem } from "../data/mangaData";
 
 interface MangaCarouselProps {
   items: MangaItem[];
@@ -88,10 +88,10 @@ const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
           {extendedItems.map((item, index) => (
             <div key={index} className="w-full lg:w-1/3 flex-shrink-0 px-2">
               <div
-                style={{ boxShadow: '0 0 1rem rgba(0, 0, 0, 0.5)' }}
-                className="dark:border-[#3a3a3a] border dark:border h-[25vh] flex rounded-lg overflow-hidden"
+                
+                className="dark:border-[#3a3a3a]  border-[#2c2c2c43] border-[1px] h-[25vh] flex rounded-lg overflow-hidden"
               >
-                <div className="w-[60%] flex flex-col justify-between">
+                <div className="w-[60%] flex flex-col justify-between ">
                   <div className="p-3 h-[40%]">
                     <h3 className="text-lg font-normal  opacity-70">
                       {item.status}

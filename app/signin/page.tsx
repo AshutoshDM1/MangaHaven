@@ -1,9 +1,9 @@
-import SignUp from "@/components/SignUp"
+import Signin from "@/components/Signin"
 
 const Signup :React.FC = () => {
  return (
   <>
-  <SignUp/>
+  <Signin/>
   </>
  )
 }

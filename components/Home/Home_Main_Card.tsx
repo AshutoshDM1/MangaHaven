@@ -5,11 +5,8 @@ export default function Home_Main_Card() {
     <div className="w-min-fit h-1/2 rounded-2xl shadow-lg shadow-slate-800 m-10">
       <div className="w-full h-full rounded-2xl relative flex overflow-hidden">
         <div
-          className=" w-4/6 h-full rounded-2xl text-3xl md:text-5xl z-10 bg-slate-900"
-          style={{
-            background:
-              "linear-gradient(90deg, rgba(23, 22, 20, 1) 10%, rgba(43, 42, 60, 0) 100%)",
-          }}
+          className=" w-4/6 h-full rounded-2xl text-3xl md:text-5xl z-10 "
+  
         >
           <div className="w-full m-8 ">
             M<span className="text-pink-500 ">a</span>nga H
@@ -60,8 +57,8 @@ export default function Home_Main_Card() {
             </div>
           </div>
           <button className="bg-pink-400 hover:bg-pink-500 hover:text-gray-800 text-slate-900 font-semibold px-3 rounded-2xl flex items-center text-3xl mt-auto ml-8 p-4">
-            Let&apos;s Start &rarr;	
-            </button>
+            Let&apos;s Start &rarr;
+          </button>
         </div>
         <div className="flex justify-end absolute top-0 -right-14 opacity-50">
           <Image

@@ -6,24 +6,25 @@ import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import DropMenuTypes from "./DropMenuTypes";
 import DropMenuGenres from "./ui/DropMenuGenres";
 import { useSession } from "next-auth/react";
+import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
 interface NavbarMainProps {}
 
 const NavbarMain: React.FC<NavbarMainProps> = () => {
-  const [showList, setShowList] = useState<Boolean>(false);
+
+  const router = useRouter();
   const session = useSession();
-
-
-  const handleClick = () => {
-    setShowList((prevState) => !prevState);
-  };
+  console.log(session)
 
   return (
     <>
-      <div className="min-h-[8vh] py-3 max-h-fit flex justify-center items-center px-0 md:px-4 border-[#828282] border-b-[1px]">
+      <div className="min-h-[8vh] py-3 max-h-fit flex justify-center items-center px-0 md:px-4 border-[#828282a8] border-b-[1px] sticky top-0 z-50 backdrop-blur-md ">
         <div className="h-full w-full md:w-full flex flex-wrap justify-between items-center gap-4 ">
           <div className="h-full flex gap-8 items-center justify-center lg:justify-start w-full lg:w-fit mt-5 md:mt-0 ">
-            <div className="h-full flex justify-center items-center">
+            <div 
+            onClick={()=>router.push("/home")}
+            className="h-full flex justify-center items-center cursor-pointer ">
               <img className="h-[50px]" src="./MangaHaven Logo.png" />
               <div className="ml-2 flex flex-col">
                 <h1 className=" font-bold text-2xl">Manga</h1>
@@ -31,9 +32,11 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
               </div>
             </div>
             <div className="2xl:flex gap-4 hidden ">
+              <button 
+              onClick={()=>router.push("/home")}
+              className=" font-semibold text-base">Home</button>
               <DropMenuTypes />
               <DropMenuGenres />
-              <button className=" font-semibold text-base">Completed</button>
               <button className="font-semibold text-base ml-4">A-Z List</button>
             </div>
           </div>
@@ -52,6 +55,7 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
             <div>
               <ModeToggle />
             </div>
+            <Button onClick={()=>router.push("/signin")} >Signin</Button>
           </div>
         </div>
       </div>
