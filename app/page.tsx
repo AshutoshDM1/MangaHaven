@@ -3,21 +3,24 @@ import BackGroundMain from "@/components/BackGroundMain";
 import Footer from "@/components/Footer";
 import MangaCarousel from "@/components/MangaCarousel";
 import MangaSection from "@/components/MangaSection";
-
 import Navbar from "@/components/Navbar";
 import NavbarMain from "@/components/NavbarMain";
-
-import { mangaItems } from "@/components/data/mangaData";
-
+import { Button } from "@/components/ui/button";
+import { mangaItems } from "@/components/data/mangaCarouselData";
+import { mangaBackgroundData } from "@/components/data/mangaBackgroundData";
 export default function Home() {
   return (
     <>
       <Navbar />
-      <div className="max-w-full mx-auto flex flex-col gap-4 min-h-[95vh] ">
-        <div className="flex flex-col gap-10">
+      <div className="max-w-full mx-auto flex flex-col">
+        <div className="flex flex-col">
           <NavbarMain />
-          <BackGroundMain />
-          <MangaCarousel items={mangaItems}/>
+          <div className="relative">
+            <BackGroundMain items={mangaBackgroundData} />
+            <div className="md:-mt-1 -mt-36">
+              <MangaCarousel items={mangaItems} />
+            </div>
+          </div>
         </div>
         <MangaSection />
       </div>

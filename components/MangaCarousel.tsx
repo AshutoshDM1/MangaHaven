@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { MangaItem } from "./data/mangaData";
+import React, { useEffect, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { MangaItem } from './data/mangaCarouselData';
 
 interface MangaCarouselProps {
   items: MangaItem[];
@@ -8,52 +8,54 @@ interface MangaCarouselProps {
 
 const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
   const [currentIndex, setCurrentIndex] = useState(3);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(true);
 
-  // Clone the array for infinite effect
+  // Create an extended version of the items array for smooth infinite scrolling
   const extendedItems = [...items.slice(-3), ...items, ...items.slice(0, 3)];
 
+  // Handle transition to the next slide
   const nextSlide = () => {
-    if (!isTransitioning) {
-      setIsTransitioning(true);
-      setCurrentIndex((prevIndex) => prevIndex + 1);
-    }
+    if (!isAnimating) return;
+    setCurrentIndex((prevIndex) => prevIndex + 1);
   };
 
+  // Handle transition to the previous slide
   const prevSlide = () => {
-    if (!isTransitioning) {
-      setIsTransitioning(true);
-      setCurrentIndex((prevIndex) => prevIndex - 1);
-    }
+    if (!isAnimating) return;
+    setCurrentIndex((prevIndex) => prevIndex - 1);
   };
 
-  // Automatically slide every 3 seconds
+  // Reset index when reaching the artificial boundaries
   useEffect(() => {
-    const interval = setInterval(nextSlide, 3000);
-    return () => clearInterval(interval); // Clean up the interval on unmount
-  }, [isTransitioning]);
-
-  // Handle transition end to reset the index for infinite effect
-  useEffect(() => {
-    if (isTransitioning) {
-      const transitionEnd = () => {
-        setIsTransitioning(false);
-
-        // Wrap around logic
-        if (currentIndex === extendedItems.length - 3) {
-          setCurrentIndex(3); // Reset to the original start
-        } else if (currentIndex === 0) {
-          setCurrentIndex(extendedItems.length - 6); // Reset to the original end
-        }
-      };
-
-      const carousel = document.getElementById("carousel");
-      carousel?.addEventListener("transitionend", transitionEnd);
-
-      return () =>
-        carousel?.removeEventListener("transitionend", transitionEnd);
+    if (currentIndex === extendedItems.length - 3) {
+      // When reaching the end, instantly reset to the real first item
+      setTimeout(() => {
+        setIsAnimating(false); // Temporarily disable animation
+        setCurrentIndex(3);
+      }, 500); // Match the duration of the transition to avoid jump
+    } else if (currentIndex === 0) {
+      // When reaching the start, instantly reset to the real last item
+      setTimeout(() => {
+        setIsAnimating(false); // Temporarily disable animation
+        setCurrentIndex(extendedItems.length - 6);
+      }, 500); // Match the duration of the transition to avoid jump
     }
-  }, [currentIndex, isTransitioning, extendedItems.length]);
+  }, [currentIndex, extendedItems.length]);
+
+  // Re-enable animation after resetting
+  useEffect(() => {
+    if (!isAnimating) {
+      setTimeout(() => {
+        setIsAnimating(true);
+      }, 50); // Small delay to ensure the reset happens before re-enabling animation
+    }
+  }, [isAnimating]);
+
+  // Auto-slide every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 4000);
+    return () => clearInterval(interval);
+  }, [isAnimating]);
 
   const getTransformValue = () => {
     if (typeof window !== "undefined" && window.innerWidth < 1000) {
@@ -77,44 +79,37 @@ const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
 
   return (
     <div className="relative w-full overflow-hidden p-4 flex justify-center items-center">
-      <div className="w-full md:w-[80vw] relative overflow-hidden">
+      <div className="md:w-[70vw] w-full relative overflow-hidden">
+        <h5 className='md:text-3xl text-xl font-bold text-white opacity-90 md:p-3 p-2 md:mb-3'>Most Viewed</h5>
         <div
           id="carousel"
-          className={`flex transition-transform duration-500 ease-in-out ${
-            isTransitioning ? "" : "transition-none"
-          }`}
+          className={`flex ${isAnimating ? 'transition-transform duration-500 ease-in-out' : ''}`}
           style={{ transform: getTransformValue() }}
         >
           {extendedItems.map((item, index) => (
-            <div key={index} className="w-full lg:w-1/3 flex-shrink-0 px-2">
-              <div
-                style={{ boxShadow: '0 0 1rem rgba(0, 0, 0, 0.5)' }}
-                className="dark:border-[#3a3a3a] border dark:border h-[25vh] flex rounded-lg overflow-hidden"
+            <div key={index} className="lg:w-1/3 w-full flex-shrink-0 px-2">
+              <div 
+                style={{ 
+                  boxShadow: '0 0 1rem rgba(0, 0, 0, 0.5)',
+                  transition: 'background-color 0.3s ease, transform 0.3s ease'
+                }}
+                className="dark:border-[#3a3a3a] border dark:border md:h-[25vh] h-[20vh] flex rounded-lg overflow-hidden hover:bg-zinc-900 transform cursor-pointer"
               >
-                <div className="w-[60%] flex flex-col justify-between">
-                  <div className="p-3 h-[40%]">
-                    <h3 className="text-lg font-normal  opacity-70">
-                      {item.status}
-                    </h3>
-                    <h3 className="text-lg font-semibold ">{item.title}</h3>
+                <div className="w-[60%] flex flex-col justify-center border-l-2 border-white">
+                  <div className="md:p-3 p-2 md:h-[40%] h-[30%]">
+                    <h3 className="md:text-lg text-sm font-normal text-white opacity-70">{item.status}</h3>
+                    <h3 className="md:text-xl text-md font-semibold text-white">{item.title}</h3>
                   </div>
-                  <div className="text-xs h-[60%] flex flex-col justify-between px-3 pb-2 ">
-                    <p className="text-sm text-gray-400  line-clamp-2  lg:hidden 2xl:block ">
-                      {item.description}
-                    </p>
-                    <div>
+                  <div className="md:h-[60%] h-[70%] flex flex-col justify-between md:p-3 p-2 md:pt-6 mt-4">
+                    <p className="text-white opacity-70 md:text-md text-sm line-clamp-2">{item.description}</p>
+                    <div className='text-white opacity-70 md:text-md text-sm'>
                       <span>{item.volume}</span>
                       <span className="mx-2">•</span>
                       <span>{item.chapter}</span>
                     </div>
                     <div className="flex flex-wrap gap-1 text-white mt-2 ">
                       {item.genres.map((genre, i) => (
-                        <span
-                          key={i}
-                          className="text-xs  font-semibold bg-[#b341ff] px-2 py-1 rounded"
-                        >
-                          {genre}
-                        </span>
+                        <span key={i} className="md:text-md text-[12px] pr-2 text-white">{genre}</span>
                       ))}
                     </div>
                   </div>
@@ -133,15 +128,16 @@ const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
       </div>
       <button
         onClick={prevSlide}
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 shadow-md bg-opacity-50 p-2 rounded-md z-10 dark:bg-foreground/10 "
-        style={{ left: "2%" }}
+        className="absolute left-0 top-1/2 transform -translate-y-1 shadow-md bg-opacity-50 p-2 rounded-md z-10 dark:bg-foreground/10"
+        style={{ left: '2%' }}
+
       >
         <ChevronLeft className="" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 dark:bg-foreground/10 shadow-md bg-opacity-50 p-2 rounded-md z-10"
-        style={{ right: "2%" }}
+        className="absolute right-0 top-1/2 transform -translate-y-1 dark:bg-foreground/10 shadow-md bg-opacity-50 p-2 rounded-md z-10"
+        style={{ right: '2%' }}
       >
         <ChevronRight className="" />
       </button>
