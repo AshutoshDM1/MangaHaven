@@ -27,7 +27,7 @@ const Signup: React.FC = () => {
 
   const session = useSession();
   const handleGoogleSignIn = () => {
-    signIn("google", { callbackUrl: "/signin" });
+    signIn("google", { callbackUrl: "/" });
   };
 
   const handleEmailSignIn = async () => {
@@ -36,7 +36,7 @@ const Signup: React.FC = () => {
         email: email.email, // Use the email state
         password: email.password, // Use the password state
         name: email.name,
-        redirect: false,
+        redirect: true,
         callbackUrl: "/",
         action: "signup",
       });

@@ -1,14 +1,18 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { MangaBackground } from "../data/mangaBackgroundData";
 import Image from "next/image";
+import { useRecoilValue } from "recoil";
+import { mangaBackgroundData } from "@/state/atoms";
 
 interface BackGroundMainProps {
   items: MangaBackground[];
 }
 
-const BackGroundMain: React.FC<BackGroundMainProps> = ({ items }) => {
+const BackGroundMain: React.FC<BackGroundMainProps> = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const items: any = useRecoilValue(mangaBackgroundData);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -34,7 +38,7 @@ const BackGroundMain: React.FC<BackGroundMainProps> = ({ items }) => {
             {items[currentIndex].title}
           </h1>
           <h1
-            className={`md:w-[150%] w-full md:text-[15px] text- transition-opacity duration-1000 ${
+            className={`md:w-[150%] w-full md:text-[16px] text-sm transition-opacity duration-1000 ${
               isTransitioning ? "opacity-0" : "opacity-100"
             }`}
           >

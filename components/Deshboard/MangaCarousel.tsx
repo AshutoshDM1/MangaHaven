@@ -2,12 +2,16 @@ import React, { useEffect, useState, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { MangaItem } from "../data/mangaCarouselData";
 import Image from "next/image";
+import { useRecoilValue } from "recoil";
+import { mangaCarouselData } from "@/state/atoms";
 
 interface MangaCarouselProps {
   items: MangaItem[];
 }
 
-const MangaCarousel: React.FC<MangaCarouselProps> = ({ items }) => {
+const MangaCarousel: React.FC = () => {
+
+  const items : MangaItem[] = useRecoilValue(mangaCarouselData);
   const [currentIndex, setCurrentIndex] = useState(3);
   const [isAnimating, setIsAnimating] = useState(true);
 

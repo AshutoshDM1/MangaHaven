@@ -3,9 +3,11 @@ import React from "react";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { RecoilRoot } from "recoil";
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
+    <RecoilRoot>
     <ThemeProvider
       attribute="class"
       defaultTheme="system"
@@ -15,5 +17,6 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
       <Toaster />
       <SessionProvider>{children}</SessionProvider>
     </ThemeProvider>
+    </RecoilRoot>
   );
 };

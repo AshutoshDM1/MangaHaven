@@ -39,3 +39,9 @@ model mangaCarousel {
   genres        String[]
   imageUrl      String?
 }
+model manga {
+  id            Int      @id @default(autoincrement())
+  title         String   @unique
+  genres        String[]
+  imageUrl      String?
+}

@@ -13,11 +13,9 @@ import Image from "next/image";
 
 interface NavbarMainProps {}
 
-
 const NavbarMain: React.FC<NavbarMainProps> = () => {
   const router = useRouter();
   const session = useSession();
-  console.log(session);
 
   return (
     <>
@@ -59,9 +57,6 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
                 type="text"
                 placeholder="Search Manga..."
               />
-              <Button className="rounded-full h-full w-[50px] ">
-                <SearchIcon className="font-bold text-xl" />
-              </Button>
             </div>
             <div className="flex justify-evenly items-center gap-3 w-[50%] lg:w-[35%] md:w-[40%] ">
               <Avatar>
@@ -72,9 +67,8 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
                 />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <div>
-                <ModeToggle />
-              </div>
+              <Button className="h-[3.5vh] bg-[#A977E7] hover:bg-[#a05cf3] text-white "  onClick={() => router.push("/login")}>Log In</Button>
+              <Button className="h-[3.5vh] bg-[#ff5289] hover:bg-[#fa457e] text-white " onClick={() => router.push("/signup")}>Sign Up</Button>
               <SideNav />
             </div>
           </div>

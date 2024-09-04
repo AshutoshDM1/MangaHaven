@@ -25,7 +25,7 @@ const Login: React.FC = () => {
 
   const session = useSession();
   const handleGoogleSignIn = () => {
-    signIn("google", { callbackUrl: "/signin" });
+    signIn("google", { callbackUrl: "/" });
   };
 
   const handleEmailSignIn = async () => {
