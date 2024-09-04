@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/card";
 import { signIn, useSession } from "next-auth/react";
 import { toast } from "sonner";
-import { error } from "console";
 
 const Login: React.FC = () => {
   const [credentials, setCredentials] = useState({
@@ -101,7 +100,7 @@ const Login: React.FC = () => {
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <a href="/signup" className="font-semibold hover:underline">
                 Sign up
               </a>

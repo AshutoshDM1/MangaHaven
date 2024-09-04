@@ -2,6 +2,7 @@
 import React from 'react';
 import { FaSquareXTwitter, FaReddit, FaDiscord } from 'react-icons/fa6';
 import { motion, useInView } from 'framer-motion';
+import Image from 'next/image';
 
 const Footer: React.FC = () => {
   const ref = React.useRef(null);
@@ -44,9 +45,11 @@ const Footer: React.FC = () => {
         >
           <motion.div className="flex flex-col items-center" variants={itemVariants}>
             <div className="mb-4 flex justify-center">
-              <img
+              <Image
                 src="/MangaHaven Logo.png"
                 alt="MangaHaven Logo"
+                width={40}
+                height={40}
                 className="h-10 w-auto"
               />
             </div>

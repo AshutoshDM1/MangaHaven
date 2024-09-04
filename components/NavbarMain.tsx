@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import { ModeToggle } from "./ModeToggle";
 import { Avatar } from "./ui/avatar";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
@@ -10,8 +9,10 @@ import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import SideNav from "./Deshboard/SideNav";
 import { SearchIcon } from "lucide-react";
+import Image from "next/image";
 
 interface NavbarMainProps {}
+
 
 const NavbarMain: React.FC<NavbarMainProps> = () => {
   const router = useRouter();
@@ -27,7 +28,13 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
               onClick={() => router.push("/home")}
               className="h-full flex justify-center items-center cursor-pointer "
             >
-              <img className="h-[50px]" src="./MangaHaven Logo.png" />
+              <Image
+                className="h-[50px]"
+                src="/MangaHaven Logo.png"
+                alt="MangaHaven Logo"
+                width={50}
+                height={50}
+              />
               <div className="ml-2 flex flex-col">
                 <h1 className=" font-bold text-2xl">Manga</h1>
                 <h1 className=" font-bold text-2xl -mt-2">Heaven</h1>
@@ -56,7 +63,7 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
                 <SearchIcon className="font-bold text-xl" />
               </Button>
             </div>
-            <div className="flex justify-evenly items-center gap-3 w-[50%] lg:w-[35%] md:w-[30%] ">
+            <div className="flex justify-evenly items-center gap-3 w-[50%] lg:w-[35%] md:w-[40%] ">
               <Avatar>
                 <AvatarImage
                   src={
@@ -68,7 +75,6 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
               <div>
                 <ModeToggle />
               </div>
-
               <SideNav />
             </div>
           </div>

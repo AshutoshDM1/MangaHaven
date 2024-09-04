@@ -1,4 +1,5 @@
 import { Button } from "../ui/button";
+import Image from 'next/image';
 
 const MangaSection = () => {
   return (
@@ -10,7 +11,9 @@ const MangaSection = () => {
               key={item}
               className="bg-card rounded-lg shadow-xl overflow-hidden cursor-pointer transition-transform hover:scale-105 w-fit bg-[#161616] "
             >
-              <img
+              <Image
+              height={250}
+              width={250}
                 src={`https://img.mreadercdn.com/_m/300x400/100/3e/c1/3ec1028a31fa8dc8d67c4cd511b14b55/3ec1028a31fa8dc8d67c4cd511b14b55.jpg`}
                 alt={`Manga ${item}`}
                 className="w-full h-[230px] md:h-[250px] object-cover"
