@@ -7,7 +7,7 @@ export interface MangaBackground {
     status: string;
 }
 
-export const mangaBackgroundData: MangaBackground[] = [
+export const mangaBackgroundDataHard: MangaBackground[] = [
     {
         imageUrl: "one-punch-man.jpg",
         title: "One Punch Man",

@@ -4,7 +4,6 @@ import Footer from "@/components/Footer";
 import MangaSection from "@/components/Deshboard/MangaSection";
 import Navbar from "@/components/Navbar";
 import NavbarMain from "@/components/NavbarMain";
-import { mangaBackgroundData } from "@/components/data/mangaBackgroundData";
 import MangaCarousel from "@/components/Deshboard/MangaCarousel";
 export default function Home() {
   return (

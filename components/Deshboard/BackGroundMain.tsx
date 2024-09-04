@@ -1,15 +1,26 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { MangaBackground } from "../data/mangaBackgroundData";
+import {
+  MangaBackground,
+  mangaBackgroundDataHard,
+} from "../data/mangaBackgroundData";
 import Image from "next/image";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { mangaBackgroundData } from "@/state/atoms";
+import { getMangaDashboard } from "@/services/api";
+import { Skeleton } from "../ui/skeleton";
 
-
-const BackGroundMain: React.FC  = () => {
+const BackGroundMain: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const items: any = useRecoilValue(mangaBackgroundData);
+  let [items, setItems] = useRecoilState(mangaBackgroundData);
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getMangaDashboard();
+      setItems(data);
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -21,8 +32,22 @@ const BackGroundMain: React.FC  = () => {
     }, 5000); // Change slide every 5 seconds
 
     return () => clearInterval(interval);
-  }, [items.length]);
+  }, []);
 
+  if (items[currentIndex].title === "") {
+    console.log(1);
+    return (
+      <>
+        <div className="flex flex-col space-y-3">
+          <Skeleton className="h-[125px] w-[250px] rounded-xl" />
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-[250px]" />
+            <Skeleton className="h-4 w-[200px]" />
+          </div>
+        </div>
+      </>
+    );
+  }
   return (
     <div className="flex justify-center items-center overflow-hidden w-full mt-10 md:mt-0 mb-40 md:mb-0 ">
       <div className="md:min-h-[60vh] min-h-[45vh] flex justify-center items-center md:px-4 relative w-full">

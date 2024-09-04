@@ -1,6 +1,7 @@
+"use client";
 import React, { useEffect, useState, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { MangaItem } from "../data/mangaCarouselData";
+import { MangaItem, mangaItems } from "../data/mangaCarouselData";
 import Image from "next/image";
 import { useRecoilValue } from "recoil";
 import { mangaCarouselData } from "@/state/atoms";
@@ -11,7 +12,7 @@ interface MangaCarouselProps {
 
 const MangaCarousel: React.FC = () => {
 
-  const items : MangaItem[] = useRecoilValue(mangaCarouselData);
+  const items = mangaItems;
   const [currentIndex, setCurrentIndex] = useState(3);
   const [isAnimating, setIsAnimating] = useState(true);
 

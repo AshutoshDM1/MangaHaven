@@ -1,3 +1,4 @@
+"use client";
 import { useRecoilValue } from "recoil";
 import { Button } from "../ui/button";
 import Image from "next/image";

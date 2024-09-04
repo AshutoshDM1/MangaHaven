@@ -8,7 +8,14 @@ export const mangaData = selector({
 });
 export const mangaBackgroundData = atom({
   key: "mangaBackgroundData",
-  default: mangaData,
+  default: [{
+    imageUrl: "",
+    title: "",
+    description: "",
+    chapter: "",
+    volume: "",
+    status: "",
+  }],
 });
 export const mangaCarouselSelector = selector({
   key: "mangaCarouselSelector",
@@ -19,11 +26,3 @@ export const mangaCarouselData = atom({
   key: "mangaCarouselData",
   default: mangaCarouselSelector,
 });
-// export const mangaSelector = selector({
-//   key: "mangaSelector",
-//   get: getManga,
-// });
-// export const manga = atom({
-//   key: "manga",
-//   default: mangaSelector,
-// });
