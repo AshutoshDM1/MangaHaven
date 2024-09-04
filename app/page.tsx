@@ -1,10 +1,10 @@
 "use client";
-import BackGroundMain from "@/components/Deshboard/BackGroundMain";
+import BackGroundMain from "@/components/Dashboard/BackGroundMain";
 import Footer from "@/components/Footer";
-import MangaSection from "@/components/Deshboard/MangaSection";
+import MangaSection from "@/components/Dashboard/MangaSection";
 import Navbar from "@/components/Navbar";
 import NavbarMain from "@/components/NavbarMain";
-import MangaCarousel from "@/components/Deshboard/MangaCarousel";
+import MangaCarousel from "@/components/Dashboard/MangaCarousel";
 export default function Home() {
   return (
     <>

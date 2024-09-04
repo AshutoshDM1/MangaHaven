@@ -7,7 +7,7 @@ import DropMenuGenres from "./ui/DropMenuGenres";
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
-import SideNav from "./Deshboard/SideNav";
+import SideNav from "./Dashboard/SideNav";
 import { SearchIcon } from "lucide-react";
 import Image from "next/image";
 
@@ -67,8 +67,29 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
                 />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <Button className="h-[3.5vh] bg-[#A977E7] hover:bg-[#a05cf3] text-white "  onClick={() => router.push("/login")}>Log In</Button>
-              <Button className="h-[3.5vh] bg-[#ff5289] hover:bg-[#fa457e] text-white " onClick={() => router.push("/signup")}>Sign Up</Button>
+              {session.data?.user?.name ? (
+                <>
+                  {" "}
+                  <h1 className="text-base font-semibold">
+                    Hi! {session.data?.user?.name.toUpperCase()}
+                  </h1>{" "}
+                </>
+              ) : (
+                <>
+                  <Button
+                    className="h-[3.5vh] bg-[#A977E7] hover:bg-[#a05cf3] text-white "
+                    onClick={() => router.push("/login")}
+                  >
+                    Log In
+                  </Button>
+                  <Button
+                    className="h-[3.5vh] bg-[#ff5289] hover:bg-[#fa457e] text-white "
+                    onClick={() => router.push("/signup")}
+                  >
+                    Sign Up
+                  </Button>
+                </>
+              )}
               <SideNav />
             </div>
           </div>

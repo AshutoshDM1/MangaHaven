@@ -1,10 +1,10 @@
 import axios from "axios";
 
-// const baseUrl = "http://localhost:3000";
-const baseUrl = "https://manga-haven-beta.vercel.app";
+const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const getMangaDashboard = async () => {
-  const response = await axios.get(`${baseUrl}/api/v1/mangadeshboard`);
+  console.log(`${baseUrl}/api/v1/mangadeshboard`)
+  const response = await axios.get(`${baseUrl}/api/v1/mangadashboard`);
   const data = response.data;
   return data;
 };

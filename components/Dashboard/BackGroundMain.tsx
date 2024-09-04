@@ -14,6 +14,7 @@ const BackGroundMain: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   let [items, setItems] = useRecoilState(mangaBackgroundData);
+  
   useEffect(() => {
     const fetchData = async () => {
       const data = await getMangaDashboard();
@@ -32,21 +33,12 @@ const BackGroundMain: React.FC = () => {
     }, 5000); // Change slide every 5 seconds
 
     return () => clearInterval(interval);
-  }, []);
+  }, [items]); // depend on items
 
-  if (items[currentIndex].title === "") {
-    console.log(1);
-    return (
-      <>
-        <div className="flex flex-col space-y-3">
-          <Skeleton className="h-[125px] w-[250px] rounded-xl" />
-          <div className="space-y-2">
-            <Skeleton className="h-4 w-[250px]" />
-            <Skeleton className="h-4 w-[200px]" />
-          </div>
-        </div>
-      </>
-    );
+
+
+  if (items.length <= 1) {
+    return <Skeleton className="h-[60vh] w-full" />;
   }
   return (
     <div className="flex justify-center items-center overflow-hidden w-full mt-10 md:mt-0 mb-40 md:mb-0 ">
