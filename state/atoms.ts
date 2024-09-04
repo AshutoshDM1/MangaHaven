@@ -1,15 +1,10 @@
 import { atom, selector } from "recoil";
 import axios from "axios";
+import { getManga, getMangaCarousel, getMangaDashboard } from "@/services/api";
 
 export const mangaData = selector({
   key: "mangaDataSelector",
-  get: async () => {
-    const response = await axios.get(
-      "http://localhost:3000/api/v1/mangadeshboard"
-    );
-    const data = response.data;
-    return data;
-  },
+  get: getMangaDashboard,
 });
 export const mangaBackgroundData = atom({
   key: "mangaBackgroundData",
@@ -17,27 +12,18 @@ export const mangaBackgroundData = atom({
 });
 export const mangaCarouselSelector = selector({
   key: "mangaCarouselSelector",
-  get: async () => {
-    const response = await axios.get(
-      "http://localhost:3000/api/v1/mangaCraousal"
-    );
-    const data = response.data;
-    return data;
-  },
+  get: getMangaCarousel,
 });
+
 export const mangaCarouselData = atom({
   key: "mangaCarouselData",
   default: mangaCarouselSelector,
 });
-export const mangaSelector = selector({
-  key: "mangaSelector",
-  get: async () => {
-    const response = await axios.get("http://localhost:3000/api/v1/manga");
-    const data = response.data;
-    return data;
-  },
-});
-export const manga = atom({
-  key: "manga",
-  default: mangaSelector,
-});
+// export const mangaSelector = selector({
+//   key: "mangaSelector",
+//   get: getManga,
+// });
+// export const manga = atom({
+//   key: "manga",
+//   default: mangaSelector,
+// });

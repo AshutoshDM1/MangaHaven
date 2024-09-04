@@ -14,7 +14,7 @@ export default function Home() {
       <div className="max-w-7xl mx-auto flex flex-col">
         <div className="flex flex-col">
           <div className="relative">
-            <BackGroundMain items={mangaBackgroundData} />
+            <BackGroundMain />
             <div className="md:-mt-1 -mt-36">
               <MangaCarousel />
             </div>

@@ -1,12 +1,12 @@
 import { useRecoilValue } from "recoil";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import { manga } from "@/state/atoms";
+// import { manga } from "@/state/atoms";
 
 const MangaSection = () => {
 
-  const mangas = useRecoilValue(manga);
-  console.log(mangas);
+  // const mangas = useRecoilValue(manga);
+  // console.log(mangas);
   return (
     <>
       <div className="min-h-[60vh] w-full flex justify-center items-center  px-4">

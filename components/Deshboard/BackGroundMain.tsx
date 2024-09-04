@@ -5,11 +5,8 @@ import Image from "next/image";
 import { useRecoilValue } from "recoil";
 import { mangaBackgroundData } from "@/state/atoms";
 
-interface BackGroundMainProps {
-  items: MangaBackground[];
-}
 
-const BackGroundMain: React.FC<BackGroundMainProps> = () => {
+const BackGroundMain: React.FC  = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const items: any = useRecoilValue(mangaBackgroundData);
