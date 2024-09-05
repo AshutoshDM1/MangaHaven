@@ -32,6 +32,7 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
                 alt="MangaHaven Logo"
                 width={50}
                 height={50}
+                style={{ width: 'auto', height: 'auto' }}
               />
               <div className="ml-2 flex flex-col">
                 <h1 className=" font-bold text-2xl">Manga</h1>
@@ -58,7 +59,7 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
                 placeholder="Search Manga..."
               />
             </div>
-            <div className="flex justify-evenly items-center gap-3 w-[50%] lg:w-[35%] md:w-[40%] ">
+            <div className="flex justify-evenly items-center gap-3 w-[90%] lg:w-[35%] md:w-[40%] ">
               <Avatar>
                 <AvatarImage
                   src={
@@ -70,7 +71,7 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
               {session.data?.user?.name ? (
                 <>
                   {" "}
-                  <h1 className="text-base font-semibold">
+                  <h1 className="text-base font-semibold w-fit  ">
                     Hi! {session.data?.user?.name.toUpperCase()}
                   </h1>{" "}
                 </>
@@ -90,7 +91,10 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
                   </Button>
                 </>
               )}
-              <SideNav />
+              <div className="w-fit " >
+                {" "}
+                <SideNav />
+              </div>
             </div>
           </div>
         </div>

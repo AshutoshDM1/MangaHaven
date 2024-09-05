@@ -20,7 +20,7 @@ const SideNav = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <AlignJustify className="cursor-pointer" />
+        <AlignJustify  className="cursor-pointer" />
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>

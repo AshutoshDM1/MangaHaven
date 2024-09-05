@@ -1,11 +1,5 @@
-import { atom, selector } from "recoil";
-import axios from "axios";
-import { getManga, getMangaCarousel, getMangaDashboard } from "@/services/api";
+import { atom } from "recoil";
 
-export const mangaData = selector({
-  key: "mangaDataSelector",
-  get: getMangaDashboard,
-});
 export const mangaBackgroundData = atom({
   key: "mangaBackgroundData",
   default: [
@@ -19,12 +13,35 @@ export const mangaBackgroundData = atom({
     },
   ],
 });
-export const mangaCarouselSelector = selector({
-  key: "mangaCarouselSelector",
-  get: getMangaCarousel,
-});
-
 export const mangaCarouselData = atom({
   key: "mangaCarouselData",
-  default: mangaCarouselSelector,
+  default: [
+    {
+      id: 0,
+      title: "",
+      description: "",
+      chapter: "",
+      volume: "",
+      status: "",
+      genres: [],
+      imageUrl: "",
+    },
+  ],
+});
+
+interface Manga {
+  id: number;
+  title: string;
+  genres: string[];
+  imageUrl: string;
+}
+
+export const mangaData = atom<Manga[] > ({
+  key: "mangaData",
+  default:[{
+    id: 0,
+    title: "",
+    genres: [],
+    imageUrl: "",
+  }],
 });

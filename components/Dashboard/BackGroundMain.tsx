@@ -21,7 +21,7 @@ const BackGroundMain: React.FC = () => {
       setItems(data);
     };
     fetchData();
-  }, []);
+  }, [setItems]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -38,14 +38,14 @@ const BackGroundMain: React.FC = () => {
 
 
   if (items.length <= 1) {
-    return <Skeleton className="h-[60vh] w-full" />;
+    return <Skeleton className="h-[60vh] mt-5 w-full" />;
   }
   return (
     <div className="flex justify-center items-center overflow-hidden w-full mt-10 md:mt-0 mb-40 md:mb-0 ">
-      <div className="md:min-h-[60vh] min-h-[45vh] flex justify-center items-center md:px-4 relative w-full">
-        <div className="h-full w-full ease-in duration-700 md:p-5 pb-[7vh]  flex flex-col justify-start items-start md:gap-3 gap-2 relative z-10 p-2">
+      <div className="md:min-h-[60vh] min-h-[45vh] flex justify-center items-end md:px-4 relative w-full">
+        <div className="h-[80%] w-full ease-in duration-700 md:p-5 pb-[7vh]  flex flex-col justify-start items-start md:gap-3 gap-2 relative z-10 p-2">
           <h1
-            className={`md:text-6xl text-2xl font-bold text-[#A977E7] md:w-[120%] w-full transition-opacity duration-1000 ${
+            className={`md:text-6xl text-4xl font-bold text-[#A977E7] md:w-[120%] w-full transition-opacity duration-1000 ${
               isTransitioning ? "opacity-0" : "opacity-100"
             }`}
           >
@@ -73,7 +73,7 @@ const BackGroundMain: React.FC = () => {
             >
               Read Now
             </button>
-            <div className="text-white md:opacity-70 md:text-xl text-xs">
+            <div className="text-black dark:text-white md:opacity-70 md:text-xl text-xs">
               <span>{items[currentIndex].volume}</span>
               <span className="mx-2">•</span>
               <span>{items[currentIndex].chapter}</span>

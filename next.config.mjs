@@ -4,15 +4,19 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'img.mreadercdn.com',
-        port: '',
+        hostname: 'res.cloudinary.com',
         pathname: '/**',
       },
+      // Keep your existing patterns
       {
-        protocol: 'https',
-        hostname: 'i.pinimg.com',
-        port: '',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "img.mreadercdn.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "i.pinimg.com",
+        pathname: "/**",
       },
       // Add other patterns as needed
     ],
