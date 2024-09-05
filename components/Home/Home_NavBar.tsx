@@ -1,21 +1,31 @@
 export default function Home_NavBar() {
   return (
     <div className="h-28">
-      <div className="flex h-full justify-center py-auto">
-        <div className="flex gap-12 my-auto h-full font-medium text-sm md:text-base">
-          <div className="text-white flex flex-col justify-center">Home</div>
-          <div className="text-white flex flex-col justify-center">Movies</div>
-          <div className="hidden text-white sm:flex flex-col justify-center">
-            TV Series
-          </div>
-          <div className="text-white flex flex-col justify-center">
-            Most Popular
-          </div>
-          <div className="hidden sm:flex text-white flex-col justify-center">
-            Top Airing
-          </div>
+      <div className="flex h-full justify-center py-10">
+        <div className="flex gap-8 h-full md:text-base">
+          <NavItem text="Home" className="hover:cursor-pointer"/>
+          <NavItem text="Movies" className="hover:cursor-pointer" />
+          <NavItem text="TV Series" className="hidden sm:flex hover:cursor-pointer" />
+          <NavItem text="Most Popular" className="hover:cursor-pointer" />
+          <NavItem text="Top Airing" className="hidden sm:flex hover:cursor-pointer" />
         </div>
       </div>
+    </div>
+  );
+}
+
+interface NavItemProps {
+  text: string;
+  className?: string;
+}
+
+function NavItem({ text, className = "" }: NavItemProps) {
+  return (
+    <div className={`text-white flex flex-col justify-center group ${className}`}>
+      <span className="relative font-medium text-md">
+        {text}
+        <span className="absolute bottom-0 left-1/2 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+      </span>
     </div>
   );
 }

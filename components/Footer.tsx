@@ -36,7 +36,7 @@ const Footer: React.FC = () => {
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
-      className="py-8"
+      className="py-8 border-t border-gray-200 dark:border-gray-700 mt-4"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 

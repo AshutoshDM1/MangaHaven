@@ -67,3 +67,29 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .group:hover .group-hover\:w-full::before,
+  .group:hover .group-hover\:w-full::after {
+    width: 50%;
+  }
+
+  .group-hover\:w-full::before,
+  .group-hover\:w-full::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease-out;
+    width: 0;
+  }
+
+  .group-hover\:w-full::before {
+    left: 50%;
+  }
+
+  .group-hover\:w-full::after {
+    right: 50%;
+  }
+}
