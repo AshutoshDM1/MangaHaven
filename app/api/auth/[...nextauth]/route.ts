@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { compare, hash } from "bcrypt";
 import { PrismaClient } from "@prisma/client";
+import { DefaultSession } from "next-auth";
 
 const prisma = new PrismaClient();
 
@@ -92,7 +93,36 @@ const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/signup',
   },
+  callbacks: {
+    async jwt({ token, user }) {
+      // If user is signing in, update the token with the latest user info
+      if (user) {
+        token.id = user.id;
+        token.name = user.name;
+        token.email = user.email;
+        token.picture = user.image;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token && session.user) {
+        session.user.id = token.id as string | null;
+        session.user.name = token.name;
+        session.user.email = token.email as string;
+        session.user.image = token.picture as string | null;
+      }
+      return session;
+    },
+  },
 };
+
+declare module "next-auth" {
+  interface Session extends DefaultSession {
+    user?: {
+      id: string | null;
+    } & DefaultSession["user"]
+  }
+}
 
 const handler = NextAuth(authOptions);
 

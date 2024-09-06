@@ -24,18 +24,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="transition-colors duration-300">
       <head>
         <link rel="icon" href="/MH Favicon HD.png" />
         <title>MangaHaven</title>
       </head>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased  dark:bg-[#0d0d0d] ",
+          "min-h-screen bg-background font-sans antialiased bg-white dark:bg-[#0d0d0d] ",
           fontSans.variable
         )}
       >
-        <Providers>{children}</Providers>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <Providers>{children}</Providers>
+        </ThemeProvider>
       </body>
     </html>
   );

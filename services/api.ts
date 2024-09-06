@@ -30,7 +30,6 @@ export const getMangaDashboard = async () => {
 export const getMangaCarousel = async () => {
   try {
     const response = await axios.get(`${baseUrl}/api/v1/mangaCraousal`);
-    console.log(`${baseUrl}/api/v1/mangaCraousal`);
     const data = response.data;
     return data;
   } catch (error) {
@@ -43,6 +42,41 @@ export const getManga = async () => {
     const response = await axios.get(`${baseUrl}/api/v1/manga`);
     const data = response.data;
     return data;
+  } catch (error) {
+    HandleError(error);
+  }
+};
+export const editProfile = async (
+  email: string,
+  name: string,
+  image: string
+) => {
+  try {
+    const data = {
+      email,
+      name,
+      image,
+    };
+    const response = await axios.post(`${baseUrl}/api/v1/editProfile`, data);
+    toast.success("Profile updated successfully Please Login Again");
+    return response.data;
+  } catch (error) {
+    HandleError(error);
+  }
+};
+export const UploadImage = async (formData: FormData) => {
+  try {
+    const response = await axios.post(
+      `${baseUrl}/api/v1/profileUpload`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    toast.success("File uploaded successfully");
+    return response.data.url;
   } catch (error) {
     HandleError(error);
   }
