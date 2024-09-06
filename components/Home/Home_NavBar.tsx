@@ -4,8 +4,8 @@ export default function Home_NavBar() {
       <div className="flex h-full justify-center py-10">
         <div className="flex gap-8 h-full md:text-base">
           <NavItem text="Home" className="hover:cursor-pointer"/>
-          <NavItem text="Movies" className="hover:cursor-pointer" />
-          <NavItem text="TV Series" className="hidden sm:flex hover:cursor-pointer" />
+          <NavItem text="Manga" className="hover:cursor-pointer" />
+          <NavItem text="Manhwa" className="hidden sm:flex hover:cursor-pointer" />
           <NavItem text="Most Popular" className="hover:cursor-pointer" />
           <NavItem text="Top Airing" className="hidden sm:flex hover:cursor-pointer" />
         </div>
