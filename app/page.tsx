@@ -8,7 +8,7 @@ import MangaCarousel from "@/components/Dashboard/MangaCarousel";
 export default function Home() {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <NavbarMain />
       <div className="max-w-7xl mx-auto flex flex-col">
         <div className="flex flex-col">

@@ -18,7 +18,7 @@ export default function Home_Main_Card() {
               placeholder="Search manga..."
               className="w-5/6 px-4 py-2 text-base text-gray-200 bg-gray-100 border border-gray-700 rounded-full focus:outline-none focus:border-pink-500"
             />
-            <button className="bg-pink-500 hover:bg-pink-600 text-white px-3 rounded-2xl flex items-center ml-1">
+            <button className="bg-pink-500 hover:bg-pink-600 text-white px-4 rounded-full flex items-center ml-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-3 w-3"
@@ -60,7 +60,18 @@ export default function Home_Main_Card() {
             Let&apos;s Start &rarr;
           </button>
         </div>
-        <div className="flex justify-end absolute top-0 -right-14 opacity-50">
+        <div 
+          style={{ 
+            boxShadow: '0 0 1rem rgba(0, 0, 0, 0.5)',
+          }}
+          className="
+            flex justify-end absolute top-0 -right-14 
+            opacity-50 
+            transition-all duration-300 ease-in-out
+            hover:opacity-100 hover:-translate-x-16 hover:scale-105
+            transform
+          "
+        >
           <Image
             width={720}
             height={720}
