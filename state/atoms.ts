@@ -45,3 +45,9 @@ export const mangaData = atom<Manga[] > ({
     imageUrl: "",
   }],
 });
+
+
+export const showLoadingAtom = atom<boolean>({
+  key: "showLoading",
+  default: true,
+});

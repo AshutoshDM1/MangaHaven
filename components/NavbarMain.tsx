@@ -60,7 +60,9 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
               />
             </div>
             <div className="flex justify-evenly items-center gap-3 w-[90%] lg:w-[35%] md:w-[40%] ">
-              <Avatar>
+              <Avatar 
+              className="cursor-pointer  border-[2px] hover:dark:border-white hover:border-black border-transparent duration-300 transition-ease-in  "
+              onClick={() => router.push("/profile")}>
                 <AvatarImage
                   src={
                     session.data?.user?.image || "https://github.com/shadcn.png"
