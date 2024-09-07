@@ -89,9 +89,9 @@ const MangaCarousel: React.FC = () => {
             Most Viewed
           </h5>
           {items.length <= 1 ? (
-            <div className="h-[30vh] w-full flex gap-3 ">
+            <div className="h-[20vh] md:h-[25vh] w-[58vw] flex gap-3 ">
               {[1, 2, 3].map((index) => (
-                <div key={index} className="w-1/3 h-full">
+                <div key={index} className="w-full h-full">
                   <Skeleton className="w-full h-full"></Skeleton>
                 </div>
               ))}
@@ -116,9 +116,9 @@ const MangaCarousel: React.FC = () => {
                       transition:
                         "background-color 0.3s ease, transform 0.3s ease",
                     }}
-                    className="dark:border-[#3a3a3a] border dark:border md:h-[25vh] h-[20vh] flex rounded-lg overflow-hidden hover:bg-zinc-900 transform cursor-pointer"
+                    className="dark:border-[#3a3a3a] border dark:border md:h-[25vh] h-[20vh] flex rounded-lg overflow-hidden hover:bg-[#cccccc] dark:hover:bg-zinc-900 transform cursor-pointer"
                   >
-                    <div className="w-[60%] flex flex-col justify-center border-l-2 border-white">
+                    <div className="w-[60%] flex flex-col justify-center border-l-[5px] dark:border-l-[3px] border-[#C391FF] dark:border-[#ffffffe2]">
                       <div className="md:p-3 p-2 md:h-[40%] h-[30%]">
                         <h3 className="md:text-lg text-sm font-normal  opacity-70">
                           {item.status}

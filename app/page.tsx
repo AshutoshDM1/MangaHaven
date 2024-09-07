@@ -22,7 +22,7 @@ export default function Home() {
 
   return (
     <>
-      {showLoading && <Loading />}
+      {/* {showLoading && <Loading />} */}
       <div className="relative z-0 ">
       <NavbarMain />
         <div className="max-w-7xl mx-auto flex flex-col">
