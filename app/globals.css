@@ -93,3 +93,18 @@
     right: 50%;
   }
 }
+
+@keyframes click {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+}
+
+@layer utilities {
+  .animate-click {
+    animation: click 0.7s ease-in-out;
+  }
+}

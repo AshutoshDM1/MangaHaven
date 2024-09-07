@@ -24,7 +24,7 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
           <div className="h-full flex gap-8 items-center justify-center lg:justify-start w-full lg:w-fit ">
             <div
               onClick={() => router.push("/home")}
-              className="h-full flex justify-center items-center cursor-pointer "
+              className="h-full flex justify-center items-center cursor-pointer lg:block xl:flex hidden"
             >
               <Image
                 className="h-[50px]"
@@ -54,7 +54,7 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
           <div className="h-full flex flex-col md:flex-row justify-between items-center gap-3 w-full xl:w-[60%]  lg:w-[75%] transition-all duration-300 ">
             <div className="w-[90%] h-full flex justify-center items-center gap-3">
               <input
-                className="h-[4.5vh] w-full text-black dark:text-white bg-zinc-200 dark:bg-zinc-900 rounded-full border-none focus:border focus:outline-none pl-6 pr-4 "
+                className="h-[4.5vh] w-full text-black dark:text-white bg-zinc-200 dark:bg-zinc-900 rounded-full border-none focus:border focus:outline-none pl-6 pr-4 md:text-none text-center"
                 type="text"
                 placeholder="Search Manga..."
               />

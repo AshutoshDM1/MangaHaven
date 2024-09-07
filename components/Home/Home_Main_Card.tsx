@@ -2,26 +2,23 @@ import Image from "next/image";
 
 export default function Home_Main_Card() {
   return (
-    <div className="w-min-fit h-1/2 rounded-2xl shadow-lg shadow-slate-800 m-10">
-      <div className="w-full h-full rounded-2xl relative flex overflow-hidden">
-        <div
-          className=" w-4/6 h-full rounded-2xl text-3xl md:text-5xl z-10 "
-  
-        >
-          <div className="w-full m-8 ">
-            M<span className="text-pink-500 ">a</span>nga H
-            <span className="text-pink-500 ">e</span>aven
+    <div className="md:w-min-fit md:h-1/2 md:rounded-2xl md:shadow-lg md:shadow-slate-800 md:hover:shadow-slate-600 md:hover:shadow-xl md:m-10 transition-all duration-500 ease-in-out">
+      <div className="w-full h-full md:rounded-2xl relative flex flex-col md:flex-row overflow-hidden">
+        <div className="w-full md:w-4/6 h-full md:rounded-2xl text-3xl md:text-5xl z-10 order-2 md:order-1 px-4 md:px-0">
+          <div className="w-full mt-4 md:m-8">
+            M<span className="text-pink-500">a</span>nga H
+            <span className="text-pink-500">e</span>aven
           </div>
-          <div className=" w-4/6 mt-8 ml-8 flex">
+          <div className="w-full md:w-4/6 mt-4 md:mt-8 md:ml-8 flex">
             <input
               type="text"
               placeholder="Search manga..."
-              className="w-5/6 px-4 py-2 text-base text-gray-200 bg-gray-100 border border-gray-700 rounded-full focus:outline-none focus:border-pink-500"
+              className="w-5/6 px-4 py-2 text-base text-black bg-gray-100 border border-gray-700 rounded-full focus:outline-none focus:border-pink-500"
             />
-            <button className="bg-pink-500 hover:bg-pink-600 text-white px-4 rounded-full flex items-center ml-1">
+            <button className="bg-pink-500 hover:bg-pink-600 text-white px-4 rounded-full flex items-center ml-1 transition-all duration-500 ease-in-out">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-3 w-3"
+                className="h-6 w-4"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -35,7 +32,7 @@ export default function Home_Main_Card() {
               </svg>
             </button>
           </div>
-          <div className="pl-8 w-4/6 h-2/6 leading-7 tracking-wider mt-4 text-sm overflow-hidden">
+          <div className="w-full md:pl-8 md:w-4/6 h-2/6 leading-7 tracking-wider mt-4 text-sm overflow-hidden">
             <div className="truncate ...">
               Top search:One PieceMy Hero Academia Season 7
             </div>
@@ -56,26 +53,26 @@ export default function Home_Main_Card() {
               </div>
             </div>
           </div>
-          <button className="bg-pink-400 hover:bg-pink-500 hover:text-gray-800 text-slate-900 font-semibold px-3 rounded-2xl flex items-center text-3xl mt-auto ml-8 p-4">
+          <button 
+            className="bg-pink-400 hover:bg-pink-500 text-slate-900 font-semibold rounded-3xl flex items-center md:text-3xl text-xl mt-4 md:mt-auto md:ml-8 md:p-4 p-2 px-4 transition-all duration-500 ease-in-out hover:scale-105 active:animate-click"
+          >
             Let&apos;s Start &rarr;
           </button>
         </div>
         <div 
-          style={{ 
-            boxShadow: '0 0 1rem rgba(0, 0, 0, 0.5)',
-          }}
           className="
-            flex justify-end absolute top-0 -right-14 
-            opacity-50 
-            transition-all duration-300 ease-in-out
-            hover:opacity-100 hover:-translate-x-16 hover:scale-105
-            transform
+            w-full md:w-auto order-1 md:order-2
+            md:flex md:justify-end md:absolute md:top-0 md:-right-14 
+            md:opacity-50 
+            transition-all duration-500 ease-in-out
+            md:hover:opacity-100 md:hover:-translate-x-16 md:hover:scale-105
+            md:transform
           "
         >
           <Image
             width={720}
             height={720}
-            className="text-end"
+            className="w-full h-64 md:h-auto object-cover md:object-none"
             src="/home_card_bg.png"
             alt="Home_Card_Background"
           />

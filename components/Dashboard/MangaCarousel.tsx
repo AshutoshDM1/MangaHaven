@@ -82,8 +82,8 @@ const MangaCarousel: React.FC = () => {
   };
 
   return ( 
-    <div className="relative w-full overflow-visible p-4">
-      <div className="relative overflow-hidden">
+    <div className="relative w-full overflow-visible p-4 lg:px-4 md:px-8 sm:px-12">
+      <div className="relative overflow-hidden lg:px-0">
         <h5 className='md:text-3xl text-xl font-bold text-white opacity-90 md:p-3 p-2 md:mb-3'>Most Viewed</h5>
         {items.length <= 1 ? (
           <div className="h-[30vh] w-full flex gap-3 ">
@@ -100,7 +100,7 @@ const MangaCarousel: React.FC = () => {
             style={{ transform: getTransformValue() }}
           >
             {extendedItems.map((item, index) => (
-              <div key={index} className="lg:w-1/3 w-full flex-shrink-0 px-2">
+              <div key={index} className="lg:w-1/3 md:w-1/2 w-full flex-shrink-0 px-2">
                 <div 
                   style={{ 
                     boxShadow: '0 0 1rem rgba(0, 0, 0, 0.5)',
@@ -144,14 +144,14 @@ const MangaCarousel: React.FC = () => {
       </div>
       <button
         onClick={prevSlide}
-        className="absolute md:w-16 left-0 top-1/2 transform -translate-y-1 shadow-md bg-[#a962ff] bg-opacity-70 py-2 rounded-md z-10 flex justify-start items-center hover:bg-opacity-100 transition-colors duration-200"
+        className="absolute lg:left-[-2%] md:left-0 sm:left-[3%] left-[1%] md:h-[24.9vh] sm:h-[20.3vh] sm:rounded-l-3xl sm:w-auto w-4 md:top-[27.8%] sm:top-[24%] top-[55%] transform -translate-y-1 shadow-md bg-[#a962ff] bg-opacity-70 lg:p-2 md:p-1 z-10 flex justify-start items-center hover:bg-opacity-100 transition-all duration-300"
       >
         <ChevronLeft className="text-white" />
       </button>
 
       <button
         onClick={nextSlide}
-        className="absolute md:w-16 right-0 top-1/2 transform -translate-y-1 shadow-md bg-[#a962ff] bg-opacity-70 py-2 rounded-md z-10 flex justify-end items-center hover:bg-opacity-100 transition-colors duration-200"
+        className="absolute lg:right-[-2%] md:right-0 sm:right-[3%] right-[1%] md:h-[24.9vh] sm:h-[20.3vh] sm:rounded-r-3xl sm:w-auto w-4 md:top-[27.8%] sm:top-[24%] top-[55%] transform -translate-y-1 shadow-md bg-[#a962ff] bg-opacity-70 lg:p-2 md:p-1 z-10 flex justify-end items-center hover:bg-opacity-100 transition-all duration-300"
       >
         <ChevronRight className="text-white" />
       </button>
