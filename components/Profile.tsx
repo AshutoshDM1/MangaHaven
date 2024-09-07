@@ -39,6 +39,7 @@ export default function Profile() {
     const formData = new FormData();
     formData.append("file", file);
     try {
+      toast.loading("Updating profile...");
       const imageUrl = await UploadImage(formData);
       setImage(imageUrl);
     } catch (error) {

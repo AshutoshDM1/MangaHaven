@@ -30,4 +30,4 @@ const Get = async (req: Request) => {
   }
 };
 
-export { Post as POST, Get as Get };
+export { Post as POST, Get as GET };

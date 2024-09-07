@@ -24,14 +24,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="transition-colors duration-300">
+    <html lang="en">
       <head>
         <link rel="icon" href="/MH Favicon HD.png" />
         <title>MangaHaven</title>
       </head>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased bg-white dark:bg-[#0d0d0d] ",
+          "bg-background font-sans antialiased bg-white dark:bg-[#0d0d0d] ",
           fontSans.variable
         )}
       >

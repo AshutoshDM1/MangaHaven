@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect } from "react";
 import BackGroundMain from "@/components/Dashboard/BackGroundMain";
 import Footer from "@/components/Footer";
 import MangaSection from "@/components/Dashboard/MangaSection";
@@ -6,11 +7,24 @@ import Navbar from "@/components/Navbar";
 import NavbarMain from "@/components/NavbarMain";
 import MangaCarousel from "@/components/Dashboard/MangaCarousel";
 import Loading from "@/components/Dashboard/Loading";
+import { useRecoilState } from "recoil";
+import { showLoadingAtom } from "@/state/atoms";
+
 export default function Home() {
+  const [showLoading, setShowLoading] = useRecoilState(showLoadingAtom);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setShowLoading(window.innerWidth >= 1500);
+    };
+    checkScreenSize();
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
   return (
     <>
-      {/* <Loading /> */}
-      <div className="absolute top-0 left-0 right-0 bottom-0 z-0" >
+      {showLoading && <Loading />}
+      <div className="absolute top-0 left-0 right-0 bottom-0 z-[-10]">
         <Navbar />
         <NavbarMain />
         <div className="max-w-7xl mx-auto flex flex-col">

@@ -2,26 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* globals.css */
-
-:root {
-  --transition-duration: 1s;
-}
-
-html {
-  scroll-behavior: smooth;
-  transition: background-color var(--transition-duration), color var(--transition-duration);
-}
-
-body {
-  transition: background-color var(--transition-duration), color var(--transition-duration);
-}
-
-.dark {
-  transition: background-color var(--transition-duration), color var(--transition-duration);
-}
-
-
 
 @layer base {
   :root {
