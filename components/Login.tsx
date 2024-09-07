@@ -30,6 +30,7 @@ const Login: React.FC = () => {
 
   const handleEmailSignIn = async () => {
     if (credentials.email && credentials.password) {
+      toast.loading("Login ...");
       const res = await signIn("credentials", {
         email: credentials.email,
         password: credentials.password,

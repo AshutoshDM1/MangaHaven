@@ -32,6 +32,7 @@ const Signup: React.FC = () => {
 
   const handleEmailSignIn = async () => {
     if (email.password !== "" && email.password === email.confirmPassword) {
+      toast.loading("Signing up...");
       const res = await signIn("credentials", {
         email: email.email, // Use the email state
         password: email.password, // Use the password state

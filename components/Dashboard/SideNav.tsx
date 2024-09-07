@@ -10,17 +10,15 @@ import {
 import { Button } from "../ui/button";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { ModeToggle } from "../ModeToggle";
+import { ModeToggle } from "../NavBar/ModeToggle";
 import { AlignJustify } from "lucide-react";
 
 const SideNav = () => {
   const router = useRouter();
-  const { data: session } = useSession();
-
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <AlignJustify  className="cursor-pointer" />
+        <AlignJustify className="cursor-pointer" />
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>

@@ -81,80 +81,102 @@ const MangaCarousel: React.FC = () => {
     }
   };
 
-  return ( 
-    <div className="relative w-full overflow-visible p-4 lg:px-4 md:px-8 sm:px-12">
-      <div className="relative overflow-hidden lg:px-0">
-        <h5 className='md:text-3xl text-xl font-bold text-white opacity-90 md:p-3 p-2 md:mb-3'>Most Viewed</h5>
-        {items.length <= 1 ? (
-          <div className="h-[30vh] w-full flex gap-3 ">
-            {[1, 2, 3].map((index) => (
-              <div key={index} className="w-1/3 h-full">
-                <Skeleton className="w-full h-full"></Skeleton>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div
-            id="carousel"
-            className={`flex ${isAnimating ? 'transition-transform duration-500 ease-in-out' : ''}`}
-            style={{ transform: getTransformValue() }}
-          >
-            {extendedItems.map((item, index) => (
-              <div key={index} className="lg:w-1/3 md:w-1/2 w-full flex-shrink-0 px-2">
-                <div 
-                  style={{ 
-                    boxShadow: '0 0 1rem rgba(0, 0, 0, 0.5)',
-                    transition: 'background-color 0.3s ease, transform 0.3s ease'
-                  }}
-                  className="dark:border-[#3a3a3a] border dark:border md:h-[25vh] h-[20vh] flex rounded-lg overflow-hidden hover:bg-zinc-900 transform cursor-pointer"
+  return (
+    <div className="xl:max-w-[75rem] w-[95%] mx-auto">
+      <div className="relative w-full flex justify-center items-center overflow-visible p-4 lg:px-4 md:px-8 px-12">
+        <div className="relative max-w-7xl mx-auto overflow-hidden lg:px-0">
+          <h5 className="md:text-3xl text-xl font-bold  opacity-90 md:p-3 p-2 md:mb-3">
+            Most Viewed
+          </h5>
+          {items.length <= 1 ? (
+            <div className="h-[30vh] w-full flex gap-3 ">
+              {[1, 2, 3].map((index) => (
+                <div key={index} className="w-1/3 h-full">
+                  <Skeleton className="w-full h-full"></Skeleton>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div
+              id="carousel"
+              className={`flex ${
+                isAnimating
+                  ? "transition-transform duration-500 ease-in-out"
+                  : ""
+              }`}
+              style={{ transform: getTransformValue() }}
+            >
+              {extendedItems.map((item, index) => (
+                <div
+                  key={index}
+                  className="lg:w-1/3 md:w-1/2 w-full flex-shrink-0 px-0 md:px-2 "
                 >
-                  <div className="w-[60%] flex flex-col justify-center border-l-2 border-white">
-                    <div className="md:p-3 p-2 md:h-[40%] h-[30%]">
-                      <h3 className="md:text-lg text-sm font-normal text-white opacity-70">{item.status}</h3>
-                      <h3 className="md:text-xl text-md font-semibold text-white">{item.title}</h3>
-                    </div>
-                    <div className="md:h-[60%] h-[70%] flex flex-col justify-between md:p-3 p-2 md:pt-6 mt-4">
-                      <p className="text-white opacity-70 md:text-md text-sm line-clamp-2">{item.description}</p>
-                      <div className='text-white opacity-70 md:text-md text-sm'>
-                        <span>{item.volume}</span>
-                        <span className="mx-2">•</span>
-                        <span>{item.chapter}</span>
+                  <div
+                    style={{
+                      transition:
+                        "background-color 0.3s ease, transform 0.3s ease",
+                    }}
+                    className="dark:border-[#3a3a3a] border dark:border md:h-[25vh] h-[20vh] flex rounded-lg overflow-hidden hover:bg-zinc-900 transform cursor-pointer"
+                  >
+                    <div className="w-[60%] flex flex-col justify-center border-l-2 border-white">
+                      <div className="md:p-3 p-2 md:h-[40%] h-[30%]">
+                        <h3 className="md:text-lg text-sm font-normal  opacity-70">
+                          {item.status}
+                        </h3>
+                        <h3 className="md:text-xl text-md font-semibold ">
+                          {item.title}
+                        </h3>
                       </div>
-                      <div className="flex flex-wrap gap-1">
-                        {item.genres.map((genre, i) => (
-                          <span key={i} className="md:text-md text-[12px] pr-2 text-white">{genre}</span>
-                        ))}
+                      <div className="md:h-[60%] h-[70%] flex flex-col justify-between md:p-3 p-2 md:pt-3 ">
+                        <p className=" opacity-70 md:text-md text-sm line-clamp-2">
+                          {item.description}
+                        </p>
+                        <div className=" opacity-70 md:text-md text-sm">
+                          <span>{item.volume}</span>
+                          <span className="mx-2">•</span>
+                          <span>{item.chapter}</span>
+                        </div>
+                        <div className="flex flex-wrap gap-1">
+                          {item.genres.map((genre, i) => (
+                            <span
+                              key={i}
+                              className="md:text-md text-[12px] px-1 "
+                            >
+                              {genre}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="relative w-[40%]">
-                    <Image
-                      src={`${item.imageUrl}`}
-                      alt={item.title}
-                      className="w-full h-full object-cover"
-                      width={500}
-                      height={300}
-                    />
+                    <div className="relative w-[40%]">
+                      <Image
+                        src={`${item.imageUrl}`}
+                        alt={item.title}
+                        className="w-full h-full object-cover"
+                        width={500}
+                        height={300}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-      <button
-        onClick={prevSlide}
-        className="absolute lg:left-[-2%] md:left-0 sm:left-[3%] left-[1%] md:h-[24.9vh] sm:h-[20.3vh] sm:rounded-l-3xl sm:w-auto w-4 md:top-[27.8%] sm:top-[24%] top-[55%] transform -translate-y-1 shadow-md bg-[#a962ff] bg-opacity-70 lg:p-2 md:p-1 z-10 flex justify-start items-center hover:bg-opacity-100 transition-all duration-300"
-      >
-        <ChevronLeft className="text-white" />
-      </button>
+              ))}
+            </div>
+          )}
+        </div>
+        <button
+          onClick={prevSlide}
+          className="absolute lg:left-[-2%] md:left-0 left-[3%]  md:h-[24.9vh] h-[20.3vh] rounded-l-3xl w-auto md:top-[27.8%] top-[24%] transform -translate-y-1 shadow-md bg-[#a962ff] bg-opacity-70 lg:p-2 md:p-1 z-10 flex justify-start items-center hover:bg-opacity-100 transition-all duration-300"
+        >
+          <ChevronLeft className=" w-fit " />
+        </button>
 
-      <button
-        onClick={nextSlide}
-        className="absolute lg:right-[-2%] md:right-0 sm:right-[3%] right-[1%] md:h-[24.9vh] sm:h-[20.3vh] sm:rounded-r-3xl sm:w-auto w-4 md:top-[27.8%] sm:top-[24%] top-[55%] transform -translate-y-1 shadow-md bg-[#a962ff] bg-opacity-70 lg:p-2 md:p-1 z-10 flex justify-end items-center hover:bg-opacity-100 transition-all duration-300"
-      >
-        <ChevronRight className="text-white" />
-      </button>
+        <button
+          onClick={nextSlide}
+          className="absolute lg:right-[-2%] md:right-0 right-[3%]  md:h-[24.9vh] h-[20.3vh] rounded-r-3xl w-auto  md:top-[27.8%] top-[24%] transform -translate-y-1 shadow-md bg-[#a962ff] bg-opacity-70 lg:p-2 md:p-1 z-10 flex justify-end items-center hover:bg-opacity-100 transition-all duration-300"
+        >
+          <ChevronRight className=" w-fit " />
+        </button>
+      </div>
     </div>
   );
 };
