@@ -34,7 +34,7 @@ export default function Home_Main_Card() {
           </div>
           <div className="w-full md:pl-8 md:w-4/6 h-2/6 leading-7 tracking-wider mt-4 text-sm overflow-hidden">
             <div className="truncate ...">
-              Top search:One PieceMy Hero Academia Season 7
+              Top search:One Piece ,My Hero Academia Season 7
             </div>
             <div className="flex flex-wrap">
               <div className="truncate ...">
@@ -56,7 +56,7 @@ export default function Home_Main_Card() {
           <button 
             className="bg-pink-400 hover:bg-pink-500 text-slate-900 font-semibold rounded-3xl flex items-center md:text-3xl text-xl mt-4 md:mt-auto md:ml-8 md:p-4 p-2 px-4 transition-all duration-500 ease-in-out hover:scale-105 active:animate-click"
           >
-            Let&apos;s Start &rarr;
+            Let&apos;s Binge &rarr;
           </button>
         </div>
         <div 
