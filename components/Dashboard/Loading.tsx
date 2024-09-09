@@ -73,7 +73,7 @@ export default function Loading() {
     <>
       <div
         ref={containermain}
-        className="min-h-[360vh] absolute top-0 left-0 right-0 bottom-0 z-[50] overflow-hidden "
+        className="absolute top-0 left-0 right-0 bottom-0 z-[50] overflow-hidden "
         style={{
           overflowX: "hidden",
         }}
@@ -121,10 +121,6 @@ export default function Loading() {
             </div>
           </div>
         </div>
-        <div
-          ref={container2}
-          className="min-h-[260vh] bg-background flex justify-center items-start "
-        ></div>
       </div>
     </>
   );
