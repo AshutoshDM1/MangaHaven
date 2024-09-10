@@ -54,9 +54,9 @@ export default function Home_Main_Card() {
             </div>
           </div>
           <button 
-            className="bg-pink-400 hover:bg-pink-500 text-slate-900 font-semibold rounded-3xl flex items-center md:text-3xl text-xl mt-4 md:mt-auto md:ml-8 md:p-4 p-2 px-4 transition-all duration-500 ease-in-out hover:scale-105 active:animate-click"
+            className=" text-white text-[1.5rem] font-semibold rounded-xl ml-10 flex items-center px-10 py-3 border-[1px] border-[#bcbcbc8d] transition-all duration-500 ease-in-out bg-[#c131ff8d] "
           >
-            Let&apos;s Binge &rarr;
+            Lets Read
           </button>
         </div>
         <div 
