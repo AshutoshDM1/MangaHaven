@@ -110,23 +110,13 @@
   }
 }
 
-.Heading1 {
+.HomeH1 {
   color: transparent;
   background-clip: text;
   background-image: linear-gradient(
     to right,
-    #a947ff 0%,
+    #8800ff 0%,
     #ffffff 50%,
     #efc0ff 80%
-  );
-}
-.Heading2 {
-  color: transparent;
-  background-clip: text;
-  background-image: linear-gradient(
-    to right,
-    #a947ff 0%,
-    #ffffff 50%,
-    #a947ff 120%
   );
 }

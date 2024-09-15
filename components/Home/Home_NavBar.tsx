@@ -1,7 +1,7 @@
 export default function Home_NavBar() {
   return (
-    <div className="h-28">
-      <div className="flex h-full justify-center py-10">
+    <div className="h-fit">
+      <div className="flex h-full justify-center py-4 sm:py-10  ">
         <div className="flex gap-8 h-full md:text-base">
           <NavItem text="Home" className="hover:cursor-pointer"/>
           <NavItem text="Manga" className="hover:cursor-pointer" />
