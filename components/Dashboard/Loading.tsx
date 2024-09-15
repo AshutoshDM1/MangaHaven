@@ -5,12 +5,13 @@ import { useGSAP } from "@gsap/react";
 import { Loader2 } from "lucide-react";
 import { showLoadingAtom } from "@/state/atoms";
 import { useRecoilState } from "recoil";
+import { useRouter } from "next/navigation";
 
 export default function Loading() {
   const container = useRef(null);
   const container2 = useRef(null);
   const containermain = useRef(null);
-  const [showLoading, setShowLoading] = useRecoilState(showLoadingAtom);
+  const router = useRouter();
 
   const Animated = () => {
     let tl = gsap.timeline();
@@ -48,23 +49,14 @@ export default function Loading() {
       y: "-120vh",
       duration: 1,
       ease: "power2.inOut",
-    });
-    tl.to(container2.current, {
-      delay: 0.2,
-      duration: 1,
-      opacity: 0,
-      ease: "ease-in-out",
-    });
-    tl.to(containermain.current, {
-      display: "none",
+      onComplete: () => {
+        router.push("/dashboard");
+      },
     });
   };
   useGSAP(
     () => {
-      if (showLoading) {
-        Animated();
-        console.log("showLoading", showLoading);
-      }
+      Animated();
     },
     { scope: container }
   );
@@ -73,7 +65,7 @@ export default function Loading() {
     <>
       <div
         ref={containermain}
-        className="min-h-[360vh] absolute top-0 left-0 right-0 bottom-0 z-[50] overflow-hidden "
+        className="absolute top-0 left-0 right-0 bottom-0 z-[50] overflow-hidden "
         style={{
           overflowX: "hidden",
         }}
@@ -121,10 +113,6 @@ export default function Loading() {
             </div>
           </div>
         </div>
-        <div
-          ref={container2}
-          className="min-h-[260vh] bg-background flex justify-center items-start "
-        ></div>
       </div>
     </>
   );

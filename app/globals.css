@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -77,7 +76,7 @@
 
   .group-hover\:w-full::before,
   .group-hover\:w-full::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     height: 2px;
@@ -96,7 +95,8 @@
 }
 
 @keyframes click {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -108,4 +108,25 @@
   .animate-click {
     animation: click 0.7s ease-in-out;
   }
+}
+
+.Heading1 {
+  color: transparent;
+  background-clip: text;
+  background-image: linear-gradient(
+    to right,
+    #a947ff 0%,
+    #ffffff 50%,
+    #efc0ff 80%
+  );
+}
+.Heading2 {
+  color: transparent;
+  background-clip: text;
+  background-image: linear-gradient(
+    to right,
+    #a947ff 0%,
+    #ffffff 50%,
+    #a947ff 120%
+  );
 }

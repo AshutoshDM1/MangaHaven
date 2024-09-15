@@ -66,9 +66,10 @@ const MangaSection = () => {
                         {item.genres.slice(0, 3).map((genre, index) => (
                           <p
                             key={`${item.id}-${genre}`}
-                            className={`text-sm text-white px-3 py-[2px] rounded-md w-fit ${
-                              colors[index % colors.length]
-                            }`}
+                            className={`text-sm text-white px-3 py-[2px] rounded-md w-fit`}
+                            style={{
+                              textShadow: '0 0 10px #A977E7, 0 0 10px #A977E7'
+                            }}
                           >
                             {genre}
                           </p>

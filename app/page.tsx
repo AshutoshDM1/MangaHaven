@@ -8,13 +8,15 @@ import Loading from "@/components/Dashboard/Loading";
 import { useRecoilState } from "recoil";
 import { showLoadingAtom } from "@/state/atoms";
 import NavbarMain from "@/components/NavBar/NavbarMain";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [showLoading, setShowLoading] = useRecoilState(showLoadingAtom);
-
+const router = useRouter()
   useEffect(() => {
     const checkScreenSize = () => {
-      setShowLoading(window.innerWidth >= 1500);
+      if (window.innerWidth <= 1500) {
+        router.push("/dashboard");
+      }
     };
     checkScreenSize();
     return () => window.removeEventListener("resize", checkScreenSize);
@@ -22,18 +24,7 @@ export default function Home() {
 
   return (
     <>
-      {/* {showLoading && <Loading />} */}
-      <div className="relative z-0 ">
-      <NavbarMain />
-        <div className="max-w-7xl mx-auto flex flex-col">
-          <BackGroundMain />
-        </div>
-        <MangaCarousel />
-        <div className="max-w-7xl mx-auto flex flex-col">
-          <MangaSection />
-        </div>
-        <Footer />
-      </div>
+      <Loading />
     </>
   );
 }
