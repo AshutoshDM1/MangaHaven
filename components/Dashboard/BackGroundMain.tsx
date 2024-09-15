@@ -14,7 +14,7 @@ const BackGroundMain: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   let [items, setItems] = useRecoilState(mangaBackgroundData);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       const data = await getMangaDashboard();
@@ -35,8 +35,6 @@ const BackGroundMain: React.FC = () => {
     return () => clearInterval(interval);
   }, [items]); // depend on items
 
-
-
   if (items.length <= 1) {
     return <Skeleton className="h-[60vh] mt-5 w-full" />;
   }
@@ -44,25 +42,35 @@ const BackGroundMain: React.FC = () => {
     <div className="flex justify-center items-center overflow-hidden w-full">
       <div className="md:min-h-[60vh] min-h-[35vh] flex justify-center items-end md:px-4 relative w-full">
         <div className="h-full w-full ease-in duration-700 md:p-5 flex flex-col justify-start items-start md:gap-3 gap-2 relative z-10 p-2">
-          <h1 className={`md:text-6xl text-2xl font-bold text-[#A977E7] md:w-[150%] w-full transition-opacity duration-1000 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+          <h1
+            className={`md:text-6xl text-2xl font-bold text-[#A977E7] md:w-[150%] w-full transition-opacity duration-1000 ${
+              isTransitioning ? "opacity-0" : "opacity-100"
+            }`}
+          >
             {items[currentIndex].title}
           </h1>
-          <h1 className={`md:w-[150%] w-full md:text-[16px] text-sm transition-opacity duration-1000 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
-            <span className="md:line-clamp-none line-clamp-3 md:h-[18vh]">
-              {items[currentIndex].description}
-            </span>
+          <h1
+            className={`md:w-[150%] w-full h1 md:text-[16px] text-sm transition-opacity duration-1000 ${
+              isTransitioning ? "opacity-0" : "opacity-100"
+            }`}
+          >
+            {items[currentIndex].description}
           </h1>
-          <div className={`flex flex-wrap gap-2 items-center md:gap-4 transition-opacity duration-1000 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+          <div
+            className={`flex flex-wrap gap-2 items-center md:gap-4 transition-opacity duration-1000 ${
+              isTransitioning ? "opacity-0" : "opacity-100"
+            }`}
+          >
             <button
-              style={{ 
-                boxShadow: '0 0 1rem rgba(0, 0, 0, 0.5)',
-                transition: 'background-color 0.3s ease, transform 0.3s ease'
-              }} 
-              className="rounded-full md:py-2 md:px-4 p-1 px-2 bg-[#995fff] hover:bg-[#A977E7] md:text-lg text-xs"
+              style={{
+                boxShadow: "0 0 1rem rgba(0, 0, 0, 0.5)",
+                transition: "background-color 0.3s ease, transform 0.3s ease",
+              }}
+              className="rounded-full text-white md:py-2 md:px-4 p-1 px-2 bg-[#995fff] hover:bg-[#A977E7] md:text-lg text-xs"
             >
               Read Now
             </button>
-            <div className='text-white md:opacity-70 md:text-xl text-xs'>
+            <div className="text-white md:opacity-70 md:text-xl text-xs">
               <span>{items[currentIndex].volume}</span>
               <span className="mx-2">•</span>
               <span>{items[currentIndex].chapter}</span>
@@ -73,7 +81,9 @@ const BackGroundMain: React.FC = () => {
           <img
             src={items[currentIndex].imageUrl}
             alt={items[currentIndex].title}
-            className={`md:h-[60vh] h-[45vh] w-[200%] object-cover transition-opacity duration-1000 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}
+            className={`md:h-[60vh] h-[45vh] w-[200%] object-cover transition-opacity duration-1000 ${
+              isTransitioning ? "opacity-0" : "opacity-100"
+            }`}
             style={{
               maskImage:
                 "linear-gradient(from left, transparent, black, transparent)",

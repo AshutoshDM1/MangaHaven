@@ -1,9 +1,15 @@
-// import { NextResponse } from 'next/server';
-// import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
+import { NextRequest, NextResponse } from 'next/server';
 
-// export const prisma = new PrismaClient();
+const prisma = new PrismaClient();
 
-// export async function GET(request: Request) {
+export async function GET(request: Request) {
+  // Handle GET request
+  return NextResponse.json({ error: 'Manga name and chapter are required' }, { status: 400 });
+}
+
+// Uncommenting and fixing the POST function
+// export async function POST(request: Request) {
 //   const { searchParams } = new URL(request.url);
 //   const mangaName = searchParams.get('manga');
 //   const chapter = searchParams.get('chapter');
