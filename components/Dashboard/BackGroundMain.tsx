@@ -61,6 +61,7 @@ const BackGroundMain: React.FC = () => {
               className="rounded-full md:py-2 md:px-4 p-1 px-2 bg-[#995fff] hover:bg-[#A977E7] md:text-lg text-xs"
             >
               Read Now
+              
             </button>
             <div className='text-white md:opacity-70 md:text-lg text-xs'>
               <span>{items[currentIndex].volume}</span>
