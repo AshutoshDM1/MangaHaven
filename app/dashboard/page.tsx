@@ -1,25 +1,25 @@
+"use client";
 import BackGroundMain from "@/components/Dashboard/BackGroundMain";
-import MangaCarousel from "@/components/Dashboard/MangaCarousel";
-import MangaSection from "@/components/Dashboard/MangaSection";
 import Footer from "@/components/Footer";
+import MangaSection from "@/components/Dashboard/MangaSection";
+import MangaCarousel from "@/components/Dashboard/MangaCarousel";
 import NavbarMain from "@/components/NavBar/NavbarMain";
-
-const dashboard = () => {
+export default function Home() {
   return (
     <>
-      <div className="main-dashboard">
-        <NavbarMain />
-        <div className="max-w-7xl mx-auto flex flex-col">
-          <BackGroundMain />
+      <NavbarMain />
+      <div className="max-w-7xl mx-auto flex flex-col">
+        <div className="flex flex-col">
+          <div className="relative">
+            <BackGroundMain />
+            <div className="md:-mt-1 -mt-36">
+              <MangaCarousel />
+            </div>
+          </div>
         </div>
-        <MangaCarousel />
-        <div className="max-w-7xl mx-auto flex flex-col">
-          <MangaSection />
-        </div>
-        <Footer />
+        <MangaSection />
       </div>
+      <Footer />
     </>
   );
-};
-
-export default dashboard;
+}
