@@ -120,3 +120,29 @@
     #efc0ff 80%
   );
 }
+
+::-webkit-scrollbar {
+  width: 17px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;                 
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #555;        
+  border-radius: 10px;           
+  cursor: pointer;                  
+  border: 3px solid #181818;     
+  transition: all;
+  transition-duration: 600ms;   
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #888;  
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;             
+}
+

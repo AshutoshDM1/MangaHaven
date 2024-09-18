@@ -1,29 +1,23 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+// middleware.js
+import { NextResponse } from 'next/server';
 
-export function middleware(request: NextRequest) {
-  const response = NextResponse.next()
+export function middleware(req : Request) {
+  const response = NextResponse.next();
 
-  // Allow requests from any origin
-  response.headers.set('Access-Control-Allow-Origin', '*')
+  // Set CORS headers
+  response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3001');
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
 
-  // Allow specific HTTP methods
-  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-
-  // Allow specific headers
-  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-
-  // Allow credentials (if needed)
-  response.headers.set('Access-Control-Allow-Credentials', 'true')
-
-  // Handle preflight requests
-  if (request.method === 'OPTIONS') {
-    return new NextResponse(null, { status: 200 })
+  // Handle preflight requests (CORS preflight)
+  if (req.method === 'OPTIONS') {
+    return new NextResponse(null, { headers: response.headers });
   }
 
-  return response
+  return response;
 }
 
+// Apply middleware to all API routes
 export const config = {
   matcher: '/api/:path*',
-}
+};
