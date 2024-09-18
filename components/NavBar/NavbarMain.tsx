@@ -26,7 +26,7 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
             </div>
             <div className="2xl:flex gap-4 hidden ">
               <button
-                onClick={() => router.push("/home")}
+                onClick={() => router.push("/")}
                 className=" font-semibold text-base"
               >
                 Home

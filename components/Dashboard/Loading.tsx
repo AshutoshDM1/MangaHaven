@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 
 export default function Loading() {
   const container = useRef(null);
-  const container2 = useRef(null);
   const containermain = useRef(null);
   const router = useRouter();
 
@@ -43,6 +42,7 @@ export default function Loading() {
       right: "0",
       ease: "power2.inOut",
       width: "203vh",
+      borderRadius : "0px"
     });
     tl.to(containermain.current, {
       delay: 4,
@@ -65,14 +65,14 @@ export default function Loading() {
     <>
       <div
         ref={containermain}
-        className="absolute top-0 left-0 right-0 bottom-0 z-[50] overflow-hidden "
+        className="absolute top-0 left-0 right-0 bottom-0 z-[50] overflow-hidden bg-black "
         style={{
           overflowX: "hidden",
         }}
       >
         <div
           ref={container}
-          className="opacity-100 flex flex-col items-center justify-center h-screen bg-[#101010]  relative "
+          className="opacity-100 flex flex-col items-center justify-center h-screen  relative "
         >
           <div className="h-fit w-fit overflow-hidden">
             <h1 className="text-white text-[8.8vw] font-medium uppercase h-[20vh] w-fit relative z-20 mix-blend-difference translate-x-[-1700px]">
@@ -102,9 +102,9 @@ export default function Loading() {
                 Of Manga
               </h1>
             </div>
-            <div className=" h-[15vh] w-[25vh] ">
+            <div className=" h-[15vh] w-[25vh] overflow-hidden ">
               <video
-                className="video translate-x-[-1800px] w-[35vh] absolute right-[28vh] bottom-[17vh] z-10 object-cover "
+                className="video translate-x-[-1800px] w-[35vh] rounded-[20px] absolute right-[28vh] bottom-[17vh] z-10 object-cover "
                 src="./Jujutsu Kaisen AMV Cut.mp4"
                 autoPlay
                 loop

@@ -1,17 +1,12 @@
 "use client";
-import { useState, useEffect } from "react";
-import BackGroundMain from "@/components/Dashboard/BackGroundMain";
-import Footer from "@/components/Footer";
-import MangaSection from "@/components/Dashboard/MangaSection";
-import MangaCarousel from "@/components/Dashboard/MangaCarousel";
 import Loading from "@/components/Dashboard/Loading";
-import { useRecoilState } from "recoil";
-import { showLoadingAtom } from "@/state/atoms";
-import NavbarMain from "@/components/NavBar/NavbarMain";
 import { useRouter } from "next/navigation";
+import Home_NavBar from "@/components/Home/Home_NavBar";
+import Home_Main_Card_II from "@/components/Home/Home_Main_Card_II";
+import { useEffect } from "react";
 
 export default function Home() {
-const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
     const checkScreenSize = () => {
       if (window.innerWidth <= 1500) {
@@ -25,6 +20,12 @@ const router = useRouter()
   return (
     <>
       <Loading />
+      <div className="relative min-h-screen">
+        <div className="absolute top-0 left-0 w-full z-10">
+          <Home_NavBar />
+        </div>
+        <Home_Main_Card_II />
+      </div>
     </>
   );
 }

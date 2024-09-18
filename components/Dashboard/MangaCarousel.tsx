@@ -85,11 +85,11 @@ const MangaCarousel: React.FC = () => {
     <div className="xl:max-w-[75rem] w-[95%] mx-auto">
       <div className="relative w-full flex justify-center items-center overflow-visible p-4 lg:px-4 md:px-8 px-7">
         <div className="relative max-w-7xl mx-auto overflow-hidden lg:px-0">
-          <h5 className="md:text-3xl text-xl font-bold  opacity-90 md:p-3 p-2 md:mb-3">
+          <h5 className="md:text-3xl text-xl font-bold  opacity-90 px-2 pt-2 pb-1 md:pb-5 md:mb-3">
             Most Viewed
           </h5>
           {items.length <= 1 ? (
-            <div className="h-[20vh] md:h-[25vh] w-[58vw] flex gap-3 ">
+            <div className="h-[20vh] md:h-[25vh] w-[58vw] flex gap-3  ">
               {[1, 2, 3].map((index) => (
                 <div key={index} className="w-full h-full">
                   <Skeleton className="w-full h-full"></Skeleton>
