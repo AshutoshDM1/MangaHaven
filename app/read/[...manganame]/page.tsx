@@ -1,6 +1,11 @@
 "use client";
 import NavbarMain from "@/components/NavBar/NavbarMain";
-import { ChevronLeft, ChevronRight, GalleryHorizontal, GalleryVertical } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  GalleryHorizontal,
+  GalleryVertical,
+} from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 
@@ -12,7 +17,7 @@ const ReadPage = () => {
       <NavbarMain />
       <div className="h-[92vh] w-full flex justify-center items-center flex-col md:flex-row ">
         <div
-          className="min-h-[10vh] h-[15vh] flex-wrap md:h-full w-full md:w-[40vh] md:bg-foreground/10 flex flex-row  md:flex-col justify-start items-center p-3 px-5 md:pt-10 gap-4
+          className="min-h-[10vh] h-[15vh] flex-wrap md:h-full w-full md:w-[40vh] md:bg-foreground/10 flex flex-row  md:flex-col justify-center md:justify-start  items-center p-3 px-5 md:pt-10 gap-4
           "
         >
           <Image
@@ -23,10 +28,10 @@ const ReadPage = () => {
             alt="Naruto_lvhvkh.png"
           />
 
-          <h1 className="w-fit text-xl font-bold text-center">
+          <h1 className="w-full md:w-fit  text-xl font-bold text-center">
             {manganame[0].split("%20").join(" ")}
           </h1>
-          <div className="w-fit md:w-full flex items-center justify-center ">
+          <div className="w-fit md:w-full flex items-center justify-center  ">
             <h1 className="w-full font-medium text-[1rem] md:text-[1.2rem]  text-center bg-foreground/5  py-2 rounded-md  cursor-pointer px-3 ">
               Chapter {manganame[1]}
             </h1>
@@ -41,14 +46,14 @@ const ReadPage = () => {
           </div>
           <div className="w-fit md:w-full hidden md:flex  justify-center items-center gap-3 ">
             <div className="w-1/2 py-[5px] px-3 bg-foreground/10 rounded-md flex justify-center items-center cursor-pointer ">
-            <GalleryVertical />
+              <GalleryVertical />
             </div>
             <div className="w-1/2 py-[5px] px-3 bg-foreground/10 rounded-md flex justify-center items-center  cursor-pointer  ">
-            <GalleryHorizontal />
+              <GalleryHorizontal />
             </div>
           </div>
         </div>
-        <div className="h-full w-full md:bg-foreground/5 md:overflow-y-auto overflow-hidden">
+        <div className="h-full w-full  md:overflow-y-auto overflow-hidden">
           {[1, 2, 3].map(() => {
             return (
               <>

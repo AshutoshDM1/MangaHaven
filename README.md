@@ -1,5 +1,8 @@
 # Manga Haven
 
+#### Total Time on Project
+[![wakatime](https://wakatime.com/badge/user/c34e365f-01c3-4480-a437-d477dc0aa67b/project/b9af7a61-33e3-4ee1-92f5-fc35bab59695.svg)](https://wakatime.com/badge/user/c34e365f-01c3-4480-a437-d477dc0aa67b/project/b9af7a61-33e3-4ee1-92f5-fc35bab59695)
+
 ### A Modern Manga Reading platform that blends stunning visuals with seamless Performance.
 
 ## Tech Stack
