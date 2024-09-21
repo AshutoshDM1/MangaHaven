@@ -10,7 +10,7 @@ cloudinary.config({
 });
 
 export async function POST(request: NextRequest) {
-  const { mangaName } = await request.json(); // Get manga name from request body
+  const { mangaName , chapter } = await request.json(); // Get manga name from request body
 
   if (!mangaName) {
     return NextResponse.json({ error: 'Manga name is required' }, { status: 400 });
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     // Fetch images from Cloudinary based on the manga folder
     const result = await cloudinary.api.resources({
       type: 'upload',
-      prefix: `MangaHaven/manga/${mangaName}/`, // Folder path for manga images
+      prefix: `MangaHaven/manga/${mangaName}/${chapter}`, // Folder path for manga images
       max_results: 500, // Adjust as necessary
     });
 

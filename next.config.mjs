@@ -20,6 +20,7 @@ const nextConfig = {
       },
       // Add other patterns as needed
     ],
+    domains: ['res.cloudinary.com'], // Add this line
   },
   // ... other configurations
 };
