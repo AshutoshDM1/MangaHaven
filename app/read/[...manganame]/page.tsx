@@ -1,5 +1,6 @@
 "use client";
 import NavbarMain from "@/components/NavBar/NavbarMain";
+import { Skeleton } from "@/components/ui/skeleton";
 import { getManga, getMangaChapterRead } from "@/services/api";
 import {
   ChevronLeft,
@@ -14,7 +15,7 @@ import { useEffect, useState } from "react";
 const ReadPage = () => {
   const { manganame } = useParams();
   const [manga, setmanga] = useState([{ url: "" }]);
-  const [mangaImage, setMangaImage] = useState({ imageUrl : ""});
+  const [mangaImage, setMangaImage] = useState({ imageUrl: "" });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,8 +26,10 @@ const ReadPage = () => {
       const data = await getMangaChapterRead(mangadata);
       const mangaimage = await getManga();
       // Fix the filter to compare the correct property
-      const filteredManga = mangaimage.find((item: any) => item.title === manganame[0].split("%20").join(" ")); // Assuming 'name' is the correct property
-      setMangaImage(filteredManga)
+      const filteredManga = mangaimage.find(
+        (item: any) => item.title === manganame[0].split("%20").join(" ")
+      ); // Assuming 'name' is the correct property
+      setMangaImage(filteredManga);
       setmanga(data);
     };
     fetchData();
@@ -40,11 +43,19 @@ const ReadPage = () => {
           className="h-fit flex-wrap md:h-full w-full md:w-[40vh] md:bg-[#e9e9e9] md:dark:bg-gradient-to-r from-[#000000] to-[#363636]      flex flex-row  md:flex-col justify-center md:justify-start  items-center p-3 px-5 md:pt-10 gap-4
           "
         >
-          <img
-            className="object-cover hidden md:block rounded-[10px]  "
-            src= {mangaImage.imageUrl}
-            alt="Naruto_lvhvkh.png"
-          />
+          {mangaImage.imageUrl === "" ? (
+            <>
+              <Skeleton className="h-[40vh] w-full hidden md:block " />
+            </>
+          ) : (
+            <>
+              <img
+                className="object-cover h-[40vh] hidden md:block rounded-[10px]  "
+                src={mangaImage.imageUrl}
+                alt="Naruto_lvhvkh.png"
+              />
+            </>
+          )}
 
           <h1 className="w-full md:w-fit  text-xl font-bold text-center">
             {manganame[0].split("%20").join(" ")}
@@ -72,24 +83,30 @@ const ReadPage = () => {
           </div>
         </div>
         <div className="h-full w-full pt-5 overflow-y-auto  ">
-          {manga.map((manga) => {
-            return (
-              <>
-                <div
-                  key={manga.url}
-                  className="mx-auto max-w-[50rem] px-5 mb-5 h-fit flex justify-center items-start "
-                >
-                  <Image
-                    className="object-cover"
-                    src={manga.url}
-                    alt="OPM_0004-001.png"
-                    width={550}
-                    height={550}
-                  />
-                </div>
-              </>
-            );
-          })}
+          {manga.length === 1 ? (
+            <>
+              <Skeleton className="h-full max-w-[50rem] mx-5 md:mx-auto " />
+            </>
+          ) : (
+            manga.map((manga) => {
+              return (
+                <>
+                  <div
+                    key={manga.url}
+                    className="mx-auto max-w-[50rem] px-5 mb-5 h-fit flex justify-center items-start "
+                  >
+                    <Image
+                      className="object-cover"
+                      src={manga.url}
+                      alt="OPM_0004-001.png"
+                      width={550}
+                      height={550}
+                    />
+                  </div>
+                </>
+              );
+            })
+          )}
           <div className="h-[5vh] absolute md:sticky bottom-0 w-full flex justify-center">
             <div className="md:w-[60%] w-full h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-t-[10px] flex justify-evenly items-center ">
               <div className="flex justify-center items-center cursor-pointer ">

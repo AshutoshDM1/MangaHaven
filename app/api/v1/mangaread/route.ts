@@ -28,6 +28,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(result.resources);
   } catch (error) {
     console.error('Error fetching images from Cloudinary:', error);
-    return NextResponse.json({ error: 'Failed to fetch images' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to fetch images' , message : error }, { status: 500 });
   }
 }
