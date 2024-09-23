@@ -21,7 +21,7 @@ const ReadPage = () => {
     const fetchData = async () => {
       const mangadata = {
         mangaName: manganame[0].split("%20").join(" "),
-        chapter: `chapter ${manganame[1]}`,
+        chapter: `chapter-${manganame[1]}`,
       };
       const data = await getMangaChapterRead(mangadata);
       const mangaimage = await getManga();
@@ -98,7 +98,7 @@ const ReadPage = () => {
                     <Image
                       className="object-cover"
                       src={manga.url}
-                      alt="OPM_0004-001.png"
+                      alt={manga.url}
                       width={550}
                       height={550}
                     />

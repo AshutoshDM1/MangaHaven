@@ -2,9 +2,6 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { Loader2 } from "lucide-react";
-import { showLoadingAtom } from "@/state/atoms";
-import { useRecoilState } from "recoil";
 import { useRouter } from "next/navigation";
 
 export default function Loading() {
@@ -49,9 +46,6 @@ export default function Loading() {
       y: "-120vh",
       duration: 1,
       ease: "power2.inOut",
-      onComplete: () => {
-        router.push("/dashboard");
-      },
     });
   };
   useGSAP(
