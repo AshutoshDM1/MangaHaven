@@ -2,8 +2,15 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
+import { useRouter } from "next/navigation"; // Import useRouter for navigation
 
 export default function Home_Main_Card_II() {
+  const router = useRouter();
+
+  const handleGetStarted = () => {
+    router.push("/dashboard"); // Navigate to /dashboard
+  };
+
   return (
     <div
       className="min-h-screen bg-cover bg-center flex flex-col items-center justify-center px-4 relative"
@@ -40,10 +47,20 @@ export default function Home_Main_Card_II() {
             />
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white" />
           </div>
-          <Button className="ml-2 text-white bg-purple-500 hover:bg-purple-700 rounded-full">
+          <Button className="ml-2 text-white bg-purple-500 hover:bg-purple-700 rounded-full transition duration-500 ease-in-out">
             Search
           </Button>
         </div>
+      </div>
+
+      {/* Get Started Button at the bottom */}
+      <div className="absolute bottom-8 w-full flex justify-center">
+        <Button
+          onClick={handleGetStarted}
+          className="text-white bg-transparent border-[1px] border-white rounded-full px-6 py-3 text-lg transition duration-500 ease-in-out hover:bg-white hover:bg-opacity-20" // Added transition for smoother color change
+        >
+          Get Started
+        </Button>
       </div>
     </div>
   );
