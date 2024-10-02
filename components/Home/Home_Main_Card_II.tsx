@@ -1,8 +1,7 @@
-import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
-import { useRouter } from "next/navigation"; // Import useRouter for navigation
+import { useRouter } from "next/navigation";
 
 export default function Home_Main_Card_II() {
   const router = useRouter();
@@ -30,7 +29,7 @@ export default function Home_Main_Card_II() {
           className="mx-auto mb-2 w-[30vh] sm:w-[40vh] "
         />
 
-        <h1 className="HomeH1 text-[5rem] font-bold mb-4 text-center text-white">
+        <h1 className="HomeH1 text-[5rem] font-bold mb-4 text-center text-white leading-[1] ">
           Manga Haven
         </h1>
         <p className="text-xl mb-8 text-center text-white">
@@ -38,8 +37,8 @@ export default function Home_Main_Card_II() {
           favorite titles, discover new series, and start reading instantly.
         </p>
 
-        <div className="flex justify-center mb-8">
-          <div className="relative w-full max-w-md">
+        <div className="flex justify-center mb-8 flex-wrap gap-4 ">
+          <div className="relative w-full max-w-md  ">
             <Input
               type="text"
               placeholder="Search manga..."
@@ -50,17 +49,13 @@ export default function Home_Main_Card_II() {
           <Button className="ml-2 text-white bg-purple-500 hover:bg-purple-700 rounded-full transition duration-500 ease-in-out">
             Search
           </Button>
+          <Button
+            onClick={handleGetStarted}
+            className="text-white bg-transparent border-[1px] border-white rounded-full px-6 py-3 text-lg transition duration-500 ease-in-out hover:bg-white hover:bg-opacity-20 ml-4 "
+          >
+            Get Started
+          </Button>
         </div>
-      </div>
-
-      {/* Get Started Button at the bottom */}
-      <div className="absolute bottom-8 w-full flex justify-center">
-        <Button
-          onClick={handleGetStarted}
-          className="text-white bg-transparent border-[1px] border-white rounded-full px-6 py-3 text-lg transition duration-500 ease-in-out hover:bg-white hover:bg-opacity-20" // Added transition for smoother color change
-        >
-          Get Started
-        </Button>
       </div>
     </div>
   );

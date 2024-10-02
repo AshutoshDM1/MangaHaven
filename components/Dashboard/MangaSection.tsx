@@ -3,9 +3,10 @@ import { useRecoilState } from "recoil";
 import Image from "next/image";
 import { mangaData } from "@/state/atoms";
 import { Skeleton } from "../ui/skeleton";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { getManga } from "@/services/api";
 import { useRouter } from "next/navigation";
+import { animate, motion, useInView } from "framer-motion";
 
 const MangaSection = () => {
   const [mangas, setMangas] = useRecoilState(mangaData);
@@ -21,32 +22,49 @@ const MangaSection = () => {
   const handleMangaClick = (manganame: string) => {
     router.push(`/read/${manganame}/1`);
   };
+  const ref = useRef(null);
+  const isInView = useInView(ref, { amount: 0.1 });
 
-  const colors = useMemo(
-    () => ["bg-purple-500", "bg-[#FF6969] ", "bg-blue-500"],
-    []
-  );
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        duration: 2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 2,
+      },
+    },
+  };
 
   return (
     <>
       <div className="min-h-[60vh] w-full flex justify-center items-center">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 mt-8 transition-all duration-300">
+        <motion.div
+          ref={ref}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          variants={containerVariants}
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 mt-8 transition-all duration-300"
+        >
           {mangas.length === 1
             ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((index) => {
-                return (
-                  <>
-                    <Skeleton className="w-[21vh] h-[270px] rounded-lg" />
-                  </>
-                );
+                return <Skeleton className="w-[21vh] h-[270px] rounded-lg" />;
               })
             : mangas.map((item) => (
-                <div
+                <motion.div
+                  variants={itemVariants}
                   onClick={() => handleMangaClick(item.title)}
                   key={item.id}
-                  style={{
-                    transition:
-                      "background-color 0.3s ease, transform 0.3s ease",
-                  }}
                   className="dark:border-[#3a3a3a] border dark:border dark:hover:bg-zinc-900 transform  bg-card rounded-lg shadow-xl overflow-hidden transition-transform bg-[#161616] h-full  cursor-pointer "
                 >
                   <div className="relative overflow-hidden group">
@@ -68,7 +86,7 @@ const MangaSection = () => {
                             key={`${item.id}-${genre}`}
                             className={`text-sm text-white px-3 py-[2px] rounded-md w-fit`}
                             style={{
-                              textShadow: '0 0 10px #A977E7, 0 0 10px #A977E7'
+                              textShadow: "0 0 10px #A977E7, 0 0 10px #A977E7",
                             }}
                           >
                             {genre}
@@ -82,9 +100,9 @@ const MangaSection = () => {
                       {item.title}
                     </h3>
                   </div>
-                </div>
+                </motion.div>
               ))}
-        </div>
+        </motion.div>
       </div>
     </>
   );
