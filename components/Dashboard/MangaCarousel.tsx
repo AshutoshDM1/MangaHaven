@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight, Divide } from "lucide-react";
 import { MangaItem, mangaItems } from "../data/mangaCarouselData";
 import Image from "next/image";
@@ -7,6 +7,7 @@ import { useRecoilState } from "recoil";
 import { mangaCarouselData } from "@/state/atoms";
 import { getMangaCarousel } from "@/services/api";
 import { Skeleton } from "../ui/skeleton";
+import { animate, delay, motion, stagger, useInView } from "framer-motion";
 
 interface MangaCarouselProps {
   items: MangaItem[];
@@ -80,6 +81,28 @@ const MangaCarousel: React.FC = () => {
       return `translateX(-${currentIndex * 33.33}%)`;
     }
   };
+  const ref = useRef(null);
+  const variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+        duration: 2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: -50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
 
   return (
     <div className="xl:max-w-[75rem] w-[95%] mx-auto">
@@ -88,76 +111,89 @@ const MangaCarousel: React.FC = () => {
           <h5 className="md:text-3xl text-xl font-bold  opacity-90 px-2 pt-2 pb-1 md:pb-5 md:mb-3">
             Most Viewed
           </h5>
-          <div
-            id="carousel"
-            className={`flex w-full ${
-              isAnimating ? "transition-transform duration-500 ease-in-out" : ""
-            }`}
-            style={{ transform: getTransformValue() }}
-          >
-            {items.length <= 1
-              ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((index) => (
+          {items.length <= 1 ? (
+            <>
+              <div className="w-full flex">
+                {[1, 2, 3].map((index) => (
                   <>
-                    <div className="flex gap-4">
-                      <Skeleton className="w-[70vw] md:w-[25vw] flex-shrink-0 mx-2 h-[20vh] md:h-[25vh] "></Skeleton>
+                    <div key={index} className="flex gap-4 w-[40vh] ">
+                      <Skeleton className="w-full mx-2 h-[20vh] md:h-[25vh] "></Skeleton>
                     </div>
                   </>
-                ))
-              : extendedItems.map((item, index) => (
+                ))}
+              </div>
+            </>
+          ) : (
+            <motion.div
+              ref={ref}
+              initial="hidden"
+              animate="visible"
+              variants={variants}
+              id="carousel"
+              className={`flex w-full ${
+                isAnimating
+                  ? "transition-transform duration-500 ease-in-out"
+                  : ""
+              }`}
+              style={{ transform: getTransformValue() }}
+            >
+              {extendedItems.map((item, index) => (
+                <motion.div
+                  variants={itemVariants}
+                  key={index}
+                  className="lg:w-1/3 md:w-1/2 w-full flex-shrink-0 px-0 md:px-2 "
+                >
                   <div
-                    key={index}
-                    className="lg:w-1/3 md:w-1/2 w-full flex-shrink-0 px-0 md:px-2 "
+                    style={{
+                      transition:
+                        "background-color 0.3s ease, transform 0.3s ease",
+                    }}
+                    className="dark:border-[#3a3a3a] border dark:border md:h-[25vh] h-[20vh] flex rounded-lg overflow-hidden hover:bg-[#cccccc] dark:hover:bg-zinc-900 transform cursor-pointer"
                   >
-                    <div
-                      style={{
-                        transition:
-                          "background-color 0.3s ease, transform 0.3s ease",
-                      }}
-                      className="dark:border-[#3a3a3a] border dark:border md:h-[25vh] h-[20vh] flex rounded-lg overflow-hidden hover:bg-[#cccccc] dark:hover:bg-zinc-900 transform cursor-pointer"
-                    >
-                      <div className="w-[60%] flex flex-col justify-center border-l-[5px] dark:border-l-[3px] border-[#C391FF] dark:border-[#ffffffe2]">
-                        <div className="md:p-3 p-2 md:h-[40%] h-[30%]">
-                          <h3 className="md:text-lg text-sm font-normal  opacity-70">
-                            {item.status}
-                          </h3>
-                          <h3 className="md:text-xl text-md font-semibold ">
-                            {item.title}
-                          </h3>
-                        </div>
-                        <div className="md:h-[60%] h-[50%] flex flex-col justify-between md:p-3 p-2 pt-6 md:pt-3 ">
-                          <p className=" opacity-70 md:text-md text-sm line-clamp-2 md:block hidden">
-                            {item.description}
-                          </p>
-                          <div className=" opacity-70 md:text-md text-sm">
-                            <span>{item.volume}</span>
-                            <span className="mx-2">•</span>
-                            <span>{item.chapter}</span>
-                          </div>
-                          <div className="flex flex-wrap gap-1">
-                            {item.genres.map((genre, i) => (
-                              <span
-                                key={i}
-                                className="md:text-md text-[12px] px-1 "
-                              >
-                                {genre}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
+                    <div className="w-[60%] flex flex-col justify-center border-l-[5px] dark:border-l-[3px] border-[#C391FF] dark:border-[#ffffffe2]">
+                      <div className="md:p-3 p-2 md:h-[40%] h-[30%]">
+                        <h3 className="md:text-lg text-sm font-normal  opacity-70">
+                          {item.status}
+                        </h3>
+                        <h3 className="md:text-xl text-md font-semibold ">
+                          {item.title}
+                        </h3>
                       </div>
-                      <div className="relative w-[40%]">
-                        <Image
-                          src={`${item.imageUrl}`}
-                          alt={item.title}
-                          className="w-full h-full object-cover"
-                          width={500}
-                          height={300}
-                        />
+                      <div className="md:h-[60%] h-[50%] flex flex-col justify-between md:p-3 p-2 pt-6 md:pt-3 ">
+                        <p className=" opacity-70 md:text-md text-sm line-clamp-2 md:block hidden">
+                          {item.description}
+                        </p>
+                        <div className=" opacity-70 md:text-md text-sm">
+                          <span>{item.volume}</span>
+                          <span className="mx-2">•</span>
+                          <span>{item.chapter}</span>
+                        </div>
+                        <div className="flex flex-wrap gap-1">
+                          {item.genres.map((genre, i) => (
+                            <span
+                              key={i}
+                              className="md:text-md text-[12px] px-1 "
+                            >
+                              {genre}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
+                    <div className="relative w-[40%]">
+                      <Image
+                        src={`${item.imageUrl}`}
+                        alt={item.title}
+                        className="w-full h-full object-cover"
+                        width={500}
+                        height={300}
+                      />
+                    </div>
                   </div>
-                ))}
-          </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
         </div>
         <button
           onClick={prevSlide}

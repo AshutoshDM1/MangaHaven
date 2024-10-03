@@ -7,6 +7,7 @@ import Loading from "@/components/Dashboard/Loading";
 import { useRecoilState } from "recoil";
 import { showLoadingAtom } from "@/state/atoms";
 
+
 export default function Home() {
   const [showLoading, setShowLoading] = useRecoilState(showLoadingAtom);
   useEffect(() => {
@@ -19,8 +20,8 @@ export default function Home() {
 
   return (
     <>
-      {showLoading && <Loading />}
-      <div className="relative min-h-screen">
+      {/* {showLoading && <Loading />} */}
+      <div className="relative min-h-screen  overflow-hidden">
         <div className="absolute top-0 left-0 w-full z-10">
           <Home_NavBar />
         </div>

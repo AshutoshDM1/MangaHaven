@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { animate, delay, motion, stagger, useInView } from "framer-motion";
 
 export default function Home_Main_Card_II() {
   const router = useRouter();
@@ -11,17 +12,23 @@ export default function Home_Main_Card_II() {
   };
 
   return (
-    <div
-      className="min-h-screen bg-cover bg-center flex flex-col items-center justify-center px-4 relative"
+    <motion.div
+      initial={{ opacity: 1 , backgroundPosition: "left 50%"  }}
+      transition={{ duration: 2 }}
+      animate={{ opacity: 1 , backgroundPosition: "left 5%" }}
+      className="min-h-screen bg-cover bg-center flex flex-col items-center justify-center px-4 relative overflow-hidden "
       style={{
         backgroundImage: "url('/background-image-home.webp')",
         backgroundSize: "150%",
         backgroundPosition: "left 5%",
       }}
     >
-      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-50 "></div>
       <div className="w-full max-w-3xl z-10">
-        <img
+        <motion.img
+          initial={{ opacity: 0 }}
+          transition={{ duration: 2 }}
+          animate={{ opacity: 1 }}
           src="https://images.fineartamerica.com/images/artworkimages/medium/3/animal-demon-slayer-anime-tanjiro-kamado-anime-video-game-transparent.png"
           alt="Anime characters eating together"
           width={400}
@@ -29,15 +36,32 @@ export default function Home_Main_Card_II() {
           className="mx-auto mb-2 w-[30vh] sm:w-[40vh] "
         />
 
-        <h1 className="HomeH1 text-[5rem] font-bold mb-4 text-center text-white leading-[1] ">
-          Manga Haven
-        </h1>
-        <p className="text-xl mb-8 text-center text-white">
+        <div className=" overflow-hidden">
+          <motion.h1
+            initial={{ opacity: 0, y: 100 }}
+            transition={{ duration: 0.5 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="HomeH1 text-[4.1rem] font-bold pb-4 text-center text-white leading-[1] sm:leading-[1.2] "
+          >
+            Manga Haven
+          </motion.h1>
+        </div>
+        <motion.p
+          initial={{ opacity: 0 }}
+          transition={{ duration: 2 , delay : .5 }}
+          animate={{ opacity: 1 }}
+          className="text-xl mb-8 text-center text-white"
+        >
           Dive into the world of manga with MangaHeaven. Search for your
           favorite titles, discover new series, and start reading instantly.
-        </p>
+        </motion.p>
 
-        <div className="flex justify-center mb-8 flex-wrap gap-4 ">
+        <motion.div
+          initial={{ opacity: 0 }}
+          transition={{ duration: 2 , delay : 1 }}
+          animate={{ opacity: 1 }}
+          className="flex justify-center mb-8 flex-wrap gap-4 "
+        >
           <div className="relative w-full max-w-md  ">
             <Input
               type="text"
@@ -55,8 +79,8 @@ export default function Home_Main_Card_II() {
           >
             Get Started
           </Button>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }

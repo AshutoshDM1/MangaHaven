@@ -6,7 +6,7 @@ import { Skeleton } from "../ui/skeleton";
 import { useEffect, useMemo, useRef } from "react";
 import { getManga } from "@/services/api";
 import { useRouter } from "next/navigation";
-import { animate, motion, useInView } from "framer-motion";
+import { animate, delay, motion, useInView } from "framer-motion";
 
 const MangaSection = () => {
   const [mangas, setMangas] = useRecoilState(mangaData);
@@ -30,7 +30,7 @@ const MangaSection = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
+        staggerChildren: .2,
         duration: 2,
       },
     },
@@ -58,7 +58,12 @@ const MangaSection = () => {
         >
           {mangas.length === 1
             ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((index) => {
-                return <Skeleton className="w-[21vh] h-[270px] rounded-lg" />;
+                return (
+                  <Skeleton
+                    key={index}
+                    className="w-[21vh] h-[270px] rounded-lg"
+                  />
+                );
               })
             : mangas.map((item) => (
                 <motion.div

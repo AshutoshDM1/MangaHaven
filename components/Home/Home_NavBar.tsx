@@ -1,14 +1,46 @@
+import { motion } from "framer-motion";
+
 export default function Home_NavBar() {
+  const variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15, // Stagger delay for child items
+        duration: 2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: -50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5, // Individual item animation duration
+      },
+    },
+  };
+
   return (
     <div className="h-fit">
-      <div className="flex h-full justify-center py-4 sm:py-10  ">
-        <div className="flex gap-8 h-full md:text-base">
-          <NavItem text="Home" className="hover:cursor-pointer"/>
-          <NavItem text="Manga" className="hover:cursor-pointer" />
-          <NavItem text="Manhwa" className="hidden sm:flex hover:cursor-pointer" />
-          <NavItem text="Most Popular" className="hover:cursor-pointer" />
-          <NavItem text="Top Airing" className="hidden sm:flex hover:cursor-pointer" />
-        </div>
+      <div className="flex h-full justify-center py-4 sm:py-10">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={variants}
+          transition={{ when: "beforeChildren", delayChildren: 9 }} // 9 sec delay before the child animations start
+          className="flex gap-8 h-full md:text-base"
+        >
+          {["Home", "Manhwa", "Manga", "Most Popular", "Top Airing"].map((text) => (
+            <div className="overflow-hidden" key={text}>
+              <motion.div variants={itemVariants} className="overflow-hidden w-fit">
+                <NavItem text={text} className={`hover:cursor-pointer ${text === "Most Popular" ? "hidden md:block " : "" } ${text === "Top Airing" ? "hidden md:block " : "" } `}/>
+              </motion.div>
+            </div>
+          ))}
+        </motion.div>
       </div>
     </div>
   );
