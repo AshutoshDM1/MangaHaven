@@ -8,24 +8,25 @@ export default function Home_Main_Card_II() {
   const router = useRouter();
 
   const handleGetStarted = () => {
-    router.push("/dashboard"); // Navigate to /dashboard
+    router.push("/dashboard");
   };
 
   return (
     <motion.div
-      initial={{ opacity: 1 , backgroundPosition: "left 50%"  }}
-      transition={{ duration: 2 }}
-      animate={{ opacity: 1 , backgroundPosition: "left 5%" }}
-      className="min-h-screen bg-cover bg-center flex flex-col items-center justify-center px-4 relative overflow-hidden "
+      initial={{ opacity: 1, backgroundPosition: "left 60%" }}
+      transition={{ duration: 1.5 }}
+      animate={{ opacity: 1, backgroundPosition: "left 30%" }}
+      className="min-h-screen  flex flex-col items-center justify-center px-4 relative overflow-hidden bg-auto "
       style={{
         backgroundImage: "url('/background-image-home.webp')",
-        backgroundSize: "150%",
-        backgroundPosition: "left 5%",
       }}
     >
       <div className="absolute inset-0 bg-black bg-opacity-50 "></div>
       <div className="w-full max-w-3xl z-10">
         <motion.img
+          onClick={() => {
+            router.push("/dashboard");
+          }}
           initial={{ opacity: 0 }}
           transition={{ duration: 2 }}
           animate={{ opacity: 1 }}
@@ -33,22 +34,25 @@ export default function Home_Main_Card_II() {
           alt="Anime characters eating together"
           width={400}
           height={200}
-          className="mx-auto mb-2 w-[30vh] sm:w-[40vh] "
+          className="mx-auto mb-2 w-[30vh] sm:w-[40vh] cursor-pointer  "
         />
 
         <div className=" overflow-hidden">
           <motion.h1
+            onClick={() => {
+              router.push("/dashboard");
+            }}
             initial={{ opacity: 0, y: 100 }}
             transition={{ duration: 0.5 }}
             animate={{ opacity: 1, y: 0 }}
-            className="HomeH1 text-[4.1rem] font-bold pb-4 text-center text-white leading-[1] sm:leading-[1.2] "
+            className="HomeH1 text-[4.1rem] font-bold pb-4 text-center text-white leading-[1] sm:leading-[1.2] cursor-pointer select-text "
           >
             Manga Haven
           </motion.h1>
         </div>
         <motion.p
           initial={{ opacity: 0 }}
-          transition={{ duration: 2 , delay : .5 }}
+          transition={{ duration: 2, delay: 0.5 }}
           animate={{ opacity: 1 }}
           className="text-xl mb-8 text-center text-white"
         >
@@ -58,7 +62,7 @@ export default function Home_Main_Card_II() {
 
         <motion.div
           initial={{ opacity: 0 }}
-          transition={{ duration: 2 , delay : 1 }}
+          transition={{ duration: 2, delay: 1 }}
           animate={{ opacity: 1 }}
           className="flex justify-center mb-8 flex-wrap gap-4 "
         >

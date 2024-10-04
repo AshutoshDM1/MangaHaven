@@ -8,12 +8,14 @@ import { mangaCarouselData } from "@/state/atoms";
 import { getMangaCarousel } from "@/services/api";
 import { Skeleton } from "../ui/skeleton";
 import { animate, delay, motion, stagger, useInView } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 interface MangaCarouselProps {
   items: MangaItem[];
 }
 
 const MangaCarousel: React.FC = () => {
+  const router = useRouter();
   const [items, setItems] = useRecoilState(mangaCarouselData);
   const [currentIndex, setCurrentIndex] = useState(3);
   const [isAnimating, setIsAnimating] = useState(true);
@@ -139,6 +141,9 @@ const MangaCarousel: React.FC = () => {
             >
               {extendedItems.map((item, index) => (
                 <motion.div
+                  onClick={() => {
+                    router.push(`/read/${item.title}/1`);
+                  }}
                   variants={itemVariants}
                   key={index}
                   className="lg:w-1/3 md:w-1/2 w-full flex-shrink-0 px-0 md:px-2 "

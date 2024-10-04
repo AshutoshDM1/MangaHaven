@@ -39,13 +39,16 @@ export default function Loading() {
       right: "0",
       ease: "power2.inOut",
       width: "203vh",
-      borderRadius : "0px"
+      borderRadius: "0px",
     });
     tl.to(containermain.current, {
       delay: 4,
       y: "-120vh",
       duration: 1,
       ease: "power2.inOut",
+      onComplete: () => {
+        router.push("/home");
+      },
     });
   };
   useGSAP(

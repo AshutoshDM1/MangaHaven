@@ -7,8 +7,10 @@ import { getMangaDashboard } from "@/services/api";
 import { Skeleton } from "../ui/skeleton";
 import { Divide } from "lucide-react";
 import { easeInOut, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 const BackGroundMain: React.FC = () => {
+  const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   let [items, setItems] = useRecoilState(mangaBackgroundData);
@@ -45,8 +47,8 @@ const BackGroundMain: React.FC = () => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      transition={{ duration: 1 ,ease : easeInOut }}
-      animate={{ opacity: 1 ,}}
+      transition={{ duration: 1, ease: easeInOut }}
+      animate={{ opacity: 1 }}
       className="flex justify-center items-center overflow-hidden w-full"
     >
       <div className="md:min-h-[60vh] min-h-[45vh] flex justify-center items-center md:px-4 relative w-full">
@@ -73,6 +75,9 @@ const BackGroundMain: React.FC = () => {
             }`}
           >
             <button
+              onClick={() => {
+                router.push(`/read/${items[currentIndex].title}/1`);
+              }}
               style={{
                 boxShadow: "0 0 1rem rgba(0, 0, 0, 0.5)",
                 transition: "background-color 0.3s ease, transform 0.3s ease",

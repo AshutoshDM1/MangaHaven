@@ -13,6 +13,7 @@ import {
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const ReadPage = () => {
   const { manganame } = useParams();
@@ -46,7 +47,7 @@ const ReadPage = () => {
   return (
     <>
       <NavbarMain />
-      <div className="h-[92vh] w-full flex justify-center items-center flex-col md:flex-row ">
+      <div className="h-[92vh] w-full flex justify-center items-center flex-col md:flex-row overflow-hidden relative ">
         <div
           className="h-fit flex-wrap md:h-full w-full md:w-[40vh] md:bg-[#e9e9e9] md:dark:bg-gradient-to-r from-[#000000] to-[#363636] flex flex-row  md:flex-col justify-center md:justify-start  items-center p-3 px-5 md:pt-10 gap-4
           "
@@ -104,10 +105,32 @@ const ReadPage = () => {
             )}
           </div>
           <div className="w-fit md:w-full  flex justify-center items-center gap-3 ">
-            <div className="w-1/2 py-[5px] px-3 bg-[#8031ff] rounded-md flex justify-center items-center cursor-pointer ">
+            <div
+              onClick={() => {
+                if (Number(manganame[1]) >= 2) {
+                  router.push(
+                    `/read/${manganame[0]}/${Number(manganame[1]) - 1}`
+                  );
+                } else {
+                  toast.error("There is no Chapter 0");
+                }
+              }}
+              className="w-1/2 py-[5px] px-3 bg-[#8031ff] rounded-md flex justify-center items-center cursor-pointer "
+            >
               <ChevronLeft />
             </div>
-            <div className="w-1/2 py-[5px] px-3 bg-[#8031ff] rounded-md flex justify-center items-center  cursor-pointer  ">
+            <div
+              onClick={() => {
+                if (Number(manganame[1]) <= 1) {
+                  router.push(
+                    `/read/${manganame[0]}/${Number(manganame[1]) + 1}`
+                  );
+                } else {
+                  toast.error("There is no more than 2 Chapter");
+                }
+              }}
+              className="w-1/2 py-[5px] px-3 bg-[#8031ff] rounded-md flex justify-center items-center  cursor-pointer  "
+            >
               <ChevronRight />
             </div>
           </div>
@@ -120,7 +143,7 @@ const ReadPage = () => {
             </div>
           </div>
         </div>
-        <div className="h-full w-full pt-5 overflow-y-auto  ">
+        <div className="h-full w-full pt-5 overflow-y-auto relative ">
           {manga.length === 1 ? (
             <>
               <Skeleton className="h-full max-w-[50rem] mx-5 md:mx-auto " />
@@ -134,7 +157,7 @@ const ReadPage = () => {
                     className="mx-auto max-w-[50rem] px-5 mb-5 h-fit flex justify-center items-start "
                   >
                     <Image
-                      className="object-cover"
+                      className="object-cover select-none "
                       src={manga.url}
                       alt={manga.url}
                       width={550}
@@ -145,8 +168,8 @@ const ReadPage = () => {
               );
             })
           )}
-          <div className="h-[5vh] absolute md:sticky bottom-0 w-full flex justify-center">
-            <div className="md:w-[60%] w-full h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-t-[10px] flex justify-evenly items-center ">
+          <div className="h-[5vh] sticky bottom-0 w-full flex justify-center items-center  overflow-hidden ">
+            <div className="w-[70vh] h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-t-[10px] flex justify-evenly items-center flex-shrink ">
               <div className="flex justify-center items-center cursor-pointer ">
                 <ChevronLeft className="text-[#f4bc2cf4]" />
                 <h1 className="font-normal text-[1rem] md:text-[1.2rem]">

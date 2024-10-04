@@ -120,28 +120,31 @@
     #efc0ff 80%
   );
 }
+::selection {
+  background-color: #d403a0; /* Custom background color for selected text */
+  color: #ffffff; /* Custom text color for selected text */
+}
 
 ::-webkit-scrollbar {
   width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;                 
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #555;        
-  border-radius: 5px;           
-  cursor: pointer;                    
+  background-color: #555;
+  border-radius: 5px;
+  cursor: pointer;
   transition: all;
-  transition-duration: 600ms;   
+  transition-duration: 600ms;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #888;  
+  background-color: #888;
 }
 
 ::-webkit-scrollbar-corner {
-  background: transparent;             
+  background: transparent;
 }
-
