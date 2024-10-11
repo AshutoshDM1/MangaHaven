@@ -85,8 +85,21 @@ type MangaChapterData = { mangaName: string; chapter: string };
 export const getMangaChapterRead = async (mangaData: MangaChapterData) => {
   try {
     const response = await axios.post(`${baseUrl}/api/v1/mangaread`, mangaData);
-    toast.success("Manga Added Successfully");
     return response.data;
+  } catch (error) {
+    HandleError(error);
+  }
+};
+
+type MangaImage = { title: string };
+export const getMangaImage = async (mangaimage: MangaImage) => {
+  try {
+    const response = await axios.post(
+      `${baseUrl}/api/v1/mangaCover`,
+      mangaimage
+    );
+    response.data;
+    return response.data.imageUrl;
   } catch (error) {
     HandleError(error);
   }

@@ -1,7 +1,7 @@
 "use client";
 import NavbarMain from "@/components/NavBar/NavbarMain";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getManga, getMangaChapterRead } from "@/services/api";
+import { getManga, getMangaChapterRead, getMangaImage } from "@/services/api";
 import { motion } from "framer-motion";
 
 import {
@@ -19,7 +19,7 @@ const ReadPage = () => {
   const { manganame } = useParams();
   const router = useRouter();
   const [manga, setmanga] = useState([{ url: "" }]);
-  const [mangaImage, setMangaImage] = useState({ imageUrl: "" });
+  const [mangaImage, setMangaImage] = useState("");
   const [showChap, setShowChap] = useState<boolean>(false);
 
   const handleRoute = (route: string) => {
@@ -33,12 +33,9 @@ const ReadPage = () => {
         chapter: `chapter-${manganame[1]}`,
       };
       const data = await getMangaChapterRead(mangadata);
-      const mangaimage = await getManga();
-      // Fix the filter to compare the correct property
-      const filteredManga = mangaimage.find(
-        (item: any) => item.title === manganame[0].split("%20").join(" ")
-      ); // Assuming 'name' is the correct property
-      setMangaImage(filteredManga);
+      const sendMangaImage = { title: manganame[0].split("%20").join(" ") };
+      const mangaimage = await getMangaImage(sendMangaImage);
+      setMangaImage(mangaimage);
       setmanga(data);
     };
     fetchData();
@@ -52,7 +49,7 @@ const ReadPage = () => {
           className="h-fit flex-wrap md:h-full w-full md:w-[40vh] md:bg-[#e9e9e9] md:dark:bg-gradient-to-r from-[#000000] to-[#363636] flex flex-row  md:flex-col justify-center md:justify-start  items-center p-3 px-5 md:pt-10 gap-4
           "
         >
-          {mangaImage.imageUrl === "" ? (
+          {mangaImage === "" ? (
             <>
               <Skeleton className="h-[40vh] w-full hidden md:block " />
             </>
@@ -60,7 +57,7 @@ const ReadPage = () => {
             <>
               <img
                 className="object-cover h-[40vh] hidden md:block rounded-[10px]  "
-                src={mangaImage.imageUrl}
+                src={mangaImage}
                 alt="Naruto_lvhvkh.png"
               />
             </>
