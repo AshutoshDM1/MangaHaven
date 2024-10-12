@@ -145,7 +145,7 @@ const MangaCarousel: React.FC = () => {
                     router.push(`/read/${item.title}/1`);
                   }}
                   variants={itemVariants}
-                  key={index}
+                  key={item.id}
                   className="lg:w-1/3 md:w-1/2 w-full flex-shrink-0 px-0 md:px-2 "
                 >
                   <div

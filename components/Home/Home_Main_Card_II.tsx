@@ -13,7 +13,7 @@ export default function Home_Main_Card_II() {
 
   return (
     <motion.div
-      initial={{ opacity: 1, backgroundPosition: "left 60%" }}
+      initial={{ opacity: 0, backgroundPosition: "left 60%" }}
       transition={{ duration: 1.5 }}
       animate={{ opacity: 1, backgroundPosition: "left 30%" }}
       className="min-h-screen  flex flex-col items-center justify-center px-4 relative overflow-hidden bg-auto "
@@ -34,7 +34,7 @@ export default function Home_Main_Card_II() {
           alt="Anime characters eating together"
           width={400}
           height={200}
-          className="mx-auto mb-2 w-[30vh] sm:w-[40vh] cursor-pointer  "
+          className="mx-auto h-fit mb-2 w-[30vh] sm:w-[40vh] cursor-pointer  "
         />
 
         <div className=" overflow-hidden">

@@ -24,6 +24,7 @@
     "class-variance-authority": "^0.7.0",
     "cloudinary": "^2.4.0",
     "clsx": "^2.1.1",
+    "embla-carousel-react": "^8.3.0",
     "express": "^4.20.0",
     "formidable": "^3.5.1",
     "framer-motion": "^11.3.31",

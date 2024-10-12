@@ -3,6 +3,13 @@ import NavbarMain from "@/components/NavBar/NavbarMain";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getManga, getMangaChapterRead, getMangaImage } from "@/services/api";
 import { motion } from "framer-motion";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 import {
   ChevronLeft,
@@ -21,6 +28,7 @@ const ReadPage = () => {
   const [manga, setmanga] = useState([{ url: "" }]);
   const [mangaImage, setMangaImage] = useState("");
   const [showChap, setShowChap] = useState<boolean>(false);
+  const [slide, setSlide] = useState<boolean>(true);
 
   const handleRoute = (route: string) => {
     router.push(`/read/${manganame[0]}/${route}`);
@@ -131,11 +139,25 @@ const ReadPage = () => {
               <ChevronRight />
             </div>
           </div>
-          <div className="w-fit md:w-full hidden md:flex  justify-center items-center gap-3 ">
-            <div className="w-1/2 py-[5px] px-3 bg-[#ec2f4b] rounded-md flex justify-center items-center cursor-pointer ">
+          <div className="w-fit md:w-full flex justify-center items-center gap-3 ">
+            <div
+              onClick={() => {
+                setSlide(true);
+              }}
+              className={`w-1/2 py-[5px] px-3 bg-[#ec2f4b] ${
+                slide ? "bg-[#ff2b2b]" : ""
+              } rounded-md flex justify-center items-center cursor-pointer `}
+            >
               <GalleryVertical />
             </div>
-            <div className="w-1/2 py-[5px] px-3 bg-[#ec2f4b] rounded-md flex justify-center items-center  cursor-pointer  ">
+            <div
+              onClick={() => {
+                setSlide(false);
+              }}
+              className={`w-1/2 py-[5px] px-3 bg-[#ec2f4b] ${
+                slide ? "" : "bg-[#ff2b2b]"
+              } rounded-md flex justify-center items-center cursor-pointer `}
+            >
               <GalleryHorizontal />
             </div>
           </div>
@@ -146,46 +168,55 @@ const ReadPage = () => {
               <Skeleton className="h-full max-w-[50rem] mx-5 md:mx-auto " />
             </>
           ) : (
-            manga.map((manga) => {
-              return (
+            <>
+              {slide ? (
+                manga.map((manga) => {
+                  return (
+                    <>
+                      <div
+                        key={manga.url}
+                        className="mx-auto max-w-[50rem] px-5 mb-5 h-fit flex justify-center items-start "
+                      >
+                        <Image
+                          className="object-cover select-none "
+                          src={manga.url}
+                          alt={manga.url}
+                          width={550}
+                          height={550}
+                        />
+                      </div>
+                    </>
+                  );
+                })
+              ) : (
                 <>
-                  <div
-                    key={manga.url}
-                    className="mx-auto max-w-[50rem] px-5 mb-5 h-fit flex justify-center items-start "
-                  >
-                    <Image
-                      className="object-cover select-none "
-                      src={manga.url}
-                      alt={manga.url}
-                      width={550}
-                      height={550}
-                    />
+                  <div className="max-h-[90%] w-full sm:w-[30rem] mx-auto mt-5 px-2 flex justify-center items-center overflow-hidden rounded-[15px] ">
+                    <Carousel className="w-full flex justify-center items-center">
+                      <CarouselContent>
+                        {manga.map((manga) => {
+                          return (
+                            <>
+                              <CarouselItem>
+                                <div className="h-[80vh] md:h-fit w-full flex justify-center items-center ">
+                                  <Image
+                                    className="h-fit w-fit object-cover select-none rounded-[15px] "
+                                    src={manga.url}
+                                    alt={manga.url}
+                                    width={550}
+                                    height={550}
+                                  />
+                                </div>
+                              </CarouselItem>
+                            </>
+                          );
+                        })}
+                      </CarouselContent>
+                    </Carousel>
                   </div>
                 </>
-              );
-            })
+              )}
+            </>
           )}
-          <div className="h-[5vh] sticky bottom-0 w-full flex justify-center items-center  overflow-hidden ">
-            <div className="w-[70vh] h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-t-[10px] flex justify-evenly items-center flex-shrink ">
-              <div className="flex justify-center items-center cursor-pointer ">
-                <ChevronLeft className="text-[#f4bc2cf4]" />
-                <h1 className="font-normal text-[1rem] md:text-[1.2rem]">
-                  Prev
-                </h1>
-              </div>
-              <div className="flex justify-center items-center ">
-                <h1 className="w-fit font-normal text-[1rem] md:text-[1.2rem]">
-                  33/55
-                </h1>
-              </div>
-              <div className="flex justify-center items-center cursor-pointer ">
-                <h1 className="font-normal text-[1rem] md:text-[1.2rem]">
-                  Next
-                </h1>
-                <ChevronRight className="text-[#f4bc2cf4]" />
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </>

@@ -8,8 +8,6 @@ import { Button } from "../ui/button";
 import SideNav from "../Dashboard/SideNav";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
-
-
 interface NavbarMainProps {}
 
 const NavbarMain: React.FC<NavbarMainProps> = () => {
@@ -44,7 +42,7 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
                 placeholder="Search Manga..."
               />
             </div>
-            <div className="flex flex-row-reverse  justify-evenly items-center gap-3 w-[90%] lg:w-[35%] md:w-[40%] ">
+            <div className="flex flex-row-reverse  justify-evenly items-center gap-3 w-fit lg:w-[35%] md:w-[40%] ">
               <Avatar
                 className="cursor-pointer  border-[2px] hover:dark:border-white hover:border-black border-transparent duration-300 transition-ease-in  "
                 onClick={() => router.push("/profile")}
@@ -58,8 +56,7 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
               </Avatar>
               {session.data?.user?.name ? (
                 <>
-                  {" "}
-                  <h1 className="text-base font-semibold w-fit flex ">
+                  <h1 className="text-base font-semibold w-fit hidden md:flex ">
                     Hi! {session.data?.user?.name.toUpperCase()}
                   </h1>{" "}
                 </>
