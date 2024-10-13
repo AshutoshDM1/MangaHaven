@@ -12,7 +12,7 @@ export default function Home() {
         <div className="flex flex-col">
           <div className="relative">
             <BackGroundMain />
-            <div className="md:-mt-1 -mt-36">
+            <div className="md:-mt-1 -mt-28">
               <MangaCarousel />
             </div>
           </div>

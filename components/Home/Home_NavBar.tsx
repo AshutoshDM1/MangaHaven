@@ -38,7 +38,7 @@ export default function Home_NavBar() {
               variants={itemVariants}
               className="overflow-hidden w-fit"
             >
-              <NavItem text="Home" className={`hover:cursor-pointer`} />
+              <NavItem text="Home" className={`hover:cursor-pointer hidden md:flex `} />
             </motion.div>
           </div>
           <div className="overflow-hidden">
@@ -46,7 +46,7 @@ export default function Home_NavBar() {
               variants={itemVariants}
               className="overflow-hidden w-fit"
             >
-              <NavItem text="Home" className={`hover:cursor-pointer`} />
+              <NavItem text="Manga" className={`hover:cursor-pointer`} />
             </motion.div>
           </div>
           <div className="overflow-hidden">
@@ -54,7 +54,7 @@ export default function Home_NavBar() {
               variants={itemVariants}
               className="overflow-hidden w-fit"
             >
-              <NavItem text="Home" className={`hover:cursor-pointer`} />
+              <NavItem text="Manhwa" className={`hover:cursor-pointer`} />
             </motion.div>
           </div>
           <div className="overflow-hidden">
@@ -62,7 +62,7 @@ export default function Home_NavBar() {
               variants={itemVariants}
               className="overflow-hidden w-fit"
             >
-              <NavItem text="Home" className={`hover:cursor-pointer`} />
+              <NavItem text="Most Popular" className={`hover:cursor-pointer`} />
             </motion.div>
           </div>
           <div className="overflow-hidden">
@@ -70,7 +70,7 @@ export default function Home_NavBar() {
               variants={itemVariants}
               className="overflow-hidden w-fit"
             >
-              <NavItem text="Home" className={`hover:cursor-pointer`} />
+              <NavItem text="Top Airing" className={`hover:cursor-pointer hidden md:flex `} />
             </motion.div>
           </div>
         </motion.div>

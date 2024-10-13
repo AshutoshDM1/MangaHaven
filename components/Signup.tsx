@@ -64,7 +64,7 @@ const Signup: React.FC = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="h-[55vh] w-full flex flex-col gap-3 ">
+          <div className="min-h-[55vh] w-full flex flex-col gap-3 ">
             <div className="space-y-2">
               <label htmlFor="name" className="text-sm font-medium ">
                 User Name

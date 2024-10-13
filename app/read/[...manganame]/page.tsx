@@ -86,13 +86,13 @@ const ReadPage = () => {
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.2 }}
-                className="w-[80%] absolute top-10 min-h-fit rounded-md bg-[#f8b416] flex flex-col justify-center items-center  gap-1  py-4 "
+                className="w-fit z-30 absolute top-10 min-h-fit rounded-md bg-[#f8b416] flex flex-col justify-center items-center  gap-1 p-4 "
               >
                 <motion.h1
                   onClick={() => handleRoute("1")}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 1.1 }}
-                  className="w-[80%] font-bold text-[1.2rem] md:text-[1.2rem]  text-center bg-[#e9962a]  py-1 rounded-md  cursor-pointer px-3 select-none "
+                  className="w-[8rem] z-30 font-bold text-[1.2rem] md:text-[1.2rem]  text-center bg-[#e9962a]  py-1 rounded-md  cursor-pointer px-3 select-none "
                 >
                   Chapter 1
                 </motion.h1>
@@ -100,7 +100,7 @@ const ReadPage = () => {
                   onClick={() => handleRoute("2")}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 1.1 }}
-                  className="w-[80%] font-bold text-[1.2rem] md:text-[1.2rem]  text-center bg-[#e9962a]  py-1 rounded-md  cursor-pointer px-3 select-none "
+                  className="w-[8rem] z-30 font-bold text-[1.2rem] md:text-[1.2rem]  text-center bg-[#e9962a]  py-1 rounded-md  cursor-pointer px-3 select-none "
                 >
                   Chapter 2
                 </motion.h1>

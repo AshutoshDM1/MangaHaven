@@ -61,7 +61,7 @@ const Login: React.FC = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="h-[40vh] w-full flex flex-col gap-3">
+          <div className="min-h-[40vh] w-full flex flex-col gap-3">
             <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-medium">
                 Email
