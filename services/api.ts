@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "sonner";
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
 const HandleError = (error: any): void => {
   if (error.response) {
