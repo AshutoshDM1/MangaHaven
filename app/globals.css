@@ -126,7 +126,7 @@
 }
 
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 9px;
 }
 
 ::-webkit-scrollbar-track {
@@ -135,7 +135,6 @@
 
 ::-webkit-scrollbar-thumb {
   background-color: #555;
-  border-radius: 5px;
   cursor: pointer;
   transition: all;
   transition-duration: 600ms;

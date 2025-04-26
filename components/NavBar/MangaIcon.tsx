@@ -12,13 +12,13 @@ const MangaIcon = () => {
         <Image
           src="/MangaHaven Logo.png"
           alt="MangaHaven Logo"
-          width={40}
-          height={40}
+          width={35}
+          height={35}
           style={{ width: "auto", height: "auto" }}
         />
         <div className="ml-2 flex flex-col">
-          <h1 className=" font-bold text-xl">Manga</h1>
-          <h1 className=" font-bold text-xl -mt-2">Heaven</h1>
+          <h1 className=" font-bold text-[1.2rem]">Manga</h1>
+          <h1 className=" font-bold text-[1.2rem] -mt-2">Heaven</h1>
         </div>
       </div>
     </>

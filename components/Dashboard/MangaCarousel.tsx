@@ -110,9 +110,6 @@ const MangaCarousel: React.FC = () => {
     <div className="xl:max-w-[75rem] w-[95%] mx-auto">
       <div className="relative w-full flex justify-center items-center overflow-visible p-4 lg:px-4 md:px-8 px-7">
         <div className="relative max-w-7xl mx-auto overflow-hidden lg:px-0">
-          <h5 className="md:text-3xl text-xl font-bold  opacity-90 px-2 pt-2 pb-1 md:pb-5 md:mb-3">
-            Most Viewed
-          </h5>
           {items.length <= 1 ? (
             <>
               <div className="w-full flex">
@@ -202,14 +199,13 @@ const MangaCarousel: React.FC = () => {
         </div>
         <button
           onClick={prevSlide}
-          className="absolute lg:left-[-2%] md:left-0 left-[0%] md:h-[24.9vh] h-[20.3vh] rounded-l-3xl w-auto md:top-[27.8%] top-[24%] transform -translate-y-1 shadow-md bg-[#a962ff] bg-opacity-70 lg:p-2 md:p-1 z-10 flex justify-start items-center hover:bg-opacity-100 transition-all duration-300"
+          className="absolute left-[-2%] md:h-[24.9vh] h-[20.3vh] rounded-l-3xl w-auto top-5 transform -translate-y-1 shadow-md bg-[#a962ff] bg-opacity-70 lg:p-2 md:p-1 z-10 flex justify-start items-center hover:bg-opacity-100 transition-all duration-300"
         >
           <ChevronLeft className=" w-fit " />
         </button>
-
         <button
           onClick={nextSlide}
-          className="absolute lg:right-[-2%] md:right-0 right-[0%]  md:h-[24.9vh] h-[20.3vh] rounded-r-3xl w-auto  md:top-[27.8%] top-[24%] transform -translate-y-1 shadow-md bg-[#a962ff] bg-opacity-70 lg:p-2 md:p-1 z-10 flex justify-end items-center hover:bg-opacity-100 transition-all duration-300"
+          className="absolute right-[-2%] md:h-[24.9vh] h-[20.3vh] rounded-r-3xl w-auto top-5 transform -translate-y-1 shadow-md bg-[#a962ff] bg-opacity-70 lg:p-2 md:p-1 z-10 flex justify-end items-center hover:bg-opacity-100 transition-all duration-300"
         >
           <ChevronRight className=" w-fit " />
         </button>

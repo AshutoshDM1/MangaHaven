@@ -3,10 +3,10 @@ import { useRecoilState } from "recoil";
 import Image from "next/image";
 import { mangaData } from "@/state/atoms";
 import { Skeleton } from "../ui/skeleton";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect } from "react";
 import { getManga } from "@/services/api";
 import { useRouter } from "next/navigation";
-import { animate, delay, motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 
 const MangaSection = () => {
   const [mangas, setMangas] = useRecoilState(mangaData);
@@ -22,38 +22,14 @@ const MangaSection = () => {
   const handleMangaClick = (manganame: string) => {
     router.push(`/read/${manganame}/1`);
   };
-  const ref = useRef(null);
-  const isInView = useInView(ref, { amount: 0.1 });
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        duration: 2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 2,
-      },
-    },
-  };
 
   return (
     <>
       <div className="min-h-[60vh] w-full flex justify-center items-center">
         <motion.div
-          ref={ref}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={containerVariants}
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 2 }}
           className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 mt-8 transition-all duration-300"
         >
           {mangas.length === 1
@@ -67,7 +43,6 @@ const MangaSection = () => {
               })
             : mangas.map((item) => (
                 <motion.div
-                  variants={itemVariants}
                   onClick={() => handleMangaClick(item.title)}
                   key={item.id}
                   className="dark:border-[#3a3a3a] border dark:border dark:hover:bg-zinc-900 transform  bg-card rounded-lg shadow-xl overflow-hidden transition-transform bg-[#161616] h-full  cursor-pointer "

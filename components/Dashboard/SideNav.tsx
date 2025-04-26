@@ -64,10 +64,18 @@ const SideNav = () => {
   ];
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+    <Sheet
+      open={isOpen}
+      onOpenChange={setIsOpen}
+    >
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" aria-label="Open menu">
-          <AlignJustify className="h-5 w-5" />
+        <Button
+          className="hover:bg-transparent hover:text-black dark:hover:text-white duration-300 transition-all"
+          variant="ghost"
+          size="icon"
+          aria-label="Open menu"
+        >
+          <AlignJustify className="h-14 w-14" />
         </Button>
       </SheetTrigger>
       <SheetContent>
