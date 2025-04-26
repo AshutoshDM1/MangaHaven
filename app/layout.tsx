@@ -32,7 +32,7 @@ export default function RootLayout({
       <body
         className={cn(
           "bg-background font-sans antialiased bg-white  dark:bg-[#0d0d0d] ",
-          fontSans.variable
+          fontSans.variable,
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>

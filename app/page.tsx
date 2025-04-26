@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Home_Main_Card_II from "@/components/Home/Home_Main_Card_II";
 import Home_NavBar from "@/components/Home/Home_NavBar";
 

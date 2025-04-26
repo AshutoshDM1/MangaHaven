@@ -53,13 +53,11 @@ export default function Home_Main_Card() {
               </div>
             </div>
           </div>
-          <button 
-            className=" text-white text-[1.5rem] font-semibold rounded-xl ml-10 flex items-center px-10 py-3 border-[1px] border-[#bcbcbc8d] transition-all duration-500 ease-in-out bg-[#c131ff8d] "
-          >
+          <button className=" text-white text-[1.5rem] font-semibold rounded-xl ml-10 flex items-center px-10 py-3 border-[1px] border-[#bcbcbc8d] transition-all duration-500 ease-in-out bg-[#c131ff8d] ">
             Lets Read
           </button>
         </div>
-        <div 
+        <div
           className="
             w-full md:w-auto order-1 md:order-2
             md:flex md:justify-end md:absolute md:top-0 md:-right-14 

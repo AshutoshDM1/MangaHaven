@@ -3,9 +3,9 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
       },
       // Keep your existing patterns
       {
@@ -20,7 +20,7 @@ const nextConfig = {
       },
       // Add other patterns as needed
     ],
-    domains: ['res.cloudinary.com'], // Add this line
+    domains: ["res.cloudinary.com"], // Add this line
   },
   // ... other configurations
 };

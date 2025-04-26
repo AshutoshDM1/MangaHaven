@@ -30,7 +30,7 @@ const MangaSection = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: .2,
+        staggerChildren: 0.2,
         duration: 2,
       },
     },

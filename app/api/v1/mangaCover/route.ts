@@ -13,7 +13,7 @@ export const POST = async (req: Request) => {
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to fetch manga Image" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

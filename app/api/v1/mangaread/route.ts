@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
   if (!mangaName && !chapter) {
     return NextResponse.json(
       { error: "Manga name is required" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 

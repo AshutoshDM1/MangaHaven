@@ -1,48 +1,48 @@
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-  
+
 interface DropMenuProps {}
 
 const DropMenuGenres: React.FC<DropMenuProps> = () => {
-return (
+  return (
     <>
-    <div className="font-semibold text-base flex justify-center items-center ">
+      <div className="font-semibold text-base flex justify-center items-center ">
         <DropdownMenu>
-        <DropdownMenuTrigger>Genres</DropdownMenuTrigger>
-            <DropdownMenuContent className="ml-4 w-[15vw] grid grid-cols-2 gap-2">
-                <DropdownMenuItem>Action</DropdownMenuItem>
-                <DropdownMenuItem>Adventure</DropdownMenuItem>
-                <DropdownMenuItem>Comedy</DropdownMenuItem>
-                <DropdownMenuItem>Fantasy</DropdownMenuItem>
-                <DropdownMenuItem>Demons</DropdownMenuItem>
-                <DropdownMenuItem>Harem</DropdownMenuItem>
-                <DropdownMenuItem>Horror</DropdownMenuItem>
-                <DropdownMenuItem>Isekai</DropdownMenuItem>
-                <DropdownMenuItem>Magic</DropdownMenuItem>
-                <DropdownMenuItem>Romance</DropdownMenuItem>
-                <DropdownMenuItem>Ecchi</DropdownMenuItem>
-                <DropdownMenuItem>Mecha</DropdownMenuItem>
-                <DropdownMenuItem>Space</DropdownMenuItem>
-                <DropdownMenuItem>Slice of Life</DropdownMenuItem>
-                <DropdownMenuItem>Shounen</DropdownMenuItem>
-                <DropdownMenuItem>Mystery</DropdownMenuItem>
-                <DropdownMenuItem>School</DropdownMenuItem>
-                <DropdownMenuItem>Sports</DropdownMenuItem>
-                <DropdownMenuItem>Supernatural</DropdownMenuItem>
-                <DropdownMenuItem>Thriller</DropdownMenuItem>
-                <DropdownMenuItem>Seinen</DropdownMenuItem>
-                <DropdownMenuItem>Suspense</DropdownMenuItem>
-            </DropdownMenuContent>
+          <DropdownMenuTrigger>Genres</DropdownMenuTrigger>
+          <DropdownMenuContent className="ml-4 w-[15vw] grid grid-cols-2 gap-2">
+            <DropdownMenuItem>Action</DropdownMenuItem>
+            <DropdownMenuItem>Adventure</DropdownMenuItem>
+            <DropdownMenuItem>Comedy</DropdownMenuItem>
+            <DropdownMenuItem>Fantasy</DropdownMenuItem>
+            <DropdownMenuItem>Demons</DropdownMenuItem>
+            <DropdownMenuItem>Harem</DropdownMenuItem>
+            <DropdownMenuItem>Horror</DropdownMenuItem>
+            <DropdownMenuItem>Isekai</DropdownMenuItem>
+            <DropdownMenuItem>Magic</DropdownMenuItem>
+            <DropdownMenuItem>Romance</DropdownMenuItem>
+            <DropdownMenuItem>Ecchi</DropdownMenuItem>
+            <DropdownMenuItem>Mecha</DropdownMenuItem>
+            <DropdownMenuItem>Space</DropdownMenuItem>
+            <DropdownMenuItem>Slice of Life</DropdownMenuItem>
+            <DropdownMenuItem>Shounen</DropdownMenuItem>
+            <DropdownMenuItem>Mystery</DropdownMenuItem>
+            <DropdownMenuItem>School</DropdownMenuItem>
+            <DropdownMenuItem>Sports</DropdownMenuItem>
+            <DropdownMenuItem>Supernatural</DropdownMenuItem>
+            <DropdownMenuItem>Thriller</DropdownMenuItem>
+            <DropdownMenuItem>Seinen</DropdownMenuItem>
+            <DropdownMenuItem>Suspense</DropdownMenuItem>
+          </DropdownMenuContent>
         </DropdownMenu>
-    </div>
+      </div>
     </>
-);
+  );
 };
-  
+
 export default DropMenuGenres;
 
 // Action

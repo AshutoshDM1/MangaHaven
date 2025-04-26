@@ -36,16 +36,17 @@ interface Manga {
   imageUrl: string;
 }
 
-export const mangaData = atom<Manga[] > ({
+export const mangaData = atom<Manga[]>({
   key: "mangaData",
-  default:[{
-    id: 0,
-    title: "",
-    genres: [],
-    imageUrl: "",
-  }],
+  default: [
+    {
+      id: 0,
+      title: "",
+      genres: [],
+      imageUrl: "",
+    },
+  ],
 });
-
 
 export const showLoadingAtom = atom<boolean>({
   key: "showLoading",

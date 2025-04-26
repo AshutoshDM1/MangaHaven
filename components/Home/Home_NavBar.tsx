@@ -38,7 +38,10 @@ export default function Home_NavBar() {
               variants={itemVariants}
               className="overflow-hidden w-fit"
             >
-              <NavItem text="Home" className={`hover:cursor-pointer hidden md:flex `} />
+              <NavItem
+                text="Home"
+                className={`hover:cursor-pointer hidden md:flex `}
+              />
             </motion.div>
           </div>
           <div className="overflow-hidden">
@@ -70,7 +73,10 @@ export default function Home_NavBar() {
               variants={itemVariants}
               className="overflow-hidden w-fit"
             >
-              <NavItem text="Top Airing" className={`hover:cursor-pointer hidden md:flex `} />
+              <NavItem
+                text="Top Airing"
+                className={`hover:cursor-pointer hidden md:flex `}
+              />
             </motion.div>
           </div>
         </motion.div>

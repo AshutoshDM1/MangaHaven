@@ -8,15 +8,15 @@ import { RecoilRoot } from "recoil";
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <RecoilRoot>
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-      disableTransitionOnChange
-    >
-      <Toaster />
-      <SessionProvider>{children}</SessionProvider>
-    </ThemeProvider>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <Toaster />
+        <SessionProvider>{children}</SessionProvider>
+      </ThemeProvider>
     </RecoilRoot>
   );
 };

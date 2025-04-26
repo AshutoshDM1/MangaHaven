@@ -114,7 +114,7 @@ const ReadPage = () => {
               onClick={() => {
                 if (Number(manganame[1]) >= 2) {
                   router.push(
-                    `/read/${manganame[0]}/${Number(manganame[1]) - 1}`
+                    `/read/${manganame[0]}/${Number(manganame[1]) - 1}`,
                   );
                 } else {
                   toast.error("There is no Chapter 0");
@@ -128,7 +128,7 @@ const ReadPage = () => {
               onClick={() => {
                 if (Number(manganame[1]) <= 1) {
                   router.push(
-                    `/read/${manganame[0]}/${Number(manganame[1]) + 1}`
+                    `/read/${manganame[0]}/${Number(manganame[1]) + 1}`,
                   );
                 } else {
                   toast.error("There is no more than 2 Chapter");

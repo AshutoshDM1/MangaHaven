@@ -39,14 +39,16 @@ const authOptions: NextAuthOptions = {
               throw new Error("User already exists");
             }
 
-            const Realname = credentials.name || credentials.email.split("@")[0];
+            const Realname =
+              credentials.name || credentials.email.split("@")[0];
             const hashedPassword = await hash(credentials.password, 10);
             const newUser = await prisma.user.create({
               data: {
                 email: credentials.email,
                 password: hashedPassword,
                 name: Realname,
-                image: "https://avatarfiles.alphacoders.com/375/thumb-350-375542.webp",
+                image:
+                  "https://avatarfiles.alphacoders.com/375/thumb-350-375542.webp",
               },
             });
 
@@ -65,7 +67,10 @@ const authOptions: NextAuthOptions = {
               throw new Error("User not found");
             }
 
-            const isPasswordValid = await compare(credentials.password, user.password);
+            const isPasswordValid = await compare(
+              credentials.password,
+              user.password,
+            );
 
             if (!isPasswordValid) {
               throw new Error("Invalid password");
@@ -79,7 +84,7 @@ const authOptions: NextAuthOptions = {
             } as CustomUser;
           }
         } catch (error) {
-          console.error('Authorization Error:', error);
+          console.error("Authorization Error:", error);
           throw error; // Re-throw the error to pass it to the frontend
         }
       },
@@ -91,7 +96,7 @@ const authOptions: NextAuthOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: '/signup',
+    signIn: "/signup",
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -120,7 +125,7 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user?: {
       id: string | null;
-    } & DefaultSession["user"]
+    } & DefaultSession["user"];
   }
 }
 

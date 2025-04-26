@@ -24,7 +24,7 @@ export function ModeToggle() {
       <Sun
         className={`h-5 w-5 ${isDarkMode ? "text-primary" : "text-primary"}`}
       />
-      <Switch 
+      <Switch
         checked={isDarkMode}
         onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
       />

@@ -49,7 +49,7 @@ export const getManga = async () => {
 export const editProfile = async (
   email: string,
   name: string,
-  image: string
+  image: string,
 ) => {
   try {
     const data = {
@@ -73,7 +73,7 @@ export const UploadImage = async (formData: FormData) => {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
+      },
     );
     toast.success("File uploaded successfully");
     return response.data.url;
@@ -96,7 +96,7 @@ export const getMangaImage = async (mangaimage: MangaImage) => {
   try {
     const response = await axios.post(
       `${baseUrl}/api/v1/mangaCover`,
-      mangaimage
+      mangaimage,
     );
     response.data;
     return response.data.imageUrl;

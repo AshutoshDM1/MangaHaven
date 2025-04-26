@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 import {
   Sheet,
   SheetContent,
@@ -8,48 +8,60 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet"
-import { Button } from "@/components/ui/button"
-import { signOut, useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
-import { ModeToggle } from "../NavBar/ModeToggle"
-import { AlignJustify, Home, BookOpen, User, LogIn, LogOut, UserPlus } from "lucide-react"
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { ModeToggle } from "../NavBar/ModeToggle";
+import {
+  AlignJustify,
+  Home,
+  BookOpen,
+  User,
+  LogIn,
+  LogOut,
+  UserPlus,
+} from "lucide-react";
 
 const SideNav = () => {
-  const router = useRouter()
-  const { data: session, status } = useSession()
-  const [isOpen, setIsOpen] = useState(false)
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  const [isOpen, setIsOpen] = useState(false);
 
-  const closeSheet = () => setIsOpen(false)
+  const closeSheet = () => setIsOpen(false);
 
   useEffect(() => {
-    const handleRouteChange = () => closeSheet()
+    const handleRouteChange = () => closeSheet();
     // router.events.on("routeChangeComplete", handleRouteChange)
     return () => {
       // router.events.off("routeChangeComplete", handleRouteChange)
-    }
-  }, [router])
+    };
+  }, [router]);
 
   const handleNavigation = (path: string) => {
-    router.push(path)
-    closeSheet()
-  }
+    router.push(path);
+    closeSheet();
+  };
 
   const handleSignOut = async () => {
-    await signOut({ redirect: false })
-    closeSheet()
-    router.push("/")
-  }
+    await signOut({ redirect: false });
+    closeSheet();
+    router.push("/");
+  };
 
   const navItems = [
     { name: "Dashboard", icon: Home, path: "/dashboard" },
     { name: "Home", icon: BookOpen, path: "/" },
-    ...(status === "authenticated" ? [{ name: "Profile", icon: User, path: "/profile" }] : []),
-    ...(status === "unauthenticated" ? [
-      { name: "Log In", icon: LogIn, path: "/login" },
-      { name: "Sign Up", icon: UserPlus, path: "/signup" }
-    ] : [])
-  ]
+    ...(status === "authenticated"
+      ? [{ name: "Profile", icon: User, path: "/profile" }]
+      : []),
+    ...(status === "unauthenticated"
+      ? [
+          { name: "Log In", icon: LogIn, path: "/login" },
+          { name: "Sign Up", icon: UserPlus, path: "/signup" },
+        ]
+      : []),
+  ];
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -84,7 +96,11 @@ const SideNav = () => {
         <div className="flex flex-col gap-2 mt-4">
           <ModeToggle />
           {status === "authenticated" && (
-            <Button className="w-full justify-start" variant="destructive" onClick={handleSignOut}>
+            <Button
+              className="w-full justify-start"
+              variant="destructive"
+              onClick={handleSignOut}
+            >
               <LogOut className="mr-2 h-4 w-4" />
               Sign Out
             </Button>
@@ -92,7 +108,7 @@ const SideNav = () => {
         </div>
       </SheetContent>
     </Sheet>
-  )
-}
+  );
+};
 
-export default SideNav
+export default SideNav;

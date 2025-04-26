@@ -29,7 +29,7 @@ export default function Loading() {
         ease: "power2.inOut",
         x: 0,
       },
-      "<"
+      "<",
     ); // Start at the same time as the h1 animation
     tl.to("video", {
       duration: 1,
@@ -55,7 +55,7 @@ export default function Loading() {
     () => {
       Animated();
     },
-    { scope: container }
+    { scope: container },
   );
 
   return (
