@@ -1,10 +1,9 @@
-"use client";
 import BackGroundMain from "@/components/Dashboard/BackGroundMain";
 import Footer from "@/components/Footer";
 import MangaSection from "@/components/Dashboard/MangaSection";
 import MangaCarousel from "@/components/Dashboard/MangaCarousel";
 import NavbarMain from "@/components/NavBar/NavbarMain";
-export default function Home() {
+export default async function Home() {
   return (
     <>
       <NavbarMain />
