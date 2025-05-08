@@ -64,10 +64,7 @@ const SideNav = () => {
   ];
 
   return (
-    <Sheet
-      open={isOpen}
-      onOpenChange={setIsOpen}
-    >
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <Button
           className="hover:bg-transparent hover:text-black dark:hover:text-white duration-300 transition-all"

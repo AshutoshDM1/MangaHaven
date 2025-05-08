@@ -3,7 +3,6 @@
 const Home = () => {
   return (
     <div>
- 
       <div className="min-h-screen w-full bg-[#0D0D0D] flex flex-col items-center justify-center ">
         <img
           src="https://res.cloudinary.com/dnvl8mqba/image/upload/v1746372213/MangaHaven/MangaLandingPage/solo-leveling_quzeqr.jpg"
