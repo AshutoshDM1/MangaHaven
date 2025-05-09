@@ -1,14 +1,14 @@
 "use client";
-import { motion } from "framer-motion";
 import SplineComponent from "@/components/splineComponent";
-import { MangaSection } from "@/components/Landing/MangaSection";
+import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 import { NavbarLanding } from "@/components/Landing/NavbarLanding";
+import { motion } from "framer-motion";
+import { MangaSection } from "@/components/Landing/MangaSection";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 import { FooterLanding } from "@/components/Landing/FooterLanding";
 import { useEffect } from "react";
 import FooterMain from "@/components/Landing/FooterMain";
-import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 import { AnimatedShinyText } from "@/components/magicui/animated-shiny-text";
 import { ArrowRightIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -25,16 +25,48 @@ const Home = () => {
       lenis.destroy();
     };
   }, []);
+
+  const animateCard1 = {
+    hidden: { opacity: 0, right: "80%", rotate: 360 },
+    visible: { opacity: 1, right: "-50%", top: "35%", rotate: [360, 9] },
+  };
+  const animateCard2 = {
+    hidden: { opacity: 0, right: "80%", rotate: 365 },
+    visible: { opacity: 1, right: "-50%", top: "0%", rotate: [365, 6] },
+  };
+  const animateCard3 = {
+    hidden: { opacity: 0, right: "80%", rotate: 355 },
+    visible: { opacity: 1, right: "-50%", top: "-35%", rotate: [355, 3] },
+  };
+  const animateCard4 = {
+    hidden: { opacity: 0, left: "80%", rotate: 355 },
+    visible: { opacity: 1, left: "-50%", top: "35%", rotate: [355, -3] },
+  };
+  const animateCard5 = {
+    hidden: { opacity: 0, left: "80%", rotate: 360 },
+    visible: { opacity: 1, left: "-50%", top: "0%", rotate: [360, -6] },
+  };
+  const animateCard6 = {
+    hidden: { opacity: 0, left: "80%", rotate: 365 },
+    visible: { opacity: 1, left: "-50%", top: "-35%", rotate: [365, -9] },
+  };
+
   return (
     <>
-      <div className="w-full">
-        <SplineComponent />
-        <NavbarLanding />
-        <div className="min-h-screen w-full flex flex-col items-center justify-center ">
+      <div className="w-full ">
+        {/* <SplineComponent /> */}
+        {/* <NavbarLanding /> */}
+        <div
+          style={{
+            background:
+              "radial-gradient(circle,rgba(86, 6, 156, 1) 1%, rgba(13, 13, 13, 1) 47%)",
+          }}
+          className="min-h-screen w-full flex flex-col items-center justify-center "
+        >
           <div className="z-10 flex min-h-64 items-center justify-center">
             <div
               className={cn(
-                "group rounded-full border border-black/5 bg-neutral-100 text-base text-white transition-all ease-in hover:cursor-pointer hover:bg-neutral-200 dark:border-white/5 dark:bg-zinc-900 dark:hover:bg-zinc-800",
+                "group rounded-full border border-black/5 bg-neutral-100 text-base text-white transition-all ease-in hover:cursor-pointer hover:bg-neutral-200 dark:border-white/5 dark:bg-zinc-900 dark:hover:bg-zinc-800"
               )}
             >
               <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
@@ -46,13 +78,8 @@ const Home = () => {
           <div className="flex relative -top-[16vh] ">
             <div className="flex flex-col gap-0">
               <motion.img
-                initial={{ opacity: 1, right: "80%", rotate: 360 }}
-                animate={{
-                  opacity: 1,
-                  right: "-50%",
-                  top: "35%",
-                  rotate: [360, 9],
-                }}
+                initial={animateCard1.hidden}
+                animate={animateCard1.visible}
                 transition={{
                   duration: 1,
                   ease: [0.5, 0.1, 0.5, 1.0],
@@ -62,13 +89,8 @@ const Home = () => {
                 className="w-[40vh] object-cover rounded-lg bg-white p-1 relative z-[1] "
               />
               <motion.img
-                initial={{ opacity: 1, right: "80%", rotate: 365 }}
-                animate={{
-                  opacity: 1,
-                  right: "-50%",
-                  top: "0%",
-                  rotate: [365, 6],
-                }}
+                initial={animateCard2.hidden}
+                animate={animateCard2.visible}      
                 transition={{
                   duration: 1,
                   ease: [0.5, 0.1, 0.5, 1.0],
@@ -79,13 +101,8 @@ const Home = () => {
                 className="w-[40vh] object-cover rounded-lg bg-white p-1 relative z-[2]"
               />
               <motion.img
-                initial={{ opacity: 1, right: "80%", rotate: 355 }}
-                animate={{
-                  opacity: 1,
-                  right: "-50%",
-                  top: "-35%",
-                  rotate: [355, 3],
-                }}
+                initial={animateCard3.hidden}
+                animate={animateCard3.visible}
                 transition={{
                   duration: 1,
                   ease: [0.5, 0.1, 0.5, 1.0],
@@ -98,13 +115,8 @@ const Home = () => {
             </div>
             <div className="flex flex-col gap-0 ">
               <motion.img
-                initial={{ opacity: 1, left: "80%", rotate: 355 }}
-                animate={{
-                  opacity: 1,
-                  left: "-50%",
-                  top: "35%",
-                  rotate: [355, -3],
-                }}
+                initial={animateCard4.hidden}
+                animate={animateCard4.visible}
                 transition={{
                   duration: 1,
                   ease: [0.5, 0.1, 0.5, 1.0],
@@ -115,13 +127,8 @@ const Home = () => {
                 className="max-w-[40vh] object-cover rounded-lg bg-white p-1 relative z-[4]"
               />
               <motion.img
-                initial={{ opacity: 1, left: "80%", rotate: 360 }}
-                animate={{
-                  opacity: 1,
-                  left: "-50%",
-                  top: "0%",
-                  rotate: [360, -6],
-                }}
+                initial={animateCard5.hidden}
+                animate={animateCard5.visible}
                 transition={{
                   duration: 1,
                   ease: [0.5, 0.1, 0.5, 1.0],
@@ -132,13 +139,8 @@ const Home = () => {
                 className="max-w-[40vh] object-cover rounded-lg bg-white p-1 relative z-[5]"
               />
               <motion.img
-                initial={{ opacity: 1, left: "80%", rotate: 365 }}
-                animate={{
-                  opacity: 1,
-                  left: "-50%",
-                  top: "-35%",
-                  rotate: [365, -9],
-                }}
+                initial={animateCard6.hidden}
+                animate={animateCard6.visible}
                 transition={{
                   duration: 1,
                   ease: [0.5, 0.1, 0.5, 1.0],
@@ -151,7 +153,7 @@ const Home = () => {
             </div>
           </div>
           <div className="flex flex-col gap-2 justify-center items-center absolute top-[55%] z-20">
-            <h1 className="text-white text-6xl font-bold mt-10">
+            <h1 className="text-white text-6xl font-bold mt-[10vh]">
               Your Favorite Manga and Anime
             </h1>
             <h1 className="text-white text-6xl font-bold">All at one place</h1>
