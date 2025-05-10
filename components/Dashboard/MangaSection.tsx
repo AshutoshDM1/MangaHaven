@@ -1,4 +1,3 @@
-"use client";
 import { useRecoilState } from "recoil";
 import Image from "next/image";
 import { mangaData } from "@/state/atoms";
@@ -25,7 +24,7 @@ const MangaSection = () => {
 
   return (
     <>
-      <div className="min-h-[60vh] w-full flex justify-center items-center">
+      <div className="w-[96%] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
@@ -45,7 +44,7 @@ const MangaSection = () => {
                 <motion.div
                   onClick={() => handleMangaClick(item.title)}
                   key={item.id}
-                  className="dark:border-[#3a3a3a] border dark:border dark:hover:bg-zinc-900 transform  bg-card rounded-lg shadow-xl overflow-hidden transition-transform bg-[#161616] h-full  cursor-pointer "
+                  className="dark:border-[#3a3a3a] border dark:border dark:hover:bg-zinc-900 transform  bg-card rounded-lg shadow-xl overflow-hidden transition-transform bg-[#161616] h-full cursor-pointer"
                 >
                   <div className="relative overflow-hidden group">
                     <div className="relative">

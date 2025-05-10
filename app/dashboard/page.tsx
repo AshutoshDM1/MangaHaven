@@ -1,3 +1,4 @@
+"use client";
 import BackGroundMain from "@/components/Dashboard/BackGroundMain";
 import Footer from "@/components/Footer";
 import MangaSection from "@/components/Dashboard/MangaSection";

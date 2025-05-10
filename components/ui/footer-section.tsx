@@ -53,31 +53,31 @@ function Footerdemo() {
             <nav className="space-y-2 text-sm">
               <a
                 href="#"
-                className="block transition-colors hover:text-primary"
+                className="block hover:text-purple-500 transition-all duration-300"
               >
                 Home
               </a>
               <a
                 href="#"
-                className="block transition-colors hover:text-primary"
+                className="block hover:text-purple-500 transition-all duration-300"
               >
                 About Us
               </a>
               <a
                 href="#"
-                className="block transition-colors hover:text-primary"
+                className="block hover:text-purple-500 transition-all duration-300"
               >
                 Manga
               </a>
               <a
                 href="#"
-                className="block transition-colors hover:text-primary"
+                className="block hover:text-purple-500 transition-all duration-300"
               >
                 Anime
               </a>
               <a
                 href="#"
-                className="block transition-colors hover:text-primary"
+                className="block hover:text-purple-500 transition-all duration-300"
               >
                 Contact
               </a>
@@ -85,11 +85,36 @@ function Footerdemo() {
           </div>
           <div>
             <h3 className="mb-4 text-lg font-semibold">Contact Us</h3>
-            <address className="space-y-2 text-sm not-italic">
-              <p>Twitter</p>
-              <p>Instagram</p>
-              <p>Facebook</p>
-              <p>LinkedIn</p>
+            <address className="space-y-1 gap-1 flex flex-col text-sm not-italic">
+              <a
+                href="https://github.com/AshutoshDM1/MangaHaven"
+                target="_blank"
+              >
+                <p className="hover:text-purple-500 transition-all duration-300">
+                  Github
+                </p>
+              </a>
+              <a href="https://x.com/AshutoshDM_1" target="_blank">
+                <p className="hover:text-purple-500 transition-all duration-300">
+                  Twitter
+                </p>
+              </a>
+              <a
+                href="https://www.instagram.com/ashutosh_dm_1/"
+                target="_blank"
+              >
+                <p className="hover:text-purple-500 transition-all duration-300">
+                  Instagram
+                </p>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/ashutosh-tiwari-8931b82b8/"
+                target="_blank"
+              >
+                <p className="hover:text-purple-500 transition-all duration-300">
+                  LinkedIn
+                </p>
+              </a>
             </address>
           </div>
           <div className="relative">
@@ -99,6 +124,12 @@ function Footerdemo() {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
+                      onClick={() => {
+                        window.open(
+                          "https://github.com/AshutoshDM1/MangaHaven",
+                          "_blank"
+                        );
+                      }}
                       variant="outline"
                       size="icon"
                       className="rounded-full"
@@ -108,7 +139,7 @@ function Footerdemo() {
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Follow us on Facebook</p>
+                    <p>Follow us on Github</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -116,6 +147,9 @@ function Footerdemo() {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
+                      onClick={() => {
+                        window.open("https://x.com/AshutoshDM_1", "_blank");
+                      }}
                       variant="outline"
                       size="icon"
                       className="rounded-full"
@@ -150,6 +184,12 @@ function Footerdemo() {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
+                      onClick={() => {
+                        window.open(
+                          "https://www.linkedin.com/in/ashutosh-tiwari-8931b82b8/",
+                          "_blank"
+                        );
+                      }}
                       variant="outline"
                       size="icon"
                       className="rounded-full"
@@ -186,20 +226,29 @@ function Footerdemo() {
             Made with ❤️ by{" "}
             <a
               href="https://github.com/ShaileshIshere"
-              className="text-primary"
+              className="text-primary hover:text-purple-500 transition-all duration-300"
             >
               shailesh
             </a>{" "}
             &{" "}
-            <a href="https://github.com/AshutoshDM1" className="text-primary">
+            <a
+              href="https://github.com/AshutoshDM1"
+              className="text-primary hover:text-purple-500 transition-all duration-300"
+            >
               Ashutosh
             </a>
           </p>
           <nav className="flex gap-4 text-sm">
-            <a href="#" className="transition-colors hover:text-primary">
+            <a
+              href="#"
+              className=" hover:text-purple-500 transition-all duration-300"
+            >
               Privacy Policy
             </a>
-            <a href="#" className="transition-colors hover:text-primary">
+            <a
+              href="#"
+              className=" hover:text-purple-500 transition-all duration-300"
+            >
               Terms of Service
             </a>
             <a href="#" className="transition-colors hover:text-primary">

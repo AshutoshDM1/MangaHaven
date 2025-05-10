@@ -136,10 +136,23 @@ const Footer: React.FC = () => {
         </motion.div>
         <motion.div
           variants={itemVariants}
-          className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-8 text-center"
+          className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-8 text-center flex items-center justify-center gap-2"
         >
           <p className="text-sm text-gray-600 dark:text-gray-400">
             © {new Date().getFullYear()} MangaHaven. All rights reserved.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Made with ❤️ by{" "}
+            <a
+              href="https://github.com/ShaileshIshere"
+              className="text-primary"
+            >
+              shailesh
+            </a>{" "}
+            &{" "}
+            <a href="https://github.com/AshutoshDM1" className="text-primary">
+              Ashutosh
+            </a>
           </p>
         </motion.div>
       </div>

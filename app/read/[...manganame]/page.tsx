@@ -1,14 +1,12 @@
 "use client";
 import NavbarMain from "@/components/NavBar/NavbarMain";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getManga, getMangaChapterRead, getMangaImage } from "@/services/api";
+import { getMangaChapterRead, getMangaImage } from "@/services/api";
 import { motion } from "framer-motion";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 
 import {
@@ -110,11 +108,13 @@ const ReadPage = () => {
             )}
           </div>
           <div className="w-fit md:w-full  flex justify-center items-center gap-3 ">
-            <div
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 1.1 }}
               onClick={() => {
                 if (Number(manganame[1]) >= 2) {
                   router.push(
-                    `/read/${manganame[0]}/${Number(manganame[1]) - 1}`,
+                    `/read/${manganame[0]}/${Number(manganame[1]) - 1}`
                   );
                 } else {
                   toast.error("There is no Chapter 0");
@@ -123,12 +123,14 @@ const ReadPage = () => {
               className="w-1/2 py-[5px] px-3 bg-[#8031ff] rounded-md flex justify-center items-center cursor-pointer "
             >
               <ChevronLeft />
-            </div>
-            <div
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 1.1 }}
               onClick={() => {
                 if (Number(manganame[1]) <= 1) {
                   router.push(
-                    `/read/${manganame[0]}/${Number(manganame[1]) + 1}`,
+                    `/read/${manganame[0]}/${Number(manganame[1]) + 1}`
                   );
                 } else {
                   toast.error("There is no more than 2 Chapter");
@@ -137,10 +139,12 @@ const ReadPage = () => {
               className="w-1/2 py-[5px] px-3 bg-[#8031ff] rounded-md flex justify-center items-center  cursor-pointer  "
             >
               <ChevronRight />
-            </div>
+            </motion.div>
           </div>
           <div className="w-fit md:w-full flex justify-center items-center gap-3 ">
-            <div
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 1.1 }}
               onClick={() => {
                 setSlide(true);
               }}
@@ -149,8 +153,10 @@ const ReadPage = () => {
               } rounded-md flex justify-center items-center cursor-pointer `}
             >
               <GalleryVertical />
-            </div>
-            <div
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 1.1 }}
               onClick={() => {
                 setSlide(false);
               }}
@@ -159,13 +165,13 @@ const ReadPage = () => {
               } rounded-md flex justify-center items-center cursor-pointer `}
             >
               <GalleryHorizontal />
-            </div>
+            </motion.div>
           </div>
         </div>
-        <div className="h-full w-full pt-5 overflow-y-auto relative ">
+        <div className="h-full max-w-[50rem] mx-auto pt-5 overflow-y-auto relative ">
           {manga.length === 1 ? (
             <>
-              <Skeleton className="h-full max-w-[50rem] mx-5 md:mx-auto " />
+              <Skeleton className="h-[98%] lg:w-[65vh] md:w-[40vh] w-[30vh] " />
             </>
           ) : (
             <>

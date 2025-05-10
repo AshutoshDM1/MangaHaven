@@ -6,7 +6,7 @@ const MangaIcon = () => {
   return (
     <>
       <div
-        onClick={() => router.push("/home")}
+        onClick={() => router.push("/")}
         className="h-full w-fit justify-center items-center cursor-pointer flex"
       >
         <Image

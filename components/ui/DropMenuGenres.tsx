@@ -12,7 +12,7 @@ const DropMenuGenres: React.FC<DropMenuProps> = () => {
     <>
       <div className="font-semibold text-base flex justify-center items-center ">
         <DropdownMenu>
-          <DropdownMenuTrigger>Genres</DropdownMenuTrigger>
+          <DropdownMenuTrigger className="focus:none select-none  focus:outline-none" >Genres</DropdownMenuTrigger>
           <DropdownMenuContent className="ml-4 w-[15vw] grid grid-cols-2 gap-2">
             <DropdownMenuItem>Action</DropdownMenuItem>
             <DropdownMenuItem>Adventure</DropdownMenuItem>
