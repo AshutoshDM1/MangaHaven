@@ -42,7 +42,7 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
                 className="h-[4.5vh] w-[65vh] text-black dark:text-white bg-zinc-200 dark:bg-zinc-900 rounded-full border-none focus:border focus:outline-none pl-6 pr-4 md:text-none "
                 type="text"
                 placeholder="Search Manga..."
-              /> 
+              />
             </div>
             <Search className="h-8 w-8 text-[#c4c4c4] text-xl cursor-pointer" />
             <div className="flex justify-evenly items-center gap-3">

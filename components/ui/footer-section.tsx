@@ -127,7 +127,7 @@ function Footerdemo() {
                       onClick={() => {
                         window.open(
                           "https://github.com/AshutoshDM1/MangaHaven",
-                          "_blank"
+                          "_blank",
                         );
                       }}
                       variant="outline"
@@ -187,7 +187,7 @@ function Footerdemo() {
                       onClick={() => {
                         window.open(
                           "https://www.linkedin.com/in/ashutosh-tiwari-8931b82b8/",
-                          "_blank"
+                          "_blank",
                         );
                       }}
                       variant="outline"
