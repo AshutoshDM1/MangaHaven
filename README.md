@@ -24,10 +24,10 @@
 
 ## Website Photo
 
-  <img src="https://github.com/AshutoshDM1/MangaHaven/blob/main/github%20assests/image1.png" alt="Manga Haven" width="600"/>
-  <img src="https://github.com/AshutoshDM1/MangaHaven/blob/main/github%20assests/image2.png" alt="Manga Haven" width="600"/>
-  <img src="https://github.com/AshutoshDM1/MangaHaven/blob/main/github%20assests/image3.png" alt="Manga Haven" width="600"/>
-  <img src="https://github.com/AshutoshDM1/MangaHaven/blob/main/github%20assests/image4.png" alt="Manga Haven" width="600"/>
+![image1](https://github.com/AshutoshDM1/MangaHaven/blob/main/public/image1.png)
+![image2](https://github.com/AshutoshDM1/MangaHaven/blob/main/public/image2.png)
+![image3](https://github.com/AshutoshDM1/MangaHaven/blob/main/public/image3.png)
+![image4](https://github.com/AshutoshDM1/MangaHaven/blob/main/public/image4.png)
 
 ## Tech Stack Map
   <img src="https://github.com/AshutoshDM1/MangaHaven/blob/main/github%20assests/Manga%20Haven%20Map.png" alt="Manga Haven" width="600"/>
