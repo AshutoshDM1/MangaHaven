@@ -49,7 +49,7 @@ export const getManga = async () => {
 export const editProfile = async (
   email: string,
   name: string,
-  image: string,
+  image: string
 ) => {
   try {
     const data = {
@@ -73,7 +73,7 @@ export const UploadImage = async (formData: FormData) => {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      },
+      }
     );
     toast.success("File uploaded successfully");
     return response.data.url;
@@ -81,6 +81,7 @@ export const UploadImage = async (formData: FormData) => {
     HandleError(error);
   }
 };
+
 type MangaChapterData = { mangaName: string; chapter: string };
 export const getMangaChapterRead = async (mangaData: MangaChapterData) => {
   try {
@@ -96,10 +97,25 @@ export const getMangaImage = async (mangaimage: MangaImage) => {
   try {
     const response = await axios.post(
       `${baseUrl}/api/v1/mangaCover`,
-      mangaimage,
+      mangaimage
     );
     response.data;
     return response.data.imageUrl;
+  } catch (error) {
+    HandleError(error);
+  }
+};
+
+type MangaData = {
+  title: string;
+  cover: File;
+  images: File[];
+};
+
+export const addManga = async (mangaData: MangaData) => {
+  try {
+    const response = await axios.post(`${baseUrl}/api/v1/manga`, mangaData);
+    return response.data;
   } catch (error) {
     HandleError(error);
   }
