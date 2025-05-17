@@ -67,10 +67,8 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     <>
       <SidebarProvider>
         <AppSidebar />
-        <main className="w-full">
-          <SidebarTrigger />
-          {children}
-        </main>
+        {/* <SidebarTrigger /> */}
+        {children}
       </SidebarProvider>
     </>
   );
