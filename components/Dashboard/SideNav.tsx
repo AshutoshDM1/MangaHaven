@@ -21,6 +21,7 @@ import {
   LogIn,
   LogOut,
   UserPlus,
+  UserRoundCheck,
 } from "lucide-react";
 
 const SideNav = () => {
@@ -28,7 +29,7 @@ const SideNav = () => {
   const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
 
-  const closeSheet = () => setIsOpen(false);
+  const closeSheet : any = () => setIsOpen(false);
 
   useEffect(() => {
     const handleRouteChange = () => closeSheet();
@@ -59,6 +60,7 @@ const SideNav = () => {
       ? [
           { name: "Log In", icon: LogIn, path: "/login" },
           { name: "Sign Up", icon: UserPlus, path: "/signup" },
+          { name: "Admin", icon: UserRoundCheck, path: "/admin" },
         ]
       : []),
   ];
@@ -90,7 +92,7 @@ const SideNav = () => {
             <Button
               key={item.name}
               variant="ghost"
-              className="w-full justify-start"
+              className="w-full justify-start border-b border-zinc-200 dark:border-zinc-800"
               onClick={() => handleNavigation(item.path)}
             >
               <item.icon className="mr-2 h-4 w-4" />
@@ -99,7 +101,7 @@ const SideNav = () => {
           ))}
         </nav>
         <div className="flex flex-col gap-2 mt-4">
-          <ModeToggle />
+          {/* <ModeToggle /> */}
           {status === "authenticated" && (
             <Button
               className="w-full justify-start"

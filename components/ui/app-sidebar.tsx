@@ -1,5 +1,17 @@
 "use client";
-import { Calendar, Home, Inbox, Search, Settings, LayoutDashboard, Download, Users, Plus, BookImage } from "lucide-react";
+import {
+  Calendar,
+  Home,
+  Inbox,
+  Search,
+  Settings,
+  LayoutDashboard,
+  Download,
+  Users,
+  Plus,
+  BookImage,
+  ArrowLeft,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -34,6 +46,11 @@ const items = [
     url: "/admin/downloadmanga",
     icon: Download,
   },
+  {
+    title: "Back to Dashboard",
+    url: "/dashboard",
+    icon: ArrowLeft,
+  },
 ];
 
 export function AppSidebar() {
@@ -41,7 +58,8 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Admin Panel MangaHaven</SidebarGroupLabel>
+          <SidebarGroupLabel>Admin Panel MangaHaven </SidebarGroupLabel>
+
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
