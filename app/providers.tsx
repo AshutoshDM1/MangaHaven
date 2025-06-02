@@ -10,7 +10,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
     <RecoilRoot>
       <ThemeProvider
         attribute="class"
-        defaultTheme="system"
+        defaultTheme="dark"
         enableSystem
         disableTransitionOnChange
       >

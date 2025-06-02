@@ -32,14 +32,14 @@ const items = [
     icon: LayoutDashboard,
   },
   {
-    title: "Add New Manga",
-    url: "/admin/addmanga",
-    icon: BookImage,
-  },
-  {
     title: "Users",
     url: "/admin/users",
     icon: Users,
+  },
+  {
+    title: "Add New Manga",
+    url: "/admin/addmanga",
+    icon: BookImage,
   },
   {
     title: "Download Manga",
@@ -59,7 +59,6 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Admin Panel MangaHaven </SidebarGroupLabel>
-
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (

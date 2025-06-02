@@ -45,10 +45,14 @@ import { ChartContainer } from "@/components/ui/chart";
 import { ChartTooltip } from "@/components/ui/chart";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { CardContent, CardHeader } from "@/components/ui/card";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getManga } from "@/services/api";
+import EditManga, { MangaData } from "@/components/Admin/EditManga";
 
-export const columns: ColumnDef<any>[] = [
+export const createColumns = (
+  setOpen: (open: boolean) => void,
+  setMangaData: (mangaData: MangaData) => void
+): ColumnDef<any>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -148,7 +152,14 @@ export const columns: ColumnDef<any>[] = [
             >
               Copy Manga ID
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={() => {
+                setOpen(true);
+                console.log(row.original);
+                setMangaData(row.original);
+              }}
+            >
               Edit Manga
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer">
@@ -165,6 +176,7 @@ export const columns: ColumnDef<any>[] = [
 ];
 
 export default function AdminPage() {
+  const [open, setOpen] = useState<boolean>(false);
   useEffect(() => {
     const fetchManga = async () => {
       const data = await getManga();
@@ -179,13 +191,19 @@ export default function AdminPage() {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const [mangaData, setMangaData] = React.useState<MangaData>({
+    title: "",
+    description: "",
+    genres: "",
+    chapters: 0,
+  });
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
     data: manga,
-    columns,
+    columns: createColumns(setOpen, setMangaData),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -328,6 +346,7 @@ export default function AdminPage() {
 
   return (
     <>
+      <EditManga open={open} setOpen={setOpen} mangaData={mangaData} />
       <div className="w-full flex flex-col items-center justify-center">
         {/* <h1 className="text-xl font-bold text-center">Manga Admin Panel</h1> */}
         <div className="w-full px-10">
@@ -354,16 +373,18 @@ export default function AdminPage() {
                   .filter((column) => column.getCanHide())
                   .map((column) => {
                     return (
-                      <DropdownMenuCheckboxItem
-                        key={column.id}
-                        className="capitalize"
-                        checked={column.getIsVisible()}
-                        onCheckedChange={(value) =>
-                          column.toggleVisibility(!!value)
-                        }
-                      >
-                        {column.id}
-                      </DropdownMenuCheckboxItem>
+                      <>
+                        <DropdownMenuCheckboxItem
+                          key={column.id}
+                          className="capitalize"
+                          checked={column.getIsVisible()}
+                          onCheckedChange={(value) =>
+                            column.toggleVisibility(!!value)
+                          }
+                        >
+                          {column.id}
+                        </DropdownMenuCheckboxItem>
+                      </>
                     );
                   })}
               </DropdownMenuContent>
@@ -393,8 +414,8 @@ export default function AdminPage() {
                 {loading ? (
                   <TableRow>
                     <TableCell
-                      colSpan={columns.length}
-                      className="h-24 text-center"
+                      colSpan={createColumns(setOpen, setMangaData).length}
+                      className="h-24 text-center bg-[#0D0D0D]"
                     >
                       <span className="flex items-center justify-center">
                         <Loader className="animate-spin h-5 w-5 text-zinc-100 self-center" />{" "}
@@ -420,7 +441,7 @@ export default function AdminPage() {
                 ) : (
                   <TableRow>
                     <TableCell
-                      colSpan={columns.length}
+                      colSpan={createColumns(setOpen, setMangaData).length}
                       className="h-24 text-center"
                     >
                       No results.
