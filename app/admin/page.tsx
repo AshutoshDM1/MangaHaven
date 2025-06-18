@@ -40,7 +40,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { BarChart, Bar, XAxis, CartesianGrid } from "recharts";
+import { BarChart, Bar, XAxis, CartesianGrid, Cell, ResponsiveContainer, YAxis } from "recharts";
 import { ChartContainer } from "@/components/ui/chart";
 import { ChartTooltip } from "@/components/ui/chart";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
@@ -48,10 +48,13 @@ import { CardContent, CardHeader } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { getManga } from "@/services/api";
 import EditManga, { MangaData } from "@/components/Admin/EditManga";
+import ViewMagna from "@/components/Admin/ViewMagna";
 
 export const createColumns = (
   setOpen: (open: boolean) => void,
-  setMangaData: (mangaData: MangaData) => void
+  setMangaData: (mangaData: MangaData , isEdit: boolean) => void, 
+  isEdit: boolean,
+  setIsEdit: (isEdit: boolean) => void
 ): ColumnDef<any>[] => [
   {
     id: "select",
@@ -96,14 +99,23 @@ export const createColumns = (
     },
     cell: ({ row }) => (
       <div className="lowercase flex gap-2">
-        {(row.getValue("genres") as string[]).map((genre: string) => (
-          <div
-            className="bg-zinc-200/10 px-2 py-1 rounded-md capitalize cursor-pointer"
-            key={genre}
-          >
-            {genre}
-          </div>
-        ))}
+        {(row.getValue("genres") as string[]).map((genre: string, index: number) => {
+          const colors = [
+            "bg-blue-500 text-white",
+            "bg-pink-500 text-white",
+            "bg-purple-500 text-white"
+          ];
+          const colorClass = colors[index % 3];
+          
+          return (
+            <div
+              className={`px-2 py-1 rounded-md capitalize cursor-pointer ${colorClass}`}
+              key={genre}
+            >
+              {genre}
+            </div>
+          );
+        })}
       </div>
     ),
   },
@@ -156,13 +168,17 @@ export const createColumns = (
               className="cursor-pointer"
               onClick={() => {
                 setOpen(true);
-                console.log(row.original);
-                setMangaData(row.original);
+                setMangaData(row.original , true);
               }}
             >
               Edit Manga
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">
+            <DropdownMenuItem 
+            onClick={() => {
+              setOpen(true);
+              setMangaData(row.original , false);
+            }}
+            className="cursor-pointer">
               View Manga
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer text-red-500 hover:text-red-400">
@@ -191,6 +207,7 @@ export default function AdminPage() {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const [isEdit, setIsEdit] = React.useState<boolean>(false);
   const [mangaData, setMangaData] = React.useState<MangaData>({
     title: "",
     description: "",
@@ -203,7 +220,7 @@ export default function AdminPage() {
 
   const table = useReactTable({
     data: manga,
-    columns: createColumns(setOpen, setMangaData),
+    columns: createColumns(setOpen, setMangaData , isEdit , setIsEdit ),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -347,6 +364,7 @@ export default function AdminPage() {
   return (
     <>
       <EditManga open={open} setOpen={setOpen} mangaData={mangaData} />
+      <ViewMagna open={open} setOpen={setOpen} mangaData={mangaData} />
       <div className="w-full flex flex-col items-center justify-center">
         {/* <h1 className="text-xl font-bold text-center">Manga Admin Panel</h1> */}
         <div className="w-full px-10">
@@ -359,11 +377,11 @@ export default function AdminPage() {
               onChange={(event) =>
                 table.getColumn("title")?.setFilterValue(event.target.value)
               }
-              className="max-w-sm"
+              className="max-w-sm bg-transparent text-white placeholder:text-zinc-400"
             />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="ml-auto">
+                <Button variant="outline" className="ml-auto bg-transparent text-white placeholder:text-zinc-400">
                   Columns <ChevronDown />
                 </Button>
               </DropdownMenuTrigger>
@@ -414,7 +432,7 @@ export default function AdminPage() {
                 {loading ? (
                   <TableRow>
                     <TableCell
-                      colSpan={createColumns(setOpen, setMangaData).length}
+                      colSpan={createColumns(setOpen, setMangaData , isEdit , setIsEdit).length}
                       className="h-24 text-center bg-[#0D0D0D]"
                     >
                       <span className="flex items-center justify-center">
@@ -441,7 +459,7 @@ export default function AdminPage() {
                 ) : (
                   <TableRow>
                     <TableCell
-                      colSpan={createColumns(setOpen, setMangaData).length}
+                      colSpan={createColumns(setOpen, setMangaData , isEdit , setIsEdit).length}
                       className="h-24 text-center"
                     >
                       No results.
@@ -476,9 +494,9 @@ export default function AdminPage() {
             </div>
           </div>
         </div>
-        <div className="w-full px-10 flex">
-          <div className="w-1/2  py-1">
-            <Card>
+        <div className="w-full px-10 flex  flex-col xl:flex-row">
+          <div className="w-full xl:w-1/2  py-1">
+            <Card className="bg-transparent">
               <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
                 <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
                   <CardTitle>Manga Views</CardTitle>
@@ -559,7 +577,87 @@ export default function AdminPage() {
               </CardContent>
             </Card>
           </div>
-          <div className="w-1/2 h-full"></div>
+          <div className="w-full xl:w-1/2 h-full py-1">
+            <Card className="bg-transparent h-full">
+              <CardHeader>
+                <CardTitle>Most Watched Manga</CardTitle>
+                <CardDescription>
+                  Top 10 manga by total views this month
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="px-2 sm:p-6">
+                <ChartContainer
+                  config={{
+                    views: {
+                      label: "Total Views",
+                      color: "hsl(var(--chart-1))",
+                    },
+                  }}
+                  className="aspect-auto h-[250px] w-full"
+                >
+                  <BarChart
+                    accessibilityLayer
+                    data={[
+                      { manga: "One Piece", views: 15420 },
+                      { manga: "Naruto", views: 12350 },
+                      { manga: "Demon Slayer", views: 11200 },
+                      { manga: "Jujutsu Kaisen", views: 10800 },
+                      { manga: "Attack on Titan", views: 9650 },
+                    ]}
+                    layout="vertical"
+                    margin={{
+                      left: 12,
+                      right: 20,
+                      top: 12,
+                      bottom: 0,
+                    }}
+                  >
+                    <CartesianGrid horizontal={false} />
+                    <XAxis 
+                      type="number"
+                      tickLine={false}
+                      axisLine={false}
+                      tickMargin={8}
+                      tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`}
+                    />
+                    <YAxis
+                      type="category"
+                      dataKey="manga"
+                      tickLine={false}
+                      axisLine={false}
+                      tickMargin={8}
+                      width={110}
+                      fontSize={12}
+                    />
+                    <ChartTooltip
+                      content={
+                        <ChartTooltipContent
+                          className="w-[200px]"
+                          labelFormatter={(value) => `${value}`}
+                          formatter={(value) => [`${value.toLocaleString()} views`, "Total Views"]}
+                        />
+                      }
+                    />
+                    <Bar
+                      dataKey="views"
+                      radius={[0, 4, 4, 0]}
+                    >
+                      <Cell fill="#8b5cf6" />
+                      <Cell fill="#ec4899" />
+                      <Cell fill="#eab308" />
+                      <Cell fill="#22c55e" />
+                      <Cell fill="#3b82f6" />
+                      <Cell fill="#f97316" />
+                      <Cell fill="#ef4444" />
+                      <Cell fill="#06b6d4" />
+                      <Cell fill="#a855f7" />
+                      <Cell fill="#10b981" />
+                    </Bar>
+                  </BarChart>
+                </ChartContainer>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </>

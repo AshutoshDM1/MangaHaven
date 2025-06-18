@@ -58,7 +58,9 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Admin Panel MangaHaven </SidebarGroupLabel>
+          <SidebarGroupLabel className="text-wrap text-2xl font-bold leading-[1.4] bg-gradient-to-r from-pink-500 via-purple-400 to-purple-500 bg-clip-text text-transparent text-clip my-5">
+            MangaHaven{" "}
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
