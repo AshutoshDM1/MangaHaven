@@ -2,35 +2,30 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from "@/components/ui/card";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 import { FcGoogle } from "react-icons/fc";
-import { Mail, Lock, User, Loader } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
+import { Loader, Apple, ArrowLeft } from "lucide-react";
 import { ShinyButton } from "./ui/ShinyButton";
 import { useRouter } from "next/navigation";
+import { FaGithub } from "react-icons/fa";
+
 const Signup: React.FC = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
-  const [email, setEmail] = useState({
+  const [isLoadingGithub, setIsLoadingGithub] = useState(false);
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setEmail((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleGoogleSignIn = () => {
@@ -38,14 +33,27 @@ const Signup: React.FC = () => {
     signIn("google", { callbackUrl: "/dashboard" });
   };
 
+  const handleGithubSignIn = () => {
+    setIsLoadingGithub(true);
+    signIn("github", { callbackUrl: "/dashboard" });
+  };
+
   const handleEmailSignIn = async () => {
-    if (email.password !== "" && email.password === email.confirmPassword) {
+    if (!agreedToTerms) {
+      toast.error("Please agree to the Terms & Conditions");
+      return;
+    }
+
+    if (
+      formData.password !== "" &&
+      formData.password === formData.confirmPassword
+    ) {
       setIsLoading(true);
       toast.loading("Signing up...");
       const res = await signIn("credentials", {
-        email: email.email,
-        password: email.password,
-        name: email.name,
+        email: formData.email,
+        password: formData.password,
+        name: formData.name,
         redirect: true,
         callbackUrl: "/dashboard",
         action: "signup",
@@ -61,144 +69,224 @@ const Signup: React.FC = () => {
     }
     setIsLoading(false);
   };
+
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 [background:radial-gradient(circle,rgba(86,6,156,1)_1%,rgba(13,13,13,0.8)_77%)]">
-      <Card className="w-full max-w-md border border-zinc-200 dark:border-zinc-700 shadow-lg hover:shadow-xl transition-all duration-300">
-        <CardHeader className="space-y-2 pb-6">
-          <CardTitle className="text-3xl font-bold tracking-tight text-center text-white">
-            Join{" "}
-            <span className="bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent ml-2">
+    <div className="min-h-screen flex bg-[#0D0D0D]">
+      <div className="hidden lg:flex lg:w-[40%] relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-purple-700 to-indigo-800"></div>
+
+        <div
+          className="absolute inset-0 opacity-70"
+          style={{
+            backgroundImage:
+              "url('https://img.freepik.com/free-photo/woman-contemplates-mountainous-landscape_23-2151984542.jpg?uid=R161799923&semt=ais_hybrid&w=740')",
+            backgroundSize: "cover",
+            backgroundPosition: "bottom",
+            backgroundRepeat: "no-repeat",
+          }}
+        ></div>
+
+        <div className="relative z-10 flex flex-col justify-between p-12 text-white">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center">
+              <img src="/MangaHaven Logo.png" alt="logo" className="w-full h-full object-cover" />
+            </div>
+            <span className="text-xl font-semibold">MangaHaven</span>
+          </div>
+
+          <div className="space-y-6">
+            <h1 className="text-4xl lg:text-5xl font-bold leading-tight">
+              Capturing Moments,
+            </h1>
+            <h1 className="text-4xl lg:text-5xl font-bold leading-tight">
+              Creating Memories
+            </h1>
+
+            <div className="flex space-x-2">
+              <div className="w-8 h-1 bg-gray-300 rounded-full"></div>
+              <div className="w-2 h-1 bg-gray-300/50 rounded-full"></div>
+              <div className="w-2 h-1 bg-gray-300/50 rounded-full"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full lg:w-[60%] flex items-center justify-center p-8 bg-[#0D0D0D] relative">
+        <button
+          onClick={() => router.push("/dashboard")}
+            className="flex items-center gap-2 text-sm text-gray-400 hover:text-purple-400 hover:bg-purple-900/20 transition-all duration-200 w-fit absolute top-4 right-4 px-3 py-2 rounded-lg border border-gray-700 hover:border-purple-600 backdrop-blur-sm bg-[#1a1a1a] shadow-sm hover:shadow-md"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to website
+        </button>
+        <div className="w-full max-w-md space-y-8">
+          <div className="lg:hidden flex items-center justify-center gap-2 mb-8">
+            <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-lg">M</span>
+            </div>
+            <span className="text-xl font-semibold text-white">
               MangaHaven
             </span>
-          </CardTitle>
-          <CardDescription className="text-center text-zinc-500 dark:text-zinc-400">
-            Create an account to get started
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="w-full flex flex-col gap-4">
-            <div className="space-y-2">
-              <label
-                htmlFor="name"
-                className="text-sm font-medium flex items-center gap-2"
+          </div>
+
+          <div className="space-y-2">
+            <h2 className="text-3xl font-bold text-white">
+              Create an account
+            </h2>
+            <p className="text-gray-400">
+              Already have an account?{" "}
+              <button
+                onClick={() => router.push("/login")}
+                className="text-purple-400 hover:text-purple-300 font-medium"
               >
-                <User className="h-4 w-4 text-zinc-500" />
-                Username
-              </label>
-              <Input
-                name="name"
-                onChange={handleInputChange}
-                id="name"
-                placeholder="Enter your username"
-                className="rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-              />
+                Log in
+              </button>
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label
+                  htmlFor="firstName"
+                  className="text-sm font-medium text-gray-300"
+                >
+                  First name
+                </label>
+                <Input
+                  id="firstName"
+                  name="name"
+                  onChange={handleInputChange}
+                  placeholder="First name"
+                  className="h-12 bg-zinc-800 text-white placeholder:text-gray-400"
+                />
+              </div>
+              <div className="space-y-2">
+                <label
+                  htmlFor="lastName"
+                  className="text-sm font-medium text-gray-300"
+                >
+                  Last name
+                </label>
+                <Input
+                  id="lastName"
+                  placeholder="Last name"
+                    className="h-12 bg-zinc-800 text-white placeholder:text-gray-400"
+                />
+              </div>
             </div>
+
             <div className="space-y-2">
               <label
                 htmlFor="email"
-                className="text-sm font-medium flex items-center gap-2"
+                className="text-sm font-medium text-gray-300"
               >
-                <Mail className="h-4 w-4 text-zinc-500" />
                 Email
               </label>
               <Input
+                id="email"
                 name="email"
                 onChange={handleInputChange}
-                id="email"
-                placeholder="Enter your email"
-                className="rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                type="email"
+                placeholder="Email"
+                className="h-12 bg-zinc-800 text-white placeholder:text-gray-400"
               />
             </div>
+
             <div className="space-y-2">
               <label
                 htmlFor="password"
-                className="text-sm font-medium flex items-center gap-2"
+                className="text-sm font-medium text-gray-300"
               >
-                <Lock className="h-4 w-4 text-zinc-500" />
-                Password
+                Enter your password
               </label>
               <Input
-                onChange={handleInputChange}
-                name="password"
                 id="password"
+                name="password"
+                onChange={handleInputChange}
                 type="password"
-                placeholder="Create a password"
-                className="rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                placeholder="Password"
+                className="h-12 bg-zinc-800 text-white placeholder:text-gray-400"
               />
             </div>
+
             <div className="space-y-2">
-              <label
-                htmlFor="confirmPassword"
-                className="text-sm font-medium flex items-center gap-2"
-              >
-                <Lock className="h-4 w-4 text-zinc-500" />
-                Confirm Password
-              </label>
               <Input
-                onChange={handleInputChange}
                 id="confirmPassword"
                 name="confirmPassword"
+                onChange={handleInputChange}
                 type="password"
-                placeholder="Confirm your password"
-                className="rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                placeholder="Confirm Password"
+                className="h-12 bg-zinc-800 text-white placeholder:text-gray-400"
               />
             </div>
+
+            <div className="flex items-start space-x-3">
+              <label
+                htmlFor="terms"
+                className="text-sm text-gray-400"
+              >
+                by creating an account you agree to the{" "}
+                <button className="text-purple-400 hover:text-purple-300 underline">
+                  Terms & Conditions
+                </button>
+              </label>
+            </div>
+
             <Button
-              disabled={isLoading}
-              className="mt-2 bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2 py-5 rounded-md transition-all"
               onClick={handleEmailSignIn}
+              disabled={isLoading}
+              className="w-full h-12 bg-purple-500 hover:bg-purple-600 text-white font-medium rounded-lg transition-colors"
             >
               {isLoading ? (
                 <Loader className="h-5 w-5 animate-spin" />
               ) : (
-                "Create Account"
+                "Create account"
               )}
             </Button>
 
-            <div className="relative my-2">
-              <Separator className="my-4" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="bg-white dark:bg-zinc-900 px-2 text-xs text-zinc-500">
-                  OR CONTINUE WITH
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-600"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-zinc-900 text-gray-400">
+                  Or continue with
                 </span>
               </div>
             </div>
 
-            <Button
-              onClick={handleGoogleSignIn}
-              disabled={isLoadingGoogle}
-              variant="outline"
-              className="w-full border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center gap-2 py-5 rounded-md transition-all"
-            >
-              {isLoadingGoogle ? (
-                <Loader className="h-5 w-5 animate-spin" />
-              ) : (
-                <FcGoogle className="h-5 w-5" />
-              )}
-              Sign up with Google
-            </Button>
-            <ShinyButton
-              onClick={() => {
-                router.push("/login");
-              }}
-              className=""
-            >
-              use guest Login
-            </ShinyButton>
+            <div className="grid grid-cols-2 gap-3">
+              <Button
+                onClick={handleGoogleSignIn}
+                disabled={isLoadingGoogle}
+                variant="outline"
+                className="h-12 bg-zinc-800 hover:bg-gray-700 text-white flex items-center justify-center gap-2"
+              >
+                {isLoadingGoogle ? (
+                  <Loader className="h-5 w-5 animate-spin" />
+                ) : (
+                  <FcGoogle className="h-5 w-5" />
+                )}
+                Google
+              </Button>
+              <Button
+                onClick={handleGithubSignIn}
+                disabled={isLoadingGithub}
+                variant="outline"
+                className="h-12 bg-zinc-800 hover:bg-gray-700 text-white flex items-center justify-center gap-2"
+              >
+                {isLoadingGithub ? (
+                  <Loader className="h-5 w-5 animate-spin" />
+                ) : (
+                  <FaGithub className="h-5 w-5" />
+                )}
+                Github
+              </Button>
+            </div>
           </div>
-        </CardContent>
-        <CardFooter>
-          <div className="w-full text-center text-sm">
-            Already have an account?{" "}
-            <a
-              href="/login"
-              className="font-semibold text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 hover:underline transition-all"
-            >
-              Login
-            </a>
-          </div>
-        </CardFooter>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };

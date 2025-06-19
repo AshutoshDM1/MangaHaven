@@ -99,7 +99,6 @@ export const getMangaImage = async (mangaimage: MangaImage) => {
       `${baseUrl}/api/v1/mangaCover`,
       mangaimage
     );
-    response.data;
     return response.data.imageUrl;
   } catch (error) {
     HandleError(error);

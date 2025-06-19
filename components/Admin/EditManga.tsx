@@ -31,7 +31,6 @@ const EditManga = ({
   setOpen: (open: boolean) => void;
   mangaData: MangaData;
 }) => {
-  console.log(mangaData);
   useEffect(() => {
     setManga(mangaData);
   }, [mangaData]);
@@ -79,6 +78,7 @@ const EditManga = ({
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="genres" className="text-right">
               Genres
+              <p className="text-xs text-zinc-400 text-right">only add 3 genres</p>
             </Label>
             <Input
               id="genres"
@@ -93,7 +93,19 @@ const EditManga = ({
               Total Chapters
             </Label>
             <Input
-              id="chapters"
+              id="totalChapters"
+              type="number"
+              className="col-span-3"
+              value={manga.chapters}
+              onChange={(e) =>
+                setManga({ ...manga, chapters: parseInt(e.target.value) })
+              }
+            />
+            <Label htmlFor="chapters" className="text-right">
+              Total Available Chapters 
+            </Label>
+            <Input
+              id="availableChapters"
               type="number"
               className="col-span-3"
               value={manga.chapters}

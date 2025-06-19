@@ -48,3 +48,29 @@ model mangaCover {
   title    String @unique
   imageUrl String
 }
+
+model manga{
+  id       Int    @id @default(autoincrement())
+  title    String
+  coverImageUrl String
+  description String
+  totalChapter String
+  totalAvailableChapter String
+  genres String[]
+  mangaChapter mangaChapter[]
+}
+
+model mangaChapter{
+  id       Int    @id @default(autoincrement())
+  chapterNumber String
+  mangaId  Int
+  manga    manga  @relation(fields: [mangaId], references: [id])
+  mangaChapterImage mangaChapterImage[]
+}
+
+model mangaChapterImage{
+  id       Int    @id @default(autoincrement())
+  imageUrl String
+  mangaChapterId Int
+  mangaChapter mangaChapter @relation(fields: [mangaChapterId], references: [id])
+}

@@ -51,7 +51,8 @@ import EditManga, { MangaData } from "@/components/Admin/EditManga";
 import ViewMagna from "@/components/Admin/ViewMagna";
 
 export const createColumns = (
-  setOpen: (open: boolean) => void,
+  setOpenEdit: (open: boolean) => void,
+  setOpenView: (open: boolean) => void,
   setMangaData: (mangaData: MangaData , isEdit: boolean) => void, 
   isEdit: boolean,
   setIsEdit: (isEdit: boolean) => void
@@ -167,7 +168,7 @@ export const createColumns = (
             <DropdownMenuItem
               className="cursor-pointer"
               onClick={() => {
-                setOpen(true);
+                setOpenEdit(true);
                 setMangaData(row.original , true);
               }}
             >
@@ -175,7 +176,7 @@ export const createColumns = (
             </DropdownMenuItem>
             <DropdownMenuItem 
             onClick={() => {
-              setOpen(true);
+              setOpenView(true);
               setMangaData(row.original , false);
             }}
             className="cursor-pointer">
@@ -192,7 +193,8 @@ export const createColumns = (
 ];
 
 export default function AdminPage() {
-  const [open, setOpen] = useState<boolean>(false);
+  const [openEdit, setOpenEdit] = useState<boolean>(false);
+  const [openView, setOpenView] = useState<boolean>(false);
   useEffect(() => {
     const fetchManga = async () => {
       const data = await getManga();
@@ -220,7 +222,7 @@ export default function AdminPage() {
 
   const table = useReactTable({
     data: manga,
-    columns: createColumns(setOpen, setMangaData , isEdit , setIsEdit ),
+    columns: createColumns(setOpenEdit, setOpenView, setMangaData , isEdit , setIsEdit ),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -273,67 +275,6 @@ export default function AdminPage() {
     { date: "2024-04-28", desktop: 122, mobile: 180 },
     { date: "2024-04-29", desktop: 315, mobile: 240 },
     { date: "2024-04-30", desktop: 454, mobile: 380 },
-    { date: "2024-05-01", desktop: 165, mobile: 220 },
-    { date: "2024-05-02", desktop: 293, mobile: 310 },
-    { date: "2024-05-03", desktop: 247, mobile: 190 },
-    { date: "2024-05-04", desktop: 385, mobile: 420 },
-    { date: "2024-05-05", desktop: 481, mobile: 390 },
-    { date: "2024-05-06", desktop: 498, mobile: 520 },
-    { date: "2024-05-07", desktop: 388, mobile: 300 },
-    { date: "2024-05-08", desktop: 149, mobile: 210 },
-    { date: "2024-05-09", desktop: 227, mobile: 180 },
-    { date: "2024-05-10", desktop: 293, mobile: 330 },
-    { date: "2024-05-11", desktop: 335, mobile: 270 },
-    { date: "2024-05-12", desktop: 197, mobile: 240 },
-    { date: "2024-05-13", desktop: 197, mobile: 160 },
-    { date: "2024-05-14", desktop: 448, mobile: 490 },
-    { date: "2024-05-15", desktop: 473, mobile: 380 },
-    { date: "2024-05-16", desktop: 338, mobile: 400 },
-    { date: "2024-05-17", desktop: 499, mobile: 420 },
-    { date: "2024-05-18", desktop: 315, mobile: 350 },
-    { date: "2024-05-19", desktop: 235, mobile: 180 },
-    { date: "2024-05-20", desktop: 177, mobile: 230 },
-    { date: "2024-05-21", desktop: 82, mobile: 140 },
-    { date: "2024-05-22", desktop: 81, mobile: 120 },
-    { date: "2024-05-23", desktop: 252, mobile: 290 },
-    { date: "2024-05-24", desktop: 294, mobile: 220 },
-    { date: "2024-05-25", desktop: 201, mobile: 250 },
-    { date: "2024-05-26", desktop: 213, mobile: 170 },
-    { date: "2024-05-27", desktop: 420, mobile: 460 },
-    { date: "2024-05-28", desktop: 233, mobile: 190 },
-    { date: "2024-05-29", desktop: 78, mobile: 130 },
-    { date: "2024-05-30", desktop: 340, mobile: 280 },
-    { date: "2024-05-31", desktop: 178, mobile: 230 },
-    { date: "2024-06-01", desktop: 178, mobile: 200 },
-    { date: "2024-06-02", desktop: 470, mobile: 410 },
-    { date: "2024-06-03", desktop: 103, mobile: 160 },
-    { date: "2024-06-04", desktop: 439, mobile: 380 },
-    { date: "2024-06-05", desktop: 88, mobile: 140 },
-    { date: "2024-06-06", desktop: 294, mobile: 250 },
-    { date: "2024-06-07", desktop: 323, mobile: 370 },
-    { date: "2024-06-08", desktop: 385, mobile: 320 },
-    { date: "2024-06-09", desktop: 438, mobile: 480 },
-    { date: "2024-06-10", desktop: 155, mobile: 200 },
-    { date: "2024-06-11", desktop: 92, mobile: 150 },
-    { date: "2024-06-12", desktop: 492, mobile: 420 },
-    { date: "2024-06-13", desktop: 81, mobile: 130 },
-    { date: "2024-06-14", desktop: 426, mobile: 380 },
-    { date: "2024-06-15", desktop: 307, mobile: 350 },
-    { date: "2024-06-16", desktop: 371, mobile: 310 },
-    { date: "2024-06-17", desktop: 475, mobile: 520 },
-    { date: "2024-06-18", desktop: 107, mobile: 170 },
-    { date: "2024-06-19", desktop: 341, mobile: 290 },
-    { date: "2024-06-20", desktop: 408, mobile: 450 },
-    { date: "2024-06-21", desktop: 169, mobile: 210 },
-    { date: "2024-06-22", desktop: 317, mobile: 270 },
-    { date: "2024-06-23", desktop: 480, mobile: 530 },
-    { date: "2024-06-24", desktop: 132, mobile: 180 },
-    { date: "2024-06-25", desktop: 141, mobile: 190 },
-    { date: "2024-06-26", desktop: 434, mobile: 380 },
-    { date: "2024-06-27", desktop: 448, mobile: 490 },
-    { date: "2024-06-28", desktop: 149, mobile: 200 },
-    { date: "2024-06-29", desktop: 103, mobile: 160 },
-    { date: "2024-06-30", desktop: 446, mobile: 400 },
   ];
 
   const chartConfig = {
@@ -363,8 +304,8 @@ export default function AdminPage() {
 
   return (
     <>
-      <EditManga open={open} setOpen={setOpen} mangaData={mangaData} />
-      <ViewMagna open={open} setOpen={setOpen} mangaData={mangaData} />
+      <EditManga open={openEdit} setOpen={setOpenEdit} mangaData={mangaData} />
+      <ViewMagna open={openView} setOpen={setOpenView} mangaData={mangaData} />
       <div className="w-full flex flex-col items-center justify-center">
         {/* <h1 className="text-xl font-bold text-center">Manga Admin Panel</h1> */}
         <div className="w-full px-10">
@@ -432,7 +373,7 @@ export default function AdminPage() {
                 {loading ? (
                   <TableRow>
                     <TableCell
-                      colSpan={createColumns(setOpen, setMangaData , isEdit , setIsEdit).length}
+                      colSpan={createColumns(setOpenEdit, setOpenView, setMangaData , isEdit , setIsEdit).length}
                       className="h-24 text-center bg-[#0D0D0D]"
                     >
                       <span className="flex items-center justify-center">
@@ -459,7 +400,7 @@ export default function AdminPage() {
                 ) : (
                   <TableRow>
                     <TableCell
-                      colSpan={createColumns(setOpen, setMangaData , isEdit , setIsEdit).length}
+                      colSpan={createColumns(setOpenEdit, setOpenView, setMangaData , isEdit , setIsEdit).length}
                       className="h-24 text-center"
                     >
                       No results.
@@ -469,7 +410,7 @@ export default function AdminPage() {
               </TableBody>
             </Table>
           </div>
-          <div className="flex items-center justify-end space-x-2 py-4">
+          <div className="flex items-center justify-end space-x-2 py-4 pb-1">
             <div className="flex-1 text-sm text-muted-foreground">
               {table.getFilteredSelectedRowModel().rows.length} of{" "}
               {table.getFilteredRowModel().rows.length} row(s) selected.
@@ -494,14 +435,14 @@ export default function AdminPage() {
             </div>
           </div>
         </div>
-        <div className="w-full px-10 flex  flex-col xl:flex-row">
+        <div className="w-full px-10 flex gap-2 flex-col xl:flex-row">
           <div className="w-full xl:w-1/2  py-1">
             <Card className="bg-transparent">
               <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
                 <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
                   <CardTitle>Manga Views</CardTitle>
                   <CardDescription>
-                    Showing total views for the last 3 Months
+                    Showing total views for the last 30 days
                   </CardDescription>
                 </div>
                 <div className="flex">
@@ -578,14 +519,14 @@ export default function AdminPage() {
             </Card>
           </div>
           <div className="w-full xl:w-1/2 h-full py-1">
-            <Card className="bg-transparent h-full">
+            <Card className="bg-transparent h-full p-2">
               <CardHeader>
                 <CardTitle>Most Watched Manga</CardTitle>
                 <CardDescription>
-                  Top 10 manga by total views this month
+                  Top 5 manga by total views this month
                 </CardDescription>
               </CardHeader>
-              <CardContent className="px-2 sm:p-6">
+              <CardContent className="px-2 sm:p-2">
                 <ChartContainer
                   config={{
                     views: {
@@ -627,7 +568,8 @@ export default function AdminPage() {
                       axisLine={false}
                       tickMargin={8}
                       width={110}
-                      fontSize={12}
+                      fontSize={14}
+                      fontWeight={600}
                     />
                     <ChartTooltip
                       content={
