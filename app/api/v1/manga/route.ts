@@ -5,7 +5,10 @@ const prisma = new PrismaClient();
 
 type Manga = {
   title: string;
-  imageUrl: string;
+  coverImageUrl: string;
+  description: string;
+  totalChapter: number;
+  totalAvailableChapter: number;
   genres: string[];
 };
 
@@ -29,8 +32,11 @@ const POST = async (request: NextRequest) => {
     const result = await prisma.manga.createMany({
       data: body.map((item) => ({
         title: item.title,
+        coverImageUrl: item.coverImageUrl,
+        description: item.description,
+        totalChapter: item.totalChapter,
+        totalAvailableChapter: item.totalAvailableChapter,
         genres: item.genres,
-        imageUrl: item.imageUrl,
       })),
     });
     return NextResponse.json(result, { status: 201 });

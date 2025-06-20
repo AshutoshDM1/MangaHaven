@@ -16,12 +16,13 @@ const Signup: React.FC = () => {
   const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
   const [isLoadingGithub, setIsLoadingGithub] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [agreedToTerms, setAgreedToTerms] = useState(true);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -50,14 +51,16 @@ const Signup: React.FC = () => {
     ) {
       setIsLoading(true);
       toast.loading("Signing up...");
-      const res = await signIn("credentials", {
+      const data = {
         email: formData.email,
         password: formData.password,
-        name: formData.name,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        action: "signup",
         redirect: true,
         callbackUrl: "/dashboard",
-        action: "signup",
-      });
+      };
+      const res = await signIn("credentials", data);
       if (res?.error) {
         toast.error(res.error);
       }
@@ -155,7 +158,7 @@ const Signup: React.FC = () => {
                 </label>
                 <Input
                   id="firstName"
-                  name="name"
+                  name="firstName"
                   onChange={handleInputChange}
                   placeholder="First name"
                   className="h-12 bg-zinc-800 text-white placeholder:text-gray-400"
@@ -170,7 +173,9 @@ const Signup: React.FC = () => {
                 </label>
                 <Input
                   id="lastName"
-                  placeholder="Last name"
+                  name="lastName"
+                  onChange={handleInputChange}
+                    placeholder="Last name"
                     className="h-12 bg-zinc-800 text-white placeholder:text-gray-400"
                 />
               </div>
@@ -226,7 +231,7 @@ const Signup: React.FC = () => {
                 htmlFor="terms"
                 className="text-sm text-gray-400"
               >
-                by creating an account you agree to the{" "}
+                By creating an account you agree to the{" "}
                 <button className="text-purple-400 hover:text-purple-300 underline">
                   Terms & Conditions
                 </button>

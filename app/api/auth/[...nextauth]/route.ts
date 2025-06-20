@@ -10,7 +10,8 @@ const prisma = new PrismaClient();
 type CustomUser = {
   id: number;
   email: string;
-  name: string | null;
+  firstName: string | null;
+  lastName: string | null;
   image: string | null;
 };
 
@@ -22,14 +23,16 @@ const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "text", placeholder: "Email" },
         password: { label: "Password", type: "password" },
         action: { label: "Action", type: "text" }, // 'login' or 'signup'
-        name: { label: "Name", type: "text" }, // For signup
+        firstName: { label: "First Name", type: "text" }, // For signup
+        lastName: { label: "Last Name", type: "text" }, // For signup
       },
       async authorize(credentials: any): Promise<any> {
         if (!credentials || !credentials.email || !credentials.password) {
           throw new Error("Missing credentials");
         }
-
+        console.log(credentials);
         try {
+          console.log(credentials.action);
           if (credentials.action === "signup") {
             const existingUser = await prisma.user.findUnique({
               where: { email: credentials.email },
@@ -39,14 +42,13 @@ const authOptions: NextAuthOptions = {
               throw new Error("User already exists");
             }
 
-            const Realname =
-              credentials.name || credentials.email.split("@")[0];
             const hashedPassword = await hash(credentials.password, 10);
             const newUser = await prisma.user.create({
               data: {
                 email: credentials.email,
                 password: hashedPassword,
-                name: Realname,
+                firstName: credentials.firstName,
+                lastName: credentials.lastName,
                 image:
                   "https://avatarfiles.alphacoders.com/375/thumb-350-375542.webp",
               },
@@ -55,7 +57,8 @@ const authOptions: NextAuthOptions = {
             return {
               id: newUser.id,
               email: newUser.email,
-              name: newUser.name,
+              firstName: newUser.firstName,
+              lastName: newUser.lastName,
               image: newUser.image,
             } as CustomUser;
           } else {
@@ -79,7 +82,8 @@ const authOptions: NextAuthOptions = {
             return {
               id: user.id,
               email: user.email,
-              name: user.name,
+              firstName: user.firstName,
+              lastName: user.lastName,
               image: user.image,
             } as CustomUser;
           }
@@ -103,7 +107,8 @@ const authOptions: NextAuthOptions = {
       // If user is signing in, update the token with the latest user info
       if (user) {
         token.id = user.id;
-        token.name = user.name;
+        token.firstName = user.firstName;
+        token.lastName = user.lastName;
         token.email = user.email;
         token.picture = user.image;
       }
@@ -112,7 +117,8 @@ const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.id as string | null;
-        session.user.name = token.name;
+        session.user.firstName = token.firstName as string | null;
+        session.user.lastName = token.lastName as string | null;
         session.user.email = token.email as string;
         session.user.image = token.picture as string | null;
       }
@@ -125,7 +131,14 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user?: {
       id: string | null;
+      firstName: string | null;
+      lastName: string | null;
     } & DefaultSession["user"];
+  }
+
+  interface User {
+    firstName?: string | null;
+    lastName?: string | null;
   }
 }
 

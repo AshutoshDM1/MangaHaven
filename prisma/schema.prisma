@@ -8,69 +8,74 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
-  name     String?
-  password String
-  image    String?
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  firstName String?
+  lastName  String?
+  password  String
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  role      String   @default("user")
 }
 
-model MangaDeshBoard {
-  id          Int     @id @default(autoincrement())
-  title       String  @unique
-  imageUrl    String?
-  description String
-  chapter     String?
-  volume      String?
-  status      String?
+model Manga {
+  id                    Int              @id @default(autoincrement())
+  title                 String
+  coverImageUrl         String
+  description           String
+  totalChapter          Int              @default(0)
+  totalAvailableChapter Int              @default(0)
+  genres                String[]
+  mangaChapters         MangaChapter[]
+  dashboards            DashboardManga[]
+  carousels             CarouselManga[]
 }
 
-model mangaCarousel {
-  id          Int      @id @default(autoincrement())
-  title       String   @unique
-  description String
-  chapter     String?
-  volume      String?
-  status      String?
-  genres      String[]
-  imageUrl    String?
+model MangaChapter {
+  id                Int                 @id @default(autoincrement())
+  chapterNumber     Int
+  mangaId           Int
+  manga             Manga               @relation(fields: [mangaId], references: [id])
+  mangaChapterImages MangaChapterImage[]
 }
 
-model manga {
-  id       Int      @id @default(autoincrement())
-  title    String   @unique
-  genres   String[]
-  imageUrl String?
+model MangaChapterImage {
+  id              Int          @id @default(autoincrement())
+  imageUrl        String
+  mangaChapterId  Int
+  mangaChapter    MangaChapter @relation(fields: [mangaChapterId], references: [id])
 }
 
-model mangaCover {
-  id       Int    @id @default(autoincrement())
-  title    String @unique
-  imageUrl String
+model MangaDashboard {
+  id     Int             @id @default(autoincrement())
+  name   String          @default("Main Dashboard")
+  mangas DashboardManga[]
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
 }
 
-model manga{
-  id       Int    @id @default(autoincrement())
-  title    String
-  coverImageUrl String
-  description String
-  totalChapter String
-  totalAvailableChapter String
-  genres String[]
-  mangaChapter mangaChapter[]
+model DashboardManga {
+  mangaId      Int
+  dashboardId  Int
+  manga        Manga          @relation(fields: [mangaId], references: [id])
+  dashboard    MangaDashboard @relation(fields: [dashboardId], references: [id])
+  displayOrder Int
+  @@unique([mangaId, dashboardId])
 }
 
-model mangaChapter{
-  id       Int    @id @default(autoincrement())
-  chapterNumber String
-  mangaId  Int
-  manga    manga  @relation(fields: [mangaId], references: [id])
-  mangaChapterImage mangaChapterImage[]
+model MangaCarousel {
+  id     Int             @id @default(autoincrement())
+  name   String
+  mangas CarouselManga[]
 }
 
-model mangaChapterImage{
-  id       Int    @id @default(autoincrement())
-  imageUrl String
-  mangaChapterId Int
-  mangaChapter mangaChapter @relation(fields: [mangaChapterId], references: [id])
+model CarouselManga {
+  id           Int           @id @default(autoincrement())
+  carouselId   Int
+  carousel     MangaCarousel @relation(fields: [carouselId], references: [id])
+  mangaId      Int
+  manga        Manga         @relation(fields: [mangaId], references: [id])
+  displayOrder Int
+  @@unique([carouselId, mangaId])
 }

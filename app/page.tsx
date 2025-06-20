@@ -11,6 +11,7 @@ import { AnimatedShinyText } from "@/components/magicui/animated-shiny-text";
 import { ArrowRightIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 const Home = () => {
   const router = useRouter();
   useEffect(() => {
@@ -283,13 +284,11 @@ const Home = () => {
             >
               All at one place
             </motion.h1>
+            <Link href="/dashboard">
             <motion.button
               initial={{ opacity: 1 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, ease: "easeOut" }}
-              onClick={() => {
-                router.push("/dashboard");
-              }}
               className="relative inline-flex overflow-hidden rounded-full p-[2px] mt-3"
             >
               <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
@@ -297,6 +296,7 @@ const Home = () => {
                 Read Now
               </span>
             </motion.button>
+            </Link>
           </div>
         </div>
 

@@ -29,13 +29,7 @@ const Login: React.FC = () => {
     password: "",
   });
   const router = useRouter();
-  const guestLogin = () => {
-    console.log("guest login");
-    setCredentials({
-      email: "guestMangaHaven@gmail.com",
-      password: "guestMangaHaven",
-    });
-  };
+  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setCredentials((prev) => ({ ...prev, [name]: value }));
