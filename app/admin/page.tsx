@@ -47,15 +47,28 @@ import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { CardContent, CardHeader } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { getManga } from "@/services/api";
-import EditManga, { MangaData } from "@/components/Admin/EditManga";
+import EditManga from "@/components/Admin/EditManga";
 import ViewMagna from "@/components/Admin/ViewMagna";
+import { deleteManga, getAllManga } from "@/services/apiv2";
+import { toast } from "sonner";
+
+export type Manga = {
+  id: number;
+  title: string;
+  description: string;
+  totalChapter: number;
+  totalAvailableChapter: number;
+  genres: string[];
+  coverImageUrl: string;
+};
 
 export const createColumns = (
   setOpenEdit: (open: boolean) => void,
   setOpenView: (open: boolean) => void,
-  setMangaData: (mangaData: MangaData , isEdit: boolean) => void, 
+  setMangaData: (mangaData: Manga , isEdit: boolean) => void, 
   isEdit: boolean,
-  setIsEdit: (isEdit: boolean) => void
+  setIsEdit: (isEdit: boolean) => void,
+  setOpenDelete: (open: boolean) => void
 ): ColumnDef<any>[] => [
   {
     id: "select",
@@ -84,6 +97,13 @@ export const createColumns = (
     header: "Manga Name",
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("title")}</div>
+    ),
+  },
+  {
+    accessorKey: "description",
+    header: "Description",
+    cell: ({ row }) => (
+      <div className="max-w-[200px] truncate capitalize text-sm">{row.getValue("description")}</div>
     ),
   },
   {
@@ -121,19 +141,19 @@ export const createColumns = (
     ),
   },
   {
-    accessorKey: "total_chapters",
+    accessorKey: "totalChapter",
     header: () => <div className="text-center">Total Chapters</div>,
     cell: ({ row }) => {
-      const total_chapters = parseFloat(row.getValue("total_chapters"));
+      const total_chapters = parseFloat(row.getValue("totalChapter"));
       return <div className="text-center font-medium">{total_chapters}</div>;
     },
   },
   {
-    accessorKey: "total_released_chapters",
+    accessorKey: "totalAvailableChapter",
     header: () => <div className="text-center">Total Released Chapters</div>,
     cell: ({ row }) => {
       const total_released_chapters = parseFloat(
-        row.getValue("total_released_chapters")
+        row.getValue("totalAvailableChapter")
       );
       return (
         <div className="text-center font-medium">{total_released_chapters}</div>
@@ -161,13 +181,17 @@ export const createColumns = (
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
               className="cursor-pointer"
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                navigator.clipboard.writeText(payment.id);
+              }}
             >
               Copy Manga ID
             </DropdownMenuItem>
             <DropdownMenuItem
               className="cursor-pointer"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setOpenEdit(true);
                 setMangaData(row.original , true);
               }}
@@ -175,14 +199,23 @@ export const createColumns = (
               Edit Manga
             </DropdownMenuItem>
             <DropdownMenuItem 
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               setOpenView(true);
               setMangaData(row.original , false);
             }}
             className="cursor-pointer">
               View Manga
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer text-red-500 hover:text-red-400">
+            <DropdownMenuItem 
+            onClick={async (e) => {
+              e.stopPropagation();
+              const response = await deleteManga(row.original.id);
+              if (response && response.status === 200) {
+                toast.success("Manga deleted successfully");
+              }
+            }}
+            className="cursor-pointer text-red-500 hover:text-red-400">
               Delete Manga
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -195,26 +228,30 @@ export const createColumns = (
 export default function AdminPage() {
   const [openEdit, setOpenEdit] = useState<boolean>(false);
   const [openView, setOpenView] = useState<boolean>(false);
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
   useEffect(() => {
     const fetchManga = async () => {
-      const data = await getManga();
+      const data = await getAllManga();
       setManga(data);
       setLoading(false);
     };
     fetchManga();
-  }, []);
+  }, [ openDelete , openEdit , openView ]);
   const [loading, setLoading] = React.useState(true);
-  const [manga, setManga] = React.useState<any[]>([]);
+  const [manga, setManga] = React.useState<Manga[]>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
   const [isEdit, setIsEdit] = React.useState<boolean>(false);
-  const [mangaData, setMangaData] = React.useState<MangaData>({
+  const [mangaData, setMangaData] = React.useState<Manga>({
+    id: 0,
     title: "",
     description: "",
-    genres: "",
-    chapters: 0,
+    genres: [],
+    totalChapter: 0,
+    totalAvailableChapter: 0,
+    coverImageUrl: "",
   });
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -222,7 +259,7 @@ export default function AdminPage() {
 
   const table = useReactTable({
     data: manga,
-    columns: createColumns(setOpenEdit, setOpenView, setMangaData , isEdit , setIsEdit ),
+    columns: createColumns(setOpenEdit, setOpenView, setMangaData , isEdit , setIsEdit , setOpenDelete ),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -304,8 +341,8 @@ export default function AdminPage() {
 
   return (
     <>
-      <EditManga open={openEdit} setOpen={setOpenEdit} mangaData={mangaData} />
-      <ViewMagna open={openView} setOpen={setOpenView} mangaData={mangaData} />
+      <EditManga open={openEdit} setOpen={setOpenEdit} mangaData={mangaData as unknown as Manga} />
+      <ViewMagna open={openView} setOpen={setOpenView} mangaData={mangaData as unknown as Manga} />
       <div className="w-full flex flex-col items-center justify-center">
         {/* <h1 className="text-xl font-bold text-center">Manga Admin Panel</h1> */}
         <div className="w-full px-10">
@@ -373,7 +410,7 @@ export default function AdminPage() {
                 {loading ? (
                   <TableRow>
                     <TableCell
-                      colSpan={createColumns(setOpenEdit, setOpenView, setMangaData , isEdit , setIsEdit).length}
+                      colSpan={createColumns(setOpenEdit, setOpenView, setMangaData , isEdit , setIsEdit , setOpenDelete).length}
                       className="h-24 text-center bg-[#0D0D0D]"
                     >
                       <span className="flex items-center justify-center">
@@ -400,7 +437,7 @@ export default function AdminPage() {
                 ) : (
                   <TableRow>
                     <TableCell
-                      colSpan={createColumns(setOpenEdit, setOpenView, setMangaData , isEdit , setIsEdit).length}
+                      colSpan={createColumns(setOpenEdit, setOpenView, setMangaData , isEdit , setIsEdit , setOpenDelete).length}
                       className="h-24 text-center"
                     >
                       No results.

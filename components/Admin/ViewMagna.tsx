@@ -9,8 +9,8 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { Label } from "../ui/label";
-import { MangaData } from "./EditManga";
 import { getMangaImage } from "@/services/api";
+import { Manga } from "@/app/admin/page";
 
 const ViewMagna = ({
   open,
@@ -19,19 +19,8 @@ const ViewMagna = ({
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
-  mangaData: MangaData;
+  mangaData: Manga;
 }) => {
-  const [mangaCover, setMangaCover] = useState<string>("");
-  useEffect(() => {
-    const fetchMangaCover = async () => {
-      if (!mangaData.title) {
-        return;
-      }
-      const mangaCover = await getMangaImage({ title: mangaData.title });
-      setMangaCover(mangaCover);
-    };
-    fetchMangaCover();
-  }, [mangaData]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -50,7 +39,7 @@ const ViewMagna = ({
           <div className="flex gap-6">
             <div className="w-32 h-48 bg-zinc-800 rounded-lg flex items-center justify-center">
               <img
-                src={mangaCover || "https://t4.ftcdn.net/jpg/06/63/49/17/360_F_663491769_yxfkyVTMFd2p9DNsYP8aB7oDsslsDs4e.jpg"}
+                src={mangaData.coverImageUrl || "https://t4.ftcdn.net/jpg/06/63/49/17/360_F_663491769_yxfkyVTMFd2p9DNsYP8aB7oDsslsDs4e.jpg"}
                 alt="Manga Cover"
                 className="w-full h-full object-cover rounded-lg"
               />
@@ -75,7 +64,17 @@ const ViewMagna = ({
                   </Label>
                   <div className="p-2  rounded-lg border border-zinc-700">
                     <p className="text-sm text-white font-medium">
-                      {mangaData.chapters || 0}
+                        {mangaData.totalChapter || 0}
+                    </p>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-zinc-300">
+                    Total Available Chapters
+                  </Label>
+                  <div className="p-2  rounded-lg border border-zinc-700">
+                    <p className="text-sm text-white font-medium">
+                        {mangaData.totalAvailableChapter || 0}
                     </p>
                   </div>
                 </div>
@@ -100,8 +99,9 @@ const ViewMagna = ({
             <Label className="text-sm font-medium text-zinc-300">Genres</Label>
             <div className="p-3  rounded-lg border border-zinc-700">
               <div className="flex flex-wrap gap-2">
-                {Array.isArray(mangaData?.genres)
-                  ? mangaData.genres.map((genre, index) => {
+                {(() => {
+                  if (Array.isArray(mangaData?.genres)) {
+                    return mangaData.genres.map((genre, index) => {
                       const colors = [
                         "bg-blue-500 text-white",
                         "bg-pink-500 text-white",
@@ -116,15 +116,19 @@ const ViewMagna = ({
                           {genre.trim()}
                         </span>
                       );
-                    })
-                  : mangaData?.genres?.split(",").map((genre, index) => (
+                    });
+                  } else if (typeof mangaData?.genres === 'string') {
+                    return (mangaData.genres as string).split(",").map((genre: string, index: number) => (
                       <span
                         key={index}
                         className="inline-flex items-center px-4 rounded-full text-xs font-medium bg-gradient-to-r from-purple-600 to-pink-600 text-white border border-purple-500"
                       >
                         {genre.trim()}
                       </span>
-                    ))}
+                    ));
+                  }
+                  return null;
+                })()}
               </div>
             </div>
           </div>

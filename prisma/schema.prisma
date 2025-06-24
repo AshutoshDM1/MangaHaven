@@ -35,8 +35,9 @@ model Manga {
 model MangaChapter {
   id                Int                 @id @default(autoincrement())
   chapterNumber     Int
+  chapterTitle      String
   mangaId           Int
-  manga             Manga               @relation(fields: [mangaId], references: [id])
+  manga             Manga               @relation(fields: [mangaId], references: [id], onDelete: Cascade)
   mangaChapterImages MangaChapterImage[]
 }
 
@@ -44,7 +45,7 @@ model MangaChapterImage {
   id              Int          @id @default(autoincrement())
   imageUrl        String
   mangaChapterId  Int
-  mangaChapter    MangaChapter @relation(fields: [mangaChapterId], references: [id])
+  mangaChapter    MangaChapter @relation(fields: [mangaChapterId], references: [id], onDelete: Cascade)
 }
 
 model MangaDashboard {
@@ -58,8 +59,8 @@ model MangaDashboard {
 model DashboardManga {
   mangaId      Int
   dashboardId  Int
-  manga        Manga          @relation(fields: [mangaId], references: [id])
-  dashboard    MangaDashboard @relation(fields: [dashboardId], references: [id])
+  manga        Manga          @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  dashboard    MangaDashboard @relation(fields: [dashboardId], references: [id], onDelete: Cascade)
   displayOrder Int
   @@unique([mangaId, dashboardId])
 }
@@ -73,9 +74,9 @@ model MangaCarousel {
 model CarouselManga {
   id           Int           @id @default(autoincrement())
   carouselId   Int
-  carousel     MangaCarousel @relation(fields: [carouselId], references: [id])
+  carousel     MangaCarousel @relation(fields: [carouselId], references: [id], onDelete: Cascade)
   mangaId      Int
-  manga        Manga         @relation(fields: [mangaId], references: [id])
+  manga        Manga         @relation(fields: [mangaId], references: [id], onDelete: Cascade)
   displayOrder Int
   @@unique([carouselId, mangaId])
 }

@@ -79,7 +79,9 @@ const SideNav = () => {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle className="text-2xl font-bold">MangaHaven</SheetTitle>
+          <SheetTitle className="text-2xl font-bold text-primary flex gap-1 justify-start items-center">
+            <span><img src="/MangaHaven Logo.png" alt="logo" className="w-10 mb-2 cover" /></span>
+            MangaHaven</SheetTitle>
           <SheetDescription className="text-sm text-muted-foreground">
             Welcome to MangaHaven, your ultimate destination for the latest
             manga updates, reviews, and recommendations. Dive into a world of
@@ -87,12 +89,12 @@ const SideNav = () => {
             with our comprehensive manga database.
           </SheetDescription>
         </SheetHeader>
-        <nav className="flex flex-col mt-4">
+        <nav className="flex flex-col mt-4 gap-2">
           {navItems.map((item) => (
             <Button
               key={item.name}
               variant="ghost"
-              className="w-full justify-start border-b border-zinc-200 dark:border-zinc-800"
+              className="w-full justify-start bg-[#832bff]/70 hover:bg-[#832bff]/90 text-white"
               onClick={() => handleNavigation(item.path)}
             >
               <item.icon className="mr-2 h-4 w-4" />

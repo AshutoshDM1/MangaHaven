@@ -3,24 +3,26 @@ import prisma from "@/db/db";
 
 type MangaChapter = {
   chapterNumber: number;
+  chapterTitle: string;
   mangaId: number;
 };
 
 const POST = async (request: NextRequest) => {
-  const body: MangaChapter[] = await request.json();
+  const body: MangaChapter = await request.json();
 
   try {
     const result = await prisma.$transaction(async (tx) => {
-      const mangaChapter = await tx.mangaChapter.createMany({
-        data: body.map((item) => ({
-          chapterNumber: item.chapterNumber,
-          mangaId: item.mangaId,
-        }))
+      const mangaChapter = await tx.mangaChapter.create({
+        data: {
+          chapterNumber: body.chapterNumber,
+          chapterTitle: body.chapterTitle ,
+          mangaId: body.mangaId,
+        }
       });
       
       const mangaTotalChapter = await tx.manga.update({
-        where: { id: body[0].mangaId },
-        data: { totalChapter: { increment: body.length } }
+        where: { id: body.mangaId },
+        data: { totalChapter: { increment: 1 } }
       });
       
       return { mangaChapter, mangaTotalChapter };

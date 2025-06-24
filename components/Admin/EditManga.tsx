@@ -13,14 +13,9 @@ import { Label } from "@radix-ui/react-label";
 import { Textarea } from "../ui/textarea";
 import { useEffect, useState } from "react";
 import { mangaData } from "@/state/atoms";
-import { ColumnDef } from "@tanstack/react-table";
-
-export type MangaData = {
-  title: string;
-  description: string;
-  genres: string;
-  chapters: number;
-};
+import { Manga } from "@/app/admin/page";
+import { toast } from "sonner";
+import { updateManga } from "@/services/apiv2";
 
 const EditManga = ({
   open,
@@ -29,15 +24,19 @@ const EditManga = ({
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
-  mangaData: MangaData;
+  mangaData: Manga;
 }) => {
   useEffect(() => {
     setManga(mangaData);
   }, [mangaData]);
-  const [manga, setManga] = useState<MangaData>(mangaData);
+  const [manga, setManga] = useState<Manga>(mangaData);
 
-  const handleSubmit = () => {
-    setOpen(false);
+  const handleSubmit = async () => {
+    const response = await updateManga(manga);
+    if (response && response.status === 200) {
+      toast.success("Manga updated successfully");
+      setOpen(false);
+    }
   };
 
   return (
@@ -56,7 +55,7 @@ const EditManga = ({
             </Label>
             <Input
               id="title"
-              className="col-span-3 select-none selection:bg-black selection:text-white"
+              className="col-span-3"
               value={manga.title}
               onChange={(e) => setManga({ ...manga, title: e.target.value })}
             />
@@ -84,8 +83,8 @@ const EditManga = ({
               id="genres"
               className="col-span-3"
               placeholder="Action, Adventure, etc."
-              value={manga.genres}
-              onChange={(e) => setManga({ ...manga, genres: e.target.value })}
+              value={manga.genres.join(", ")}
+              onChange={(e) => setManga({ ...manga, genres: e.target.value.split(", ") as string[] })}
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -96,9 +95,9 @@ const EditManga = ({
               id="totalChapters"
               type="number"
               className="col-span-3"
-              value={manga.chapters}
+              value={manga.totalChapter}
               onChange={(e) =>
-                setManga({ ...manga, chapters: parseInt(e.target.value) })
+                setManga({ ...manga, totalChapter: parseInt(e.target.value) })
               }
             />
             <Label htmlFor="chapters" className="text-right">
@@ -108,9 +107,9 @@ const EditManga = ({
               id="availableChapters"
               type="number"
               className="col-span-3"
-              value={manga.chapters}
+              value={manga.totalAvailableChapter}
               onChange={(e) =>
-                setManga({ ...manga, chapters: parseInt(e.target.value) })
+                setManga({ ...manga, totalAvailableChapter: parseInt(e.target.value) })
               }
             />
           </div>

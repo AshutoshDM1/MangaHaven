@@ -22,12 +22,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Loader, MoreHorizontal, ChevronDown } from "lucide-react";
-import { PrismaClient } from "@prisma/client";
+import { getAllUsers } from "@/services/apiv2";
 
 interface User {
   id: number;
   email: string;
-  name: string | null;
+  firstName: string | null;
+  lastName: string | null;
   image: string | null;
 }
 
@@ -39,41 +40,11 @@ const UsersPage = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        // In a real app, you would call an API endpoint here
-        // This is a placeholder until you implement the actual API
-        const response = await fetch("/api/users");
-        const data = await response.json();
-        setUsers(data);
+        const response = await getAllUsers();
+        setUsers(response.data);
       } catch (error) {
         console.error("Failed to fetch users:", error);
-        // For demo purposes, set some sample data
-        setUsers([
-          { id: 1, email: "user1@example.com", name: "John Doe", image: null },
-          {
-            id: 2,
-            email: "user2@example.com",
-            name: "Jane Smith",
-            image: "https://i.pravatar.cc/150?img=2",
-          },
-          {
-            id: 3,
-            email: "user3@example.com",
-            name: "Bob Johnson",
-            image: "https://i.pravatar.cc/150?img=3",
-          },
-          {
-            id: 4,
-            email: "user4@example.com",
-            name: "Alice Brown",
-            image: "https://i.pravatar.cc/150?img=4",
-          },
-          {
-            id: 5,
-            email: "user5@example.com",
-            name: "Charlie Davis",
-            image: null,
-          },
-        ]);
+        setUsers([]);
       } finally {
         setLoading(false);
       }
@@ -84,7 +55,8 @@ const UsersPage = () => {
 
   const filteredUsers = users.filter(
     (user) =>
-      user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -109,7 +81,7 @@ const UsersPage = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="max-w-sm"
         />
-        <Button variant="outline">
+        <Button variant="outline" className="bg-transparent cursor-pointer">
           Columns <ChevronDown className="ml-2 h-4 w-4" />
         </Button>
       </div>
@@ -147,11 +119,13 @@ const UsersPage = () => {
                   <TableCell>
                     <Avatar>
                       <AvatarImage src={user.image || ""} />
-                      <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
+                      <AvatarFallback>
+                        {getInitials(user.firstName + " " + user.lastName)}
+                      </AvatarFallback>
                     </Avatar>
                   </TableCell>
                   <TableCell className="font-medium">
-                    {user.name || "N/A"}
+                    {user.firstName + " " + user.lastName || "N/A"}
                   </TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.id}</TableCell>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,25 +13,27 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Toaster, toast } from "sonner";
-import { addManga } from "@/services/api";
+import { addManga, apiV2, SendMangaData } from "@/services/apiv2";
+import ViewManga from "./components/ViewManga";
+import { Loader2 } from "lucide-react";
+
+type MangaData = {
+  title: string;
+  description: string;
+  totalAvailableChapter: number;
+  genres: string;
+  coverImageUrl: string;
+}
 
 const AdminPage = () => {
-  const [mangaData, setMangaData] = useState<{
-    title: string;
-    description: string;
-    totalAvailableChapter: number | null;
-    genres: string;
-    coverImageUrl: string;
-  }>({
+  const [mangaData, setMangaData] = useState<MangaData>({
     title: "",
     description: "",
-    totalAvailableChapter: null,
+    totalAvailableChapter: 0,
     genres: "",
     coverImageUrl: "",
   });
-  const [chapterNumber, setChapterNumber] = useState<number>(1);
   const [mangaCover, setMangaCover] = useState<File | null>(null);
-  const [mangaImages, setMangaImages] = useState<File[]>([]);
   const [ableToSubmit, setAbleToSubmit] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -39,11 +41,19 @@ const AdminPage = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { id, value } = e.target;
-    setMangaData((prev) => ({ ...prev, [id]: value }));
+    if (id === "totalAvailableChapter") {
+      setMangaData((prev) => ({ ...prev, [id]: parseInt(value)}));
+    } else {
+      setMangaData((prev) => ({ ...prev, [id]: value }));
+    }
+  };
+
+
+  useEffect(() => {
     if (
       mangaData.title !== "" &&
       mangaData.description !== "" &&
-      mangaData.totalAvailableChapter !== null &&
+      mangaData.totalAvailableChapter > 0 &&
       mangaData.genres !== "" &&
       mangaData.coverImageUrl !== ""
     ) {
@@ -51,8 +61,8 @@ const AdminPage = () => {
     } else {
       setAbleToSubmit(false);
     }
-  };
-
+  }, [mangaData]);
+      
   const handleCoverChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setMangaCover(e.target.files[0]);
@@ -60,8 +70,24 @@ const AdminPage = () => {
   };
 
   const handleCoverUpload = async () => {
-    console.log(mangaCover);
+    toast.loading("Uploading Manga Cover...");
+    try {
+      if (!mangaCover) {
+        toast.error("Please select a cover image.");
+        return;
+      }
+      const formData = new FormData();
+        formData.append("file", mangaCover);
+      const result = await apiV2().post("/upload/mangacover", formData);
+      toast.success("Manga Cover Uploaded Successfully");
+      setMangaData((prev) => ({ ...prev, coverImageUrl: result.data.url }));
+    } catch (error) {
+      toast.error("Failed to upload manga cover. Please try again.");
+    } finally {
+      toast.dismiss();
+    }
   };
+
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -70,10 +96,10 @@ const AdminPage = () => {
       if (
         mangaData.title === "" ||
         mangaData.description === "" ||
-        mangaData.totalAvailableChapter === null ||
+        mangaData.totalAvailableChapter === 0 ||
         mangaData.genres === "" ||
         mangaData.coverImageUrl === "" ||
-        mangaData.coverImageUrl === ""
+        mangaData.coverImageUrl === ""  
       ) {
         toast.error("Please fill in all required fields.");
         setIsSubmitting(false);
@@ -85,33 +111,41 @@ const AdminPage = () => {
         .split(",")
         .map((genre) => genre.trim());
 
+      if (genresArray.length < 3 || genresArray.length > 3) {
+        toast.error("Please enter at least and maximum 3 genres.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      if (mangaData.description.length > 300) {
+        toast.error("Description must be less than 300 characters.");
+        setIsSubmitting(false);
+        return;
+      }
 
       const sendData = {
         title: mangaData.title,
         description: mangaData.description,
-        totalChapter: 0,
         totalAvailableChapter: mangaData.totalAvailableChapter,
         genres: genresArray,
         coverImageUrl: mangaData.coverImageUrl,
-        chapterNumber: chapterNumber
+      } as SendMangaData;
+
+      const response = await addManga([sendData]);
+      
+      if (response && response.status === 201) {
+        toast.success("Manga Added Successfully", {
+          description: `${mangaData.title} has been added to the library.`,
+        });
+        setMangaData({
+          title: "",
+          description: "",
+          totalAvailableChapter: 0,
+          genres: "",
+          coverImageUrl: "",
+        });
       }
-      console.log(sendData);
-
-      toast.success("Manga Added Successfully", {
-        description: `${mangaData.title} has been added to the library.`,
-      });
-
-      // Reset form
-      setMangaData({
-        title: "",
-        description: "",
-        totalAvailableChapter: null,
-        genres: "",
-        coverImageUrl: "",
-      });
-      setChapterNumber(1);
       setMangaCover(null);
-      setMangaImages([]);
     } catch (error) {
       toast.error("Failed to add manga. Please try again.");
     } finally {
@@ -121,9 +155,11 @@ const AdminPage = () => {
 
   return (
     <>
-      <div className="w-full flex flex-col items-center justify-center p-4">
+      <div className="w-full p-4 flex items-center justify-center gap-4">
         <Toaster />
-        <Card className="w-full max-w-3xl mx-auto">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-6">
+          {/* Add Manga Form */}
+          <Card className="min-w-[30vw]">
           <CardHeader>
             <CardTitle className="self-center text-2xl font-bold text-primary ">
               Add New Manga
@@ -164,7 +200,7 @@ const AdminPage = () => {
                   <Input
                     id="totalAvailableChapter"
                     type="number"
-                    value={mangaData.totalAvailableChapter ?? ""}
+                    value={mangaData.totalAvailableChapter}
                     onChange={handleInputChange}
                     placeholder="e.g., 50"
                     required
@@ -186,6 +222,7 @@ const AdminPage = () => {
                 <Label htmlFor="mangaCover">Upload Manga Cover</Label>
                 <div className="flex items-center gap-4">
                   <Input
+
                     id="mangaCover"
                     type="file"
                     accept="image/*"
@@ -224,15 +261,22 @@ const AdminPage = () => {
               
               <Button
                 onClick={handleSubmit}
-                className="w-full"
+                className="w-full flex items-center justify-center"
                 disabled={isSubmitting || !ableToSubmit}
               >
+                {isSubmitting && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                 {isSubmitting ? "Adding Manga..." : "Add Manga"}
               </Button>
             </div>
           </CardContent>
         </Card>
+        
+        {/* Manga Preview */}
+        <div className="w-full h-full flex items-center justify-center">
+          <ViewManga mangaData={mangaData} />
+        </div>
       </div>
+    </div>
     </>
   );
 };
