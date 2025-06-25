@@ -49,8 +49,10 @@ import { useEffect, useState } from "react";
 import { getManga } from "@/services/api";
 import EditManga from "@/components/Admin/EditManga";
 import ViewMagna from "@/components/Admin/ViewMagna";
-import { deleteManga, getAllManga } from "@/services/apiv2";
+import { deleteManga, getAllManga, getMangaChapter } from "@/services/apiv2";
 import { toast } from "sonner";
+import { MangaChapter } from "@prisma/client";
+import ViewMangaChapter from "@/components/Admin/ViewMangaChapter";
 
 export type Manga = {
   id: number;
@@ -68,7 +70,8 @@ export const createColumns = (
   setMangaData: (mangaData: Manga , isEdit: boolean) => void, 
   isEdit: boolean,
   setIsEdit: (isEdit: boolean) => void,
-  setOpenDelete: (open: boolean) => void
+  setOpenDelete: (open: boolean) => void,
+  setOpenMangaChapter: (open: boolean) => void
 ): ColumnDef<any>[] => [
   {
     id: "select",
@@ -208,6 +211,15 @@ export const createColumns = (
               View Manga
             </DropdownMenuItem>
             <DropdownMenuItem 
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpenMangaChapter(true);
+              setMangaData(row.original , false);
+            }}
+            className="cursor-pointer">
+              View Manga Chapter
+            </DropdownMenuItem>
+            <DropdownMenuItem 
             onClick={async (e) => {
               e.stopPropagation();
               const response = await deleteManga(row.original.id);
@@ -229,6 +241,7 @@ export default function AdminPage() {
   const [openEdit, setOpenEdit] = useState<boolean>(false);
   const [openView, setOpenView] = useState<boolean>(false);
   const [openDelete, setOpenDelete] = useState<boolean>(false);
+  const [openMangaChapter, setOpenMangaChapter] = useState<boolean>(false);
   useEffect(() => {
     const fetchManga = async () => {
       const data = await getAllManga();
@@ -259,7 +272,7 @@ export default function AdminPage() {
 
   const table = useReactTable({
     data: manga,
-    columns: createColumns(setOpenEdit, setOpenView, setMangaData , isEdit , setIsEdit , setOpenDelete ),
+    columns: createColumns(setOpenEdit, setOpenView, setMangaData , isEdit , setIsEdit , setOpenDelete , setOpenMangaChapter ),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -343,6 +356,7 @@ export default function AdminPage() {
     <>
       <EditManga open={openEdit} setOpen={setOpenEdit} mangaData={mangaData as unknown as Manga} />
       <ViewMagna open={openView} setOpen={setOpenView} mangaData={mangaData as unknown as Manga} />
+      <ViewMangaChapter open={openMangaChapter} setOpen={setOpenMangaChapter} mangaData={mangaData as unknown as Manga} />
       <div className="w-full flex flex-col items-center justify-center">
         {/* <h1 className="text-xl font-bold text-center">Manga Admin Panel</h1> */}
         <div className="w-full px-10">
@@ -410,7 +424,7 @@ export default function AdminPage() {
                 {loading ? (
                   <TableRow>
                     <TableCell
-                      colSpan={createColumns(setOpenEdit, setOpenView, setMangaData , isEdit , setIsEdit , setOpenDelete).length}
+                      colSpan={createColumns(setOpenEdit, setOpenView, setMangaData , isEdit , setIsEdit , setOpenDelete , setOpenMangaChapter).length}
                       className="h-24 text-center bg-[#0D0D0D]"
                     >
                       <span className="flex items-center justify-center">
@@ -437,7 +451,7 @@ export default function AdminPage() {
                 ) : (
                   <TableRow>
                     <TableCell
-                      colSpan={createColumns(setOpenEdit, setOpenView, setMangaData , isEdit , setIsEdit , setOpenDelete).length}
+                      colSpan={createColumns(setOpenEdit, setOpenView, setMangaData , isEdit , setIsEdit , setOpenDelete , setOpenMangaChapter).length}
                       className="h-24 text-center"
                     >
                       No results.
@@ -642,3 +656,4 @@ export default function AdminPage() {
     </>
   );
 }
+

@@ -113,3 +113,23 @@ export const getAllUsers = async () => {
   }
   return response;
 };
+
+export const getMangaChapter = async (mangaId: number) => {
+  const response = await apiV2().get(
+    `/manga/addmangachapter?mangaId=${mangaId}`
+  );
+  if (response.data.error) {
+    handleError(response.data.error);
+  }
+  return response;
+};
+
+export const getMangaChapterImage = async (mangaChapterId: number) => {
+  const response = await apiV2().get(
+    `/manga/add-manga-images?mangaChapterId=${mangaChapterId}`
+  );
+  if (response.data.error) {
+    handleError(response.data.error);
+  }
+  return response;
+};

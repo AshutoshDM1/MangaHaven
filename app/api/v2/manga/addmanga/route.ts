@@ -54,7 +54,7 @@ const POST = async (request: NextRequest) => {
 const DELETE = async (request: NextRequest) => {
   try {
     const body = await request.json();
-    const result = await prisma.manga.delete({
+    const result = await prisma.manga.deleteMany({
       where: { id: body.id },
     });
     return NextResponse.json(
@@ -62,6 +62,7 @@ const DELETE = async (request: NextRequest) => {
       { status: 200 }
     );
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       { error: "Failed to delete manga entries" },
       { status: 500 }

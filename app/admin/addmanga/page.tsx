@@ -117,8 +117,8 @@ const AdminPage = () => {
         return;
       }
 
-      if (mangaData.description.length > 300) {
-        toast.error("Description must be less than 300 characters.");
+      if (mangaData.description.length > 500) {
+        toast.error("Description must be less than 500 characters.");
         setIsSubmitting(false);
         return;
       }

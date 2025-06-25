@@ -6,6 +6,19 @@ type MangaChapterImage = {
   mangaChapterId: number;
 };
 
+const GET = async (request: NextRequest) => {
+  const mangaChapterId = request.nextUrl.searchParams.get("mangaChapterId");
+  try {
+    const result = await prisma.mangaChapterImage.findMany({
+      where: { mangaChapterId: Number(mangaChapterId) },
+    });
+    return NextResponse.json(result);
+  } catch (error) {
+    console.error("Error fetching manga images:", error);
+    return NextResponse.json({ error: "Failed to fetch manga images" , errorData: error }, { status: 500 });
+  }
+};
+
 const POST = async (request: NextRequest) => {
   const body: MangaChapterImage[] = await request.json();
   try {
@@ -15,8 +28,8 @@ const POST = async (request: NextRequest) => {
     return NextResponse.json({ message: "Manga images added", result });
   } catch (error) {
     console.error('Error adding manga images:', error);
-    return NextResponse.json({ error: "Failed to add manga images", success: false }, { status: 500 });
+    return NextResponse.json({ error: "Failed to add manga images", errorData: error }, { status: 500 });
   }
 };
 
-export { POST };
+export { GET, POST };
