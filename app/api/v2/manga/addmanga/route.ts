@@ -13,10 +13,18 @@ type Manga = {
   genres: string[];
 };
 
-const GET = async () => {
+const GET = async (request: NextRequest) => {
   try {
-    const mangas = await prisma.manga.findMany();
-    return NextResponse.json(mangas);
+    const mangaId = request.nextUrl.searchParams.get("mangaId");
+    if (mangaId) {
+      const manga = await prisma.manga.findUnique({
+        where: { id: Number(mangaId) },
+      });
+      return NextResponse.json(manga);
+    } else {
+      const mangas = await prisma.manga.findMany();
+      return NextResponse.json(mangas);
+    }
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to fetch manga entries" },
@@ -88,8 +96,7 @@ const PUT = async (request: NextRequest) => {
       { message: "Manga updated successfully", result },
       { status: 200 }
     );
-  }
-  catch (error) {
+  } catch (error) {
     return NextResponse.json(
       { error: "Failed to update manga entries" },
       { status: 500 }

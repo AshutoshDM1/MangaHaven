@@ -1,3 +1,4 @@
+import { Manga } from "@/app/admin/page";
 import { atom } from "recoil";
 
 export const mangaBackgroundData = atom({
@@ -29,12 +30,6 @@ export const mangaCarouselData = atom({
   ],
 });
 
-interface Manga {
-  id: number;
-  title: string;
-  genres: string[];
-  imageUrl: string;
-}
 
 export const mangaData = atom<Manga[]>({
   key: "mangaData",
@@ -42,8 +37,11 @@ export const mangaData = atom<Manga[]>({
     {
       id: 0,
       title: "",
+      description: "",
+      totalChapter: 0,
+      totalAvailableChapter: 0,
       genres: [],
-      imageUrl: "",
+      coverImageUrl: "",
     },
   ],
 });

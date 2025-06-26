@@ -49,6 +49,14 @@ export const getAllManga = async (): Promise<MangaSearchResult[]> => {
   return response.data;
 };
 
+export const getMangaById = async (id: number): Promise<MangaSearchResult[]> => {
+  const response = await apiV2().get(`/manga/addmanga?mangaId=${id}`);
+  if (response.data.error) {
+    handleError(response.data.error);
+  }
+  return response.data;
+};
+
 export const deleteManga = async (id: number) => {
   const response = await apiV2().delete("/manga/addmanga", { data: id });
   if (response.data.error) {

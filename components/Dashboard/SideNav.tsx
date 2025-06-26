@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ModeToggle } from "../NavBar/ModeToggle";
 import {
   AlignJustify,
@@ -22,9 +22,14 @@ import {
   LogOut,
   UserPlus,
   UserRoundCheck,
+  ArrowLeft,
+  Users,
+  BookImage,
+  Download,
 } from "lucide-react";
 
 const SideNav = () => {
+  const currentPath = usePathname();
   const router = useRouter();
   const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
@@ -50,7 +55,17 @@ const SideNav = () => {
     router.push("/");
   };
 
-  const navItems = [
+
+  const adminItems = [
+    { name: "Admin", icon: UserRoundCheck, path: "/admin" },
+    { name: "Users", icon: Users, path: "/admin/users" },
+    { name: "Add New Manga", icon: BookImage, path: "/admin/addmanga" },
+    { name: "Add New Chapter", icon: BookOpen, path: "/admin/addnewChapter" },
+    { name: "Download Manga", icon: Download, path: "/admin/downloadmanga" },
+    { name: "Back to Dashboard", icon: ArrowLeft, path: "/dashboard" },
+  ];
+
+  const dashboardItems = [
     { name: "Dashboard", icon: Home, path: "/dashboard" },
     { name: "Home", icon: BookOpen, path: "/" },
     ...(status === "authenticated"
@@ -64,6 +79,8 @@ const SideNav = () => {
         ]
       : []),
   ];
+
+  const navItems = currentPath.startsWith("/admin") ? adminItems : dashboardItems;
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>

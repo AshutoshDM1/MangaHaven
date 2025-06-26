@@ -15,16 +15,14 @@ import { Toaster, toast } from "sonner";
 import { addManga } from "@/services/api";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
+import SideNav from "@/components/Dashboard/SideNav";
+import NavbarMain from "@/components/NavBar/NavbarMain";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
-
   return (
     <>
-      <SidebarProvider>
-        <AppSidebar />
-        <SidebarTrigger  />
-        {children}
-      </SidebarProvider>
+      <NavbarMain />
+      {children}
     </>
   );
 };

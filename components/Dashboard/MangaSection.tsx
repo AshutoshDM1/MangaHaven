@@ -3,32 +3,33 @@ import Image from "next/image";
 import { mangaData } from "@/state/atoms";
 import { Skeleton } from "../ui/skeleton";
 import { useEffect } from "react";
-import { getManga } from "@/services/api";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { getAllManga } from "@/services/apiv2";
+import { Manga } from "@/app/admin/page";
+
 
 const MangaSection = () => {
   const [mangas, setMangas] = useRecoilState(mangaData);
   const router = useRouter();
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getManga();
+      const data = await getAllManga();
       setMangas(data);
     };
     fetchData();
   }, [setMangas]);
 
-  const handleMangaClick = (manganame: string) => {
-    router.push(`/read/${manganame}/1`);
+  console.log(mangas);
+
+  const handleMangaClick = (mangaId: number) => {
+      router.push(`/read/${mangaId}`);
   };
 
   return (
     <>
       <div className="w-[96%] mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 2 }}
           className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 mt-8 transition-all duration-300"
         >
           {mangas.length === 1
@@ -42,14 +43,14 @@ const MangaSection = () => {
               })
             : mangas.map((item) => (
                 <motion.div
-                  onClick={() => handleMangaClick(item.title)}
+                  onClick={() => handleMangaClick(item.id)}
                   key={item.id}
                   className="dark:border-[#3a3a3a] border dark:border dark:hover:bg-zinc-900 transform  bg-card rounded-lg shadow-xl overflow-hidden transition-transform bg-[#161616] h-full cursor-pointer"
                 >
                   <div className="relative overflow-hidden group">
                     <div className="relative">
                       <Image
-                        src={item.imageUrl}
+                        src={item.coverImageUrl}
                         alt={`Manga ${item.title}`}
                         width={250}
                         height={250}

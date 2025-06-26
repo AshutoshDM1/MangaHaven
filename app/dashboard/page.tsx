@@ -8,8 +8,8 @@ export default async function Home() {
   return (
     <>
       <NavbarMain />
-      {/* <div className="max-w-7xl mx-auto flex flex-col">
-        <div className="flex flex-col">
+      <div className="max-w-7xl mx-auto flex flex-col">
+        {/* <div className="flex flex-col">
           <div className="relative">
             <BackGroundMain />
             <div className="-mt-[14vh] md:mt-[0]">
@@ -19,9 +19,9 @@ export default async function Home() {
               <MangaCarousel />
             </div>
           </div>
-        </div>
+        </div> */}
         <MangaSection />
-      </div> */}
+      </div>
       <Footer />
     </>
   );
