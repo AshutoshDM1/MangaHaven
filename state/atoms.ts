@@ -5,12 +5,12 @@ export const mangaBackgroundData = atom({
   key: "mangaBackgroundData",
   default: [
     {
-      imageUrl: "",
+      coverImageUrl: "",
       title: "",
       description: "",
-      chapter: "",
-      volume: "",
-      status: "",
+      totalChapter: 0,
+      totalAvailableChapter: 0,
+      genres: [],
     },
   ],
 });

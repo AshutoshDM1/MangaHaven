@@ -8,6 +8,7 @@ import { Skeleton } from "../ui/skeleton";
 import { Divide } from "lucide-react";
 import { easeInOut, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { apiV2 } from "@/services/apiv2";
 
 const BackGroundMain: React.FC = () => {
   const router = useRouter();
@@ -17,8 +18,8 @@ const BackGroundMain: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getMangaDashboard();
-      setItems(data);
+      const data = await apiV2().get("/manga/addmanga?categoryId=1");
+      setItems(data.data);
     };
     fetchData();
   }, [setItems]);
@@ -87,17 +88,17 @@ const BackGroundMain: React.FC = () => {
               Read Now
             </button>
             <div className="text-white md:opacity-70 md:text-lg text-xs">
-              <span>{items[currentIndex].volume}</span>
+              <span>{items[currentIndex].totalChapter}</span>
               <span className="mx-2">•</span>
-              <span>{items[currentIndex].chapter}</span>
+              <span>{items[currentIndex].totalAvailableChapter}</span>
             </div>
           </div>
         </div>
         <div className="md:h-[60vh] h-[45vh] w-full darkopacity-[50%] md:w-[200%] absolute md:relative z-0">
-          <Image
-            src={`/${items[currentIndex].imageUrl}`} // Ensure the path is correct
+          <img
+            src={`${items[currentIndex].coverImageUrl}`} // Ensure the path is correct
             alt={items[currentIndex].title}
-            className={`md:h-[60vh] h-[30vh] w-[200%] object-cover transition-opacity duration-1000 ${
+            className={`md:h-[60vh] h-[30vh] w-[200%] object-cover object-top transition-opacity duration-1000 ${
               isTransitioning ? "opacity-0" : "opacity-100"
             }`}
             style={{

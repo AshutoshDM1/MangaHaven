@@ -62,6 +62,7 @@ const SideNav = () => {
     { name: "Add New Manga", icon: BookImage, path: "/admin/addmanga" },
     { name: "Add New Chapter", icon: BookOpen, path: "/admin/addnewChapter" },
     { name: "Download Manga", icon: Download, path: "/admin/downloadmanga" },
+    { name: "Add Manga Category", icon: BookImage, path: "/admin/addmangaCategory" },
     { name: "Back to Dashboard", icon: ArrowLeft, path: "/dashboard" },
   ];
 

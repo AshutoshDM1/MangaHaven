@@ -9,17 +9,17 @@ export default async function Home() {
     <>
       <NavbarMain />
       <div className="max-w-7xl mx-auto flex flex-col">
-        {/* <div className="flex flex-col">
+        <div className="flex flex-col">
           <div className="relative">
             <BackGroundMain />
             <div className="-mt-[14vh] md:mt-[0]">
               <h5 className="md:text-3xl text-xl font-bold px-10 pt-2">
                 Most Viewed
               </h5>
-              <MangaCarousel />
+              {/* <MangaCarousel /> */}
             </div>
           </div>
-        </div> */}
+        </div>
         <MangaSection />
       </div>
       <Footer />

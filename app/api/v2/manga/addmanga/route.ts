@@ -16,11 +16,17 @@ type Manga = {
 const GET = async (request: NextRequest) => {
   try {
     const mangaId = request.nextUrl.searchParams.get("mangaId");
+    const categoryId = request.nextUrl.searchParams.get("categoryId");
     if (mangaId) {
       const manga = await prisma.manga.findUnique({
         where: { id: Number(mangaId) },
       });
       return NextResponse.json(manga);
+    } else if (categoryId) {
+      const mangas = await prisma.manga.findMany({
+        where: { categoryId: Number(categoryId) },
+      });
+      return NextResponse.json(mangas);
     } else {
       const mangas = await prisma.manga.findMany();
       return NextResponse.json(mangas);

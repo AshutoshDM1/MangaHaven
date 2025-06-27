@@ -28,8 +28,8 @@ model Manga {
   totalAvailableChapter Int              @default(0)
   genres                String[]
   mangaChapters         MangaChapter[]
-  dashboards            DashboardManga[]
-  carousels             CarouselManga[]
+  categoryId            Int?
+  category              Category?        @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
 
 model MangaChapter {
@@ -48,35 +48,10 @@ model MangaChapterImage {
   mangaChapter    MangaChapter @relation(fields: [mangaChapterId], references: [id], onDelete: Cascade)
 }
 
-model MangaDashboard {
-  id     Int             @id @default(autoincrement())
-  name   String          @default("Main Dashboard")
-  mangas DashboardManga[]
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
-}
-
-model DashboardManga {
-  mangaId      Int
-  dashboardId  Int
-  manga        Manga          @relation(fields: [mangaId], references: [id], onDelete: Cascade)
-  dashboard    MangaDashboard @relation(fields: [dashboardId], references: [id], onDelete: Cascade)
-  displayOrder Int
-  @@unique([mangaId, dashboardId])
-}
-
-model MangaCarousel {
-  id     Int             @id @default(autoincrement())
-  name   String
-  mangas CarouselManga[]
-}
-
-model CarouselManga {
-  id           Int           @id @default(autoincrement())
-  carouselId   Int
-  carousel     MangaCarousel @relation(fields: [carouselId], references: [id], onDelete: Cascade)
-  mangaId      Int
-  manga        Manga         @relation(fields: [mangaId], references: [id], onDelete: Cascade)
-  displayOrder Int
-  @@unique([carouselId, mangaId])
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String
+  mangas    Manga[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
