@@ -2,23 +2,12 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from "@/components/ui/card";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 import { FcGoogle } from "react-icons/fc";
-import { Mail, Lock, LogIn, Loader } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
-import { ShinyButton } from "./ui/ShinyButton";
 import { useRouter } from "next/navigation";
 import { FaGithub } from "react-icons/fa";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader } from "lucide-react";
 
 const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -97,7 +86,7 @@ const Login: React.FC = () => {
             Welcome Back,
           </h1>
           <h1 className="text-4xl lg:text-5xl font-bold leading-tight">
-            Let's Get You Back In
+            Let&apos;s Get You Back In
           </h1>
 
           <div className="flex space-x-2">
@@ -132,7 +121,7 @@ const Login: React.FC = () => {
             Login to your account
           </h2>
           <p className="text-gray-400">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <button
               onClick={() => router.push("/signup")}
               className="text-purple-400 hover:text-purple-300 font-medium"

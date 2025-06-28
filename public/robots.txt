@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+Allow: /dashboard
+Allow: /profile
+Allow: /read
+Allow: /login
+Allow: /signup
+
+# Disallow admin and API routes
+Disallow: /admin/
+Disallow: /api/
+
+# Allow specific image files for social sharing
+Allow: /Images/image.png
+Allow: /MangaHaven Logo.png
+
+# Sitemap location
+Sitemap: https://mangahaven.elitedev.tech/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1 

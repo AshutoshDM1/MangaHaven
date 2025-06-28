@@ -62,9 +62,10 @@ export type Manga = {
   totalAvailableChapter: number;
   genres: string[];
   coverImageUrl: string;
+  categoryId?: number | null;
 };
 
-export const createColumns = (
+const createColumns = (
   setOpenEdit: (open: boolean) => void,
   setOpenView: (open: boolean) => void,
   setMangaData: (mangaData: Manga , isEdit: boolean) => void, 
@@ -265,6 +266,7 @@ export default function AdminPage() {
     totalChapter: 0,
     totalAvailableChapter: 0,
     coverImageUrl: "",
+    categoryId: 0,
   });
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});

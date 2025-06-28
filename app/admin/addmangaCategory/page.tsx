@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Search, Plus, X, Loader2 } from "lucide-react";
+import Image from "next/image";
 
 interface CategoryWithManga {
   id: number;
@@ -32,15 +33,16 @@ interface CategoryWithManga {
   mangas: Manga[];
 }
 
-
 const AddMangaCategory = () => {
   const [name, setName] = useState<string>("");
   const [categories, setCategories] = useState<CategoryWithManga[]>([]);
-  
+
   // Dialog state
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
-  
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+    null
+  );
+
   // Search state
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchResults, setSearchResults] = useState<MangaSearchResult[]>([]);
@@ -48,17 +50,22 @@ const AddMangaCategory = () => {
   const [selectedManga, setSelectedManga] = useState<MangaSearchResult[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const fetchCategories = async () => {
+    const response = await apiV2().get("/manga/add-category-manga");
+    setCategories(response.data);
+  };
+
   useEffect(() => {
-    const fetchCategories = async () => {
-      setIsLoading(true);
-      const response = await apiV2().get("/manga/add-category-manga");
-      setCategories(response.data);
-      setIsLoading(false);
-    };
-    fetchCategories();
+    try {
+      fetchCategories();
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      toast.error("Failed to fetch categories");
+    }
   }, [isLoading]);
 
   const handleAddMangaCategory = async () => {
+    setIsLoading(true);
     try {
       await apiV2().post("/manga/add-category-manga", { name });
       toast.success("Category added successfully");
@@ -68,6 +75,8 @@ const AddMangaCategory = () => {
       setCategories(response.data);
     } catch (error) {
       toast.error("Failed to add category");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -119,7 +128,7 @@ const AddMangaCategory = () => {
   };
 
   const handleSelectManga = (manga: MangaSearchResult) => {
-    if (!selectedManga.find(m => m.id === manga.id)) {
+    if (!selectedManga.find((m) => m.id === manga.id)) {
       setSelectedManga([...selectedManga, manga]);
     }
     setSearchQuery("");
@@ -127,7 +136,7 @@ const AddMangaCategory = () => {
   };
 
   const handleRemoveManga = (mangaId: number) => {
-    setSelectedManga(selectedManga.filter(m => m.id !== mangaId));
+    setSelectedManga(selectedManga.filter((m) => m.id !== mangaId));
   };
 
   const handleAddMangaToCategory = async () => {
@@ -135,35 +144,39 @@ const AddMangaCategory = () => {
       toast.error("Please select manga to add");
       return;
     }
-
+    setIsLoading(true);
     try {
-      const mangaIds = selectedManga.map(m => m.id);
-      console.log(mangaIds , selectedCategory.id);
+      const mangaIds = selectedManga.map((m) => m.id);
+      console.log(mangaIds, selectedCategory.id);
 
       await apiV2().put("/manga/add-category-manga", {
         categoryId: selectedCategory.id,
-        mangaId: mangaIds
+        mangaId: mangaIds,
       });
-      
-      toast.success(`Added ${selectedManga.length} manga to ${selectedCategory.name}`);
+
+      toast.success(
+        `Added ${selectedManga.length} manga to ${selectedCategory.name}`
+      );
       handleCloseDialog();
     } catch (error) {
       console.error("Error adding manga to category:", error);
       toast.error("Failed to add manga to category");
+    } finally {
+      setIsLoading(false);
     }
   };
 
-// Debounce utility function
-function debounce<T extends (...args: any[]) => any>(
-  func: T,
-  wait: number
-): (...args: Parameters<T>) => void {
-  let timeout: NodeJS.Timeout | null = null;
-  return (...args: Parameters<T>) => {
-    if (timeout) clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), wait);
-  };
-}
+  // Debounce utility function
+  function debounce<T extends (...args: any[]) => any>(
+    func: T,
+    wait: number
+  ): (...args: Parameters<T>) => void {
+    let timeout: NodeJS.Timeout | null = null;
+    return (...args: Parameters<T>) => {
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), wait);
+    };
+  }
   return (
     <div className="bg-transparent p-6">
       <div className="max-w-2xl mx-auto">
@@ -250,9 +263,9 @@ function debounce<T extends (...args: any[]) => any>(
                             {category.mangas?.length || 0}
                           </TableCell>
                           <TableCell className="text-muted-foreground">
-                            <Button 
+                            <Button
                               onClick={() => handleOpenDialog(category)}
-                              className="bg-primary hover:bg-primary/80 text-white" 
+                              className="bg-primary hover:bg-primary/80 text-white"
                               variant="outline"
                             >
                               <Plus className="w-4 h-4 mr-2" />
@@ -276,7 +289,8 @@ function debounce<T extends (...args: any[]) => any>(
           <DialogHeader>
             <DialogTitle>Add Manga to Category</DialogTitle>
             <DialogDescription>
-              Search and select manga to add to "{selectedCategory?.name}" category
+              Search and select manga to add to &ldquo;{selectedCategory?.name}&rdquo;
+              category
             </DialogDescription>
           </DialogHeader>
 
@@ -296,7 +310,9 @@ function debounce<T extends (...args: any[]) => any>(
             {/* Selected Manga */}
             {selectedManga.length > 0 && (
               <div className="space-y-2">
-                <h3 className="font-medium">Selected Manga ({selectedManga.length})</h3>
+                <h3 className="font-medium">
+                  Selected Manga ({selectedManga.length})
+                </h3>
                 <div className="flex flex-wrap gap-2">
                   {selectedManga.map((manga) => (
                     <Badge
@@ -336,9 +352,11 @@ function debounce<T extends (...args: any[]) => any>(
                         onClick={() => handleSelectManga(manga)}
                       >
                         {manga.coverImageUrl && (
-                          <img
+                          <Image
                             src={manga.coverImageUrl}
                             alt={manga.title}
+                            width={48}
+                            height={64}
                             className="w-12 h-16 object-cover rounded"
                           />
                         )}
@@ -353,11 +371,17 @@ function debounce<T extends (...args: any[]) => any>(
                             </span>
                             {manga.genres && manga.genres.length > 0 && (
                               <div className="flex gap-1">
-                                {manga.genres.slice(0, 2).map((genre, index) => (
-                                  <Badge key={index} variant="outline" className="text-xs">
-                                    {genre}
-                                  </Badge>
-                                ))}
+                                {manga.genres
+                                  .slice(0, 2)
+                                  .map((genre, index) => (
+                                    <Badge
+                                      key={index}
+                                      variant="outline"
+                                      className="text-xs"
+                                    >
+                                      {genre}
+                                    </Badge>
+                                  ))}
                               </div>
                             )}
                           </div>
@@ -367,7 +391,7 @@ function debounce<T extends (...args: any[]) => any>(
                   </div>
                 ) : searchQuery.length >= 2 ? (
                   <div className="text-center py-4 text-muted-foreground">
-                    No manga found for "{searchQuery}"
+                    No manga found for &ldquo;{searchQuery}&rdquo;
                   </div>
                 ) : null}
               </div>
@@ -383,7 +407,11 @@ function debounce<T extends (...args: any[]) => any>(
                 disabled={selectedManga.length === 0}
                 className="bg-primary hover:bg-primary/80 text-white"
               >
-                {isLoading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : "Add Manga to Category"}
+                {isLoading ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  "Add Manga to Category"
+                )}
               </Button>
             </div>
           </div>

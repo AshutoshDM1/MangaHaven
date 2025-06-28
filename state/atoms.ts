@@ -5,6 +5,7 @@ export const mangaBackgroundData = atom({
   key: "mangaBackgroundData",
   default: [
     {
+      id: 0,
       coverImageUrl: "",
       title: "",
       description: "",
@@ -20,16 +21,15 @@ export const mangaCarouselData = atom({
     {
       id: 0,
       title: "",
+      coverImageUrl: "",
       description: "",
-      chapter: "",
-      volume: "",
-      status: "",
+      totalChapter: 0,
+      totalAvailableChapter: 0,
       genres: [],
-      imageUrl: "",
+      categoryId: 0,
     },
   ],
 });
-
 
 export const mangaData = atom<Manga[]>({
   key: "mangaData",

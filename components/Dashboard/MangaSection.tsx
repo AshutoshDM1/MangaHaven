@@ -20,8 +20,6 @@ const MangaSection = () => {
     fetchData();
   }, [setMangas]);
 
-  console.log(mangas);
-
   const handleMangaClick = (mangaId: number) => {
       router.push(`/read/${mangaId}`);
   };
@@ -52,7 +50,7 @@ const MangaSection = () => {
                       <Image
                         src={item.coverImageUrl}
                         alt={`Manga ${item.title}`}
-                        width={250}
+                        width={550}
                         height={250}
                         style={{
                           transition:

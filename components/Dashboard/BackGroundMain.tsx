@@ -77,7 +77,7 @@ const BackGroundMain: React.FC = () => {
           >
             <button
               onClick={() => {
-                router.push(`/read/${items[currentIndex].title}/1`);
+                router.push(`/read/${items[currentIndex].id}`);
               }}
               style={{
                 boxShadow: "0 0 1rem rgba(0, 0, 0, 0.5)",

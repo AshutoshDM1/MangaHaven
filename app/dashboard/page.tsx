@@ -16,7 +16,7 @@ export default async function Home() {
               <h5 className="md:text-3xl text-xl font-bold px-10 pt-2">
                 Most Viewed
               </h5>
-              {/* <MangaCarousel /> */}
+              <MangaCarousel />
             </div>
           </div>
         </div>

@@ -1,13 +1,14 @@
 import { Dialog, DialogHeader, DialogTitle, DialogContent, DialogDescription, DialogFooter } from "../ui/dialog";
 import { getMangaChapter, getMangaChapterImage } from "@/services/apiv2";
 import { useEffect, useState } from "react";
-import { Manga, MangaChapter, MangaChapterImage } from "@prisma/client";
+import { MangaChapter, MangaChapterImage } from "@prisma/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import { Skeleton } from "../ui/skeleton";
 import { ChevronRight, BookOpen, Image as ImageIcon, Eye, AlertCircle } from "lucide-react";
 import Image from "next/image";
+import { Manga } from "@/app/admin/page";
 
 interface MangaChapterWithImages extends MangaChapter {
   images?: MangaChapterImage[];

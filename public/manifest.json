@@ -1,0 +1,54 @@
+{
+  "name": "MangaHaven - Your Ultimate Manga Reading Destination",
+  "short_name": "MangaHaven",
+  "description": "Discover, read, and enjoy thousands of manga titles at MangaHaven. Your go-to platform for the latest manga chapters, popular series, and hidden gems.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d0d0d",
+  "theme_color": "#0d0d0d",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US",
+  "categories": ["entertainment", "books", "comics"],
+  "icons": [
+    {
+      "src": "/MangaHaven Logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/MangaHaven Logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/Images/image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "MangaHaven Dashboard"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "View your manga dashboard",
+      "url": "/dashboard",
+      "icons": [{ "src": "/MangaHaven Logo.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Profile",
+      "short_name": "Profile",
+      "description": "View your profile",
+      "url": "/profile",
+      "icons": [{ "src": "/MangaHaven Logo.png", "sizes": "96x96" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+} 

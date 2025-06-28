@@ -3,16 +3,19 @@
 import { useState, useEffect, useCallback } from "react";
 import { searchManga, MangaSearchResult } from "@/services/apiv2";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Search, BookOpen } from "lucide-react";
+import Image from "next/image";
 
 interface MangaAutoSearchProps {
   onMangaSelect?: (manga: MangaSearchResult) => void;
   placeholder?: string;
 }
 
-const MangaAutoSearch = ({ onMangaSelect, placeholder = "Search for manga..." }: MangaAutoSearchProps) => {
+const MangaAutoSearch = ({
+  onMangaSelect,
+  placeholder = "Search for manga...",
+}: MangaAutoSearchProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<MangaSearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -70,7 +73,7 @@ const MangaAutoSearch = ({ onMangaSelect, placeholder = "Search for manga..." }:
   };
 
   return (
-        <div className="relative w-full">
+    <div className="relative w-full">
       <div className="relative">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-400 h-4 w-4" />
         <Input
@@ -108,30 +111,44 @@ const MangaAutoSearch = ({ onMangaSelect, placeholder = "Search for manga..." }:
                   onClick={() => handleMangaSelect(manga)}
                 >
                   <div className="flex items-start space-x-3">
-                    <img
+                    <Image
                       src={manga.coverImageUrl}
                       alt={manga.title}
+                      width={48}
+                      height={64}
                       className="w-12 h-16 object-cover rounded"
                       onError={(e) => {
-                        (e.target as HTMLImageElement).src = "/placeholder-manga.png";
+                        (e.target as HTMLImageElement).src =
+                          "/placeholder-manga.png";
                       }}
                     />
                     <div className="flex-1 min-w-0">
                       <h4 className="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">
                         {manga.title}
                       </h4>
-                      <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 overflow-hidden text-ellipsis" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+                      <p
+                        className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 overflow-hidden text-ellipsis"
+                        style={{
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
+                        }}
+                      >
                         {manga.description}
                       </p>
                       <div className="flex items-center mt-2 space-x-2">
                         <div className="flex items-center text-xs text-zinc-500">
                           <BookOpen className="h-3 w-3 mr-1" />
-                          {manga.totalAvailableChapter}/{manga.totalChapter} chapters
+                          {manga.totalAvailableChapter}/{manga.totalChapter}{" "}
+                          chapters
                         </div>
                       </div>
                       <div className="flex flex-wrap gap-1 mt-2">
                         {manga.genres.slice(0, 3).map((genre) => (
-                          <span key={genre} className="inline-flex items-center rounded-full border border-zinc-200 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-700 px-2 py-0.5 text-xs font-medium text-zinc-700 dark:text-zinc-300">
+                          <span
+                            key={genre}
+                            className="inline-flex items-center rounded-full border border-zinc-200 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-700 px-2 py-0.5 text-xs font-medium text-zinc-700 dark:text-zinc-300"
+                          >
                             {genre}
                           </span>
                         ))}
@@ -149,7 +166,7 @@ const MangaAutoSearch = ({ onMangaSelect, placeholder = "Search for manga..." }:
           ) : searchQuery.trim().length >= 2 ? (
             <div className="px-4 py-8 text-center text-zinc-500 dark:text-zinc-400">
               <BookOpen className="h-8 w-8 mx-auto mb-2 opacity-50" />
-              <p className="text-sm">No manga found for "{searchQuery}"</p>
+              <p className="text-sm">No manga found for &quot;{searchQuery}&quot;</p>
             </div>
           ) : null}
         </div>

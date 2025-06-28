@@ -86,7 +86,7 @@ const ReadPage = () => {
     return (
       <>
         <NavbarMain />
-        <div className="min-h-screen bg-background">
+        <div className="min-h-screen bg-transparent">
           <div className="max-w-7xl mx-auto px-4 py-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-1">
@@ -128,7 +128,7 @@ const ReadPage = () => {
                       <Image
                         src={manga.coverImageUrl}
                         alt={manga.title}
-                        width={400}
+                        width={1200}
                         height={600}
                         className="w-full h-[500px] object-cover transition-transform duration-300 group-hover:scale-105"
                       />

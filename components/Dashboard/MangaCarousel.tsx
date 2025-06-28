@@ -9,9 +9,11 @@ import { getMangaCarousel } from "@/services/api";
 import { Skeleton } from "../ui/skeleton";
 import { animate, delay, motion, stagger, useInView } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { apiV2 } from "@/services/apiv2";
+import { Manga } from "@/app/admin/page";
 
-interface MangaCarouselProps {
-  items: MangaItem[];
+interface MangaCarousel extends Manga {
+  categoryId: number;
 }
 
 const MangaCarousel: React.FC = () => {
@@ -19,14 +21,16 @@ const MangaCarousel: React.FC = () => {
   const [items, setItems] = useRecoilState(mangaCarouselData);
   const [currentIndex, setCurrentIndex] = useState(3);
   const [isAnimating, setIsAnimating] = useState(true);
+  
+  const fetchData = async () => {
+    const data = await apiV2().get("/manga/addmanga?categoryId=2");
+    setItems(data.data);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getMangaCarousel();
-      setItems(data);
-    };
     fetchData();
-  }, [setItems]);
+  }, []);
+
   // Create an extended version of the items array for smooth infinite scrolling
   const extendedItems = [...items.slice(-3), ...items, ...items.slice(0, 3)];
 
@@ -139,7 +143,7 @@ const MangaCarousel: React.FC = () => {
               {extendedItems.map((item, index) => (
                 <motion.div
                   onClick={() => {
-                    router.push(`/read/${item.title}/1`);
+                    router.push(`/read/${item.id}`);
                   }}
                   variants={itemVariants}
                   key={item.id}
@@ -155,7 +159,7 @@ const MangaCarousel: React.FC = () => {
                     <div className="w-[60%] flex flex-col justify-center border-l-[5px] dark:border-l-[3px] border-[#C391FF] dark:border-[#ffffffe2]">
                       <div className="md:p-3 p-2 md:h-[40%] h-[30%]">
                         <h3 className="md:text-lg text-sm font-normal  opacity-70">
-                          {item.status}
+                          {item.totalAvailableChapter}
                         </h3>
                         <h3 className="md:text-xl text-md font-semibold ">
                           {item.title}
@@ -166,9 +170,9 @@ const MangaCarousel: React.FC = () => {
                           {item.description}
                         </p>
                         <div className=" opacity-70 md:text-md text-sm">
-                          <span>{item.volume}</span>
+                          <span>{item.totalChapter}</span>
                           <span className="mx-2">•</span>
-                          <span>{item.chapter}</span>
+                          <span>{item.totalAvailableChapter}</span>
                         </div>
                         <div className="flex flex-wrap gap-1">
                           {item.genres.map((genre, i) => (
@@ -184,7 +188,7 @@ const MangaCarousel: React.FC = () => {
                     </div>
                     <div className="relative w-[40%]">
                       <Image
-                        src={`${item.imageUrl}`}
+                        src={`${item.coverImageUrl}`}
                         alt={item.title}
                         className="w-full h-full object-cover"
                         width={500}

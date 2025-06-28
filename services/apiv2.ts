@@ -141,3 +141,5 @@ export const getMangaChapterImage = async (mangaChapterId: number) => {
   }
   return response;
 };
+
+
