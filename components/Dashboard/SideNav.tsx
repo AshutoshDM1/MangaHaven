@@ -129,7 +129,9 @@ const SideNav = () => {
           {navItems.map((item) => {
             if (item.name === "Admin") {
               return (
-                <div className="flex flex-col gap-2 border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+                <div 
+                key={item.name}
+                className="flex flex-col gap-2 border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
                   <div className="px-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">
                     Admin Panel
                   </div>
