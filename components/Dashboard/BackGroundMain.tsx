@@ -1,11 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
 import { useRecoilState } from "recoil";
 import { mangaBackgroundData } from "@/state/atoms";
-import { getMangaDashboard } from "@/services/api";
 import { Skeleton } from "../ui/skeleton";
-import { Divide } from "lucide-react";
 import { easeInOut, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { apiV2 } from "@/services/apiv2";

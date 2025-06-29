@@ -9,15 +9,24 @@ type MangaChapter = {
 
 const GET = async (request: NextRequest) => {
   const mangaId = request.nextUrl.searchParams.get("mangaId");
+  const mangaChapterId = request.nextUrl.searchParams.get("mangaChapterId");
   try {
-    const result = await prisma.mangaChapter.findMany({
-      where: { mangaId: Number(mangaId) },
-    });
-    return NextResponse.json(result);
+    if (mangaChapterId) {
+      const result = await prisma.mangaChapter.findUnique({
+        where: { mangaId: Number(mangaId), id: Number(mangaChapterId) },
+      });
+      return NextResponse.json(result);
+    }
+    if (mangaId) {
+      const result = await prisma.mangaChapter.findMany({
+        where: { mangaId: Number(mangaId) },
+      });
+      return NextResponse.json(result);
+    }
   } catch (error) {
     console.error("Error fetching manga chapters:", error);
     return NextResponse.json(
-      { error: "Failed to fetch manga chapters" },
+      { error: "Failed to fetch manga chapters", errorData: error },
       { status: 500 }
     );
   }
@@ -48,7 +57,7 @@ const POST = async (request: NextRequest) => {
   } catch (error) {
     console.error("Error adding manga chapters:", error);
     return NextResponse.json(
-      { error: "Failed to add manga chapters" },
+      { error: "Failed to add manga chapters", errorData: error },
       { status: 500 }
     );
   }

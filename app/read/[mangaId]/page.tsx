@@ -279,7 +279,7 @@ const ReadPage = () => {
                         <CardContent className="p-4">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-4">
-                              <div className="w-2 h-8 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full" />
+                              <div className="w-2 h-8 bg-gradient-to-b from-purple-500 to-purple-800 rounded-full" />
                               <div>
                                 <h3 className="font-semibold text-foreground group-hover:text-purple-400 transition-colors">
                                   Chapter {chapter.chapterNumber}

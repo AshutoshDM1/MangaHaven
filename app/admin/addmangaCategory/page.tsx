@@ -22,7 +22,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { Search, Plus, X, Loader2 } from "lucide-react";
+import { Search, Plus, X, Loader2, Trash2 } from "lucide-react";
 import Image from "next/image";
 
 interface CategoryWithManga {
@@ -39,9 +39,8 @@ const AddMangaCategory = () => {
 
   // Dialog state
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
-    null
-  );
+  const [isManageMangaDialogOpen, setIsManageMangaDialogOpen] = useState<boolean>(false);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
 
   // Search state
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -51,28 +50,31 @@ const AddMangaCategory = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const fetchCategories = async () => {
-    const response = await apiV2().get("/manga/add-category-manga");
-    setCategories(response.data);
-  };
-
-  useEffect(() => {
     try {
-      fetchCategories();
+      const response = await apiV2().get("/manga/add-category-manga");
+      setCategories(response.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
       toast.error("Failed to fetch categories");
     }
-  }, [isLoading]);
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   const handleAddMangaCategory = async () => {
+    if (!name.trim()) {
+      toast.error("Please enter a category name");
+      return;
+    }
+
     setIsLoading(true);
     try {
       await apiV2().post("/manga/add-category-manga", { name });
       toast.success("Category added successfully");
       setName("");
-      // Refresh categories
-      const response = await apiV2().get("/manga/add-category-manga");
-      setCategories(response.data);
+      await fetchCategories();
     } catch (error) {
       toast.error("Failed to add category");
     } finally {
@@ -127,6 +129,16 @@ const AddMangaCategory = () => {
     setSelectedManga([]);
   };
 
+  const handleOpenManageMangaDialog = (category: CategoryWithManga) => {
+    setSelectedCategory(category);
+    setIsManageMangaDialogOpen(true);
+  };
+
+  const handleCloseManageMangaDialog = () => {
+    setIsManageMangaDialogOpen(false);
+    setSelectedCategory(null);
+  };
+
   const handleSelectManga = (manga: MangaSearchResult) => {
     if (!selectedManga.find((m) => m.id === manga.id)) {
       setSelectedManga([...selectedManga, manga]);
@@ -147,7 +159,6 @@ const AddMangaCategory = () => {
     setIsLoading(true);
     try {
       const mangaIds = selectedManga.map((m) => m.id);
-      console.log(mangaIds, selectedCategory.id);
 
       await apiV2().put("/manga/add-category-manga", {
         categoryId: selectedCategory.id,
@@ -158,9 +169,38 @@ const AddMangaCategory = () => {
         `Added ${selectedManga.length} manga to ${selectedCategory.name}`
       );
       handleCloseDialog();
+      await fetchCategories();
     } catch (error) {
       console.error("Error adding manga to category:", error);
       toast.error("Failed to add manga to category");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleRemoveMangaFromCategory = async (mangaId: number) => {
+    if (!selectedCategory) return;
+
+    setIsLoading(true);
+    try {
+      await apiV2().delete("/manga/add-category-manga", {
+        data: {
+          categoryId: selectedCategory.id,
+          mangaId: [mangaId],
+        }
+      });
+
+      toast.success("Manga removed from category");
+      await fetchCategories();
+      
+      // Update the selected category with the new data
+      const updatedCategories = categories.find(cat => cat.id === selectedCategory.id);
+      if (updatedCategories) {
+        setSelectedCategory(updatedCategories);
+      }
+    } catch (error) {
+      console.error("Error removing manga from category:", error);
+      toast.error("Failed to remove manga from category");
     } finally {
       setIsLoading(false);
     }
@@ -177,16 +217,19 @@ const AddMangaCategory = () => {
       timeout = setTimeout(() => func(...args), wait);
     };
   }
+
+  const currentCategoryManga = categories.find(cat => cat.id === selectedCategory?.id)?.mangas || [];
+
   return (
     <div className="bg-transparent p-6">
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <div className="rounded-lg shadow-xl border border-zinc-200 dark:border-zinc-700 p-8">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-zinc-800 dark:text-white mb-2">
-              Add Manga Category
+              Manage Manga Categories
             </h1>
             <p className="text-zinc-600 dark:text-zinc-300">
-              Create a new category to organize your manga collection
+              Create and manage categories to organize your manga collection
             </p>
           </div>
 
@@ -206,10 +249,11 @@ const AddMangaCategory = () => {
 
             <div className="pt-4">
               <button
-                onClick={() => handleAddMangaCategory()}
-                disabled={!name.trim()}
-                className="w-full bg-primary hover:bg-primary/80 disabled:bg-zinc-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 shadow-lg hover:shadow-xl"
+                onClick={handleAddMangaCategory}
+                disabled={!name.trim() || isLoading}
+                className="w-full bg-primary hover:bg-primary/80 disabled:bg-zinc-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
               >
+                {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
                 Create Category
               </button>
             </div>
@@ -223,7 +267,8 @@ const AddMangaCategory = () => {
                   • Choose descriptive category names for better organization
                 </li>
                 <li>• Categories help readers find manga by genre or theme</li>
-                <li>• You can assign manga to categories after creation</li>
+                <li>• You can assign multiple categories to each manga</li>
+                <li>• Use the manage button to view and remove manga from categories</li>
               </ul>
             </div>
           </div>
@@ -247,7 +292,7 @@ const AddMangaCategory = () => {
                         <TableHead>ID</TableHead>
                         <TableHead>Category Name</TableHead>
                         <TableHead>Manga Count</TableHead>
-                        <TableHead>Action</TableHead>
+                        <TableHead>Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -263,14 +308,26 @@ const AddMangaCategory = () => {
                             {category.mangas?.length || 0}
                           </TableCell>
                           <TableCell className="text-muted-foreground">
-                            <Button
-                              onClick={() => handleOpenDialog(category)}
-                              className="bg-primary hover:bg-primary/80 text-white"
-                              variant="outline"
-                            >
-                              <Plus className="w-4 h-4 mr-2" />
-                              Add Manga
-                            </Button>
+                            <div className="flex gap-2">
+                              <Button
+                                onClick={() => handleOpenDialog(category)}
+                                className="bg-primary hover:bg-primary/80 text-white"
+                                variant="outline"
+                                size="sm"
+                              >
+                                <Plus className="w-4 h-4 mr-2" />
+                                Add Manga
+                              </Button>
+                              {category.mangas?.length > 0 && (
+                                <Button
+                                  onClick={() => handleOpenManageMangaDialog(category)}
+                                  variant="outline"
+                                  size="sm"
+                                >
+                                  Manage ({category.mangas.length})
+                                </Button>
+                              )}
+                            </div>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -341,7 +398,8 @@ const AddMangaCategory = () => {
                 <h3 className="font-medium">Search Results</h3>
                 {isSearching ? (
                   <div className="text-center py-4 text-muted-foreground">
-                    Searching...
+                    <Loader2 className="w-4 h-4 animate-spin mx-auto" />
+                    <p className="mt-2">Searching...</p>
                   </div>
                 ) : searchResults.length > 0 ? (
                   <div className="space-y-2 max-h-60 overflow-y-auto">
@@ -404,7 +462,7 @@ const AddMangaCategory = () => {
               </Button>
               <Button
                 onClick={handleAddMangaToCategory}
-                disabled={selectedManga.length === 0}
+                disabled={selectedManga.length === 0 || isLoading}
                 className="bg-primary hover:bg-primary/80 text-white"
               >
                 {isLoading ? (
@@ -412,6 +470,78 @@ const AddMangaCategory = () => {
                 ) : (
                   "Add Manga to Category"
                 )}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Manage Category Manga Dialog */}
+      <Dialog open={isManageMangaDialogOpen} onOpenChange={handleCloseManageMangaDialog}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Manage Category: {selectedCategory?.name}</DialogTitle>
+            <DialogDescription>
+              View and manage manga in this category
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4">
+            {currentCategoryManga.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                No manga in this category yet.
+              </div>
+            ) : (
+              <div className="grid gap-4">
+                {currentCategoryManga.map((manga) => (
+                  <div key={manga.id} className="flex items-center gap-4 p-4 border rounded-lg">
+                    {manga.coverImageUrl && (
+                      <Image
+                        src={manga.coverImageUrl}
+                        alt={manga.title}
+                        width={64}
+                        height={80}
+                        className="w-16 h-20 object-cover rounded"
+                      />
+                    )}
+                    <div className="flex-1">
+                      <h4 className="font-medium">{manga.title}</h4>
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        {manga.description}
+                      </p>
+                      <div className="flex items-center gap-2 mt-2">
+                        <span className="text-xs text-muted-foreground">
+                          {manga.totalAvailableChapter} chapters
+                        </span>
+                        {manga.genres && manga.genres.length > 0 && (
+                          <div className="flex gap-1">
+                            {manga.genres.slice(0, 3).map((genre, index) => (
+                              <Badge key={index} variant="outline" className="text-xs">
+                                {genre}
+                              </Badge>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleRemoveMangaFromCategory(manga.id)}
+                      disabled={isLoading}
+                      className="text-destructive hover:text-destructive-foreground hover:bg-destructive"
+                    >
+                      <Trash2 className="w-4 h-4 mr-2" />
+                      Remove
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="flex justify-end gap-2 pt-4">
+              <Button variant="outline" onClick={handleCloseManageMangaDialog}>
+                Close
               </Button>
             </div>
           </div>

@@ -24,7 +24,7 @@ const GET = async (request: NextRequest) => {
       return NextResponse.json(manga);
     } else if (categoryId) {
       const mangas = await prisma.manga.findMany({
-        where: { categoryId: Number(categoryId) },
+        where: { mangaCategories: { some: { categoryId: Number(categoryId) } } },
       });
       return NextResponse.json(mangas);
     } else {

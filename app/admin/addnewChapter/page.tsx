@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -153,24 +152,20 @@ const AddNewChapter = () => {
 
         // Add the image data to the database
         const imageResponse = await addMangaChapterImage(imageData);
-        console.log(imageResponse);
+
         toast.success("Chapter Added Successfully", {
           description: `Chapter ${chapterData.chapterNumber} has been added to ${chapterData.mangaTitle}.`,
         });
-
-        if (imageResponse.data.success) {
+        console.log(imageResponse);
+        if (imageResponse.status === 200) {
           // Reset form
-          setChapterData({
-            mangaId: null,
-            mangaTitle: "",
-            chapterNumber: 1,
-            chapterTitle: "",
-          });
+          setChapterData({...chapterData, chapterNumber: 0, chapterTitle: ""});
           setChapterImages([]);
           setSelectedFiles(null);
         }
       }
     } catch (error) {
+      console.log(error);
       toast.error("Failed to add chapter. Please try again.");
     } finally {
       setIsSubmitting(false);

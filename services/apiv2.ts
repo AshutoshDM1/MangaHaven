@@ -132,6 +132,16 @@ export const getMangaChapter = async (mangaId: number) => {
   return response;
 };
 
+export const getMangaChapterById = async (mangaId: number, mangaChapterId: number) => {
+  const response = await apiV2().get(
+    `/manga/addmangachapter?mangaId=${mangaId}&mangaChapterId=${mangaChapterId}`
+  );
+  if (response.data.error) {
+    handleError(response.data.error);
+  }
+  return response;
+};
+
 export const getMangaChapterImage = async (mangaChapterId: number) => {
   const response = await apiV2().get(
     `/manga/add-manga-images?mangaChapterId=${mangaChapterId}`

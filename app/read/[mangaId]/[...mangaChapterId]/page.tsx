@@ -19,7 +19,12 @@ import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { getMangaById, getMangaChapter, getMangaChapterImage } from "@/services/apiv2";
+import {
+  getMangaById,
+  getMangaChapter,
+  getMangaChapterImage,
+  getMangaChapterById,
+} from "@/services/apiv2";
 import { Manga } from "@/app/admin/page";
 import { MangaChapter, MangaChapterImage } from "@prisma/client";
 
@@ -28,28 +33,94 @@ const ReadPage = () => {
   const router = useRouter();
   const [manga, setmanga] = useState<Manga | null>(null);
   const [mangaChapter, setMangaChapter] = useState<MangaChapter | null>(null);
-  const [mangaImage, setMangaImage] = useState<MangaChapterImage[] | null>(null);
+  const [mangaChapterList, setMangaChapterList] = useState<
+    MangaChapter[] | null
+  >(null);
+  const [mangaImage, setMangaImage] = useState<MangaChapterImage[] | null>(
+    null
+  );
   const [showChap, setShowChap] = useState<boolean>(false);
   const [slide, setSlide] = useState<boolean>(true);
-
-  console.log(manga);
-  console.log(mangaChapter);
-  console.log(mangaImage);
 
   useEffect(() => {
     const fetchData = async () => {
       const mangadata = await getMangaById(Number(mangaId));
-      const mangaChapterdata = await getMangaChapter(Number(mangaId));
-      const mangaChapterImagedata = await getMangaChapterImage(Number(mangaChapterId));
+      const mangaChapterdata = await getMangaChapterById(
+        Number(mangaId),
+        Number(mangaChapterId)
+      );
+      const mangaChapterImagedata = await getMangaChapterImage(
+        Number(mangaChapterId)
+      );
+      const mangaChapterListdata = await getMangaChapter(Number(mangaId));
 
       setmanga(mangadata as unknown as Manga);
       setMangaChapter(mangaChapterdata.data);
       setMangaImage(mangaChapterImagedata.data);
-
-
+      setMangaChapterList(mangaChapterListdata.data);
     };
     fetchData();
   }, []);
+
+  const handleChapterClick = (chapterId: number) => {
+    router.push(`/read/${mangaId}/${chapterId}`);
+  };
+
+  const handleChapterClickPrevious = () => {
+    try {
+      const currentChapterId = mangaChapter?.id;
+      if (!currentChapterId) {
+        toast.error("There is no chapter");
+        return;
+      }
+      if (!mangaChapterList) {
+        toast.error("There are no chapters");
+        return;
+      }
+      const nextChapterIndex = mangaChapterList?.findIndex(
+        (chapter) => chapter.id === currentChapterId
+      );
+      if (nextChapterIndex === -1 || nextChapterIndex === undefined || nextChapterIndex === 0) {
+        toast.error("There is no more chapter");
+        return;
+      }
+      // console.log(mangaChapterList?.[nextChapterIndex - 1]);
+      router.push(
+        `/read/${mangaId}/${mangaChapterList?.[nextChapterIndex -1].id}`
+      );
+    } catch (error) {
+      toast.error("There is no chapter");
+      return;
+    }
+  };
+
+  const handleChapterClickNext = () => {
+    try {
+      const currentChapterId = mangaChapter?.id;
+      if (!currentChapterId) {
+        toast.error("There is no chapter");
+        return;
+      }
+      if (!mangaChapterList) {
+        toast.error("There are no chapters");
+        return;
+      }
+      const nextChapterIndex = mangaChapterList?.findIndex(
+        (chapter) => chapter.id === currentChapterId
+      );
+      if (nextChapterIndex === -1 || nextChapterIndex === undefined || nextChapterIndex === mangaChapterList.length - 1) {
+        toast.error("There is no more chapter");
+        return;
+      }
+      // console.log(mangaChapterList?.[nextChapterIndex - 1]);
+      router.push(
+        `/read/${mangaId}/${mangaChapterList?.[nextChapterIndex +1].id}`
+      );
+    } catch (error) {
+      toast.error("There is no chapter");
+      return;
+    }
+  };
 
   return (
     <>
@@ -67,21 +138,25 @@ const ReadPage = () => {
             <>
               <img
                 className="object-cover h-[40vh] hidden md:block rounded-[10px]  "
-                src={manga && mangaChapter && manga.coverImageUrl || ""}
+                src={(manga && mangaChapter && manga.coverImageUrl) || ""}
                 alt="Naruto_lvhvkh.png"
               />
             </>
           )}
 
-          <h1 className="w-full md:w-fit  text-xl font-bold text-center">
+          <h1 className="w-full md:w-fit  text-xl font-bold text-center flex flex-col gap-2 items-center justify-center">
             {manga && mangaChapter && manga.title}
+            <span className="text-primary text-lg font-medium">
+              {mangaChapter?.chapterTitle}
+            </span>
           </h1>
+
           <div className="w-fit md:w-full flex items-center justify-center relative ">
             <h1
               onClick={() => setShowChap(!showChap)}
               className="w-full font-bold text-[1.2rem] md:text-[1.2rem]  text-center bg-[#e9962a]  py-1 rounded-md  cursor-pointer px-3 select-none "
             >
-              Chapter {manga && mangaChapter && mangaChapter.chapterNumber}
+              Chapter {mangaChapter?.chapterNumber}
             </h1>
             {showChap ? (
               <motion.div
@@ -90,40 +165,30 @@ const ReadPage = () => {
                 transition={{ duration: 0.2 }}
                 className="w-fit z-30 absolute top-10 min-h-fit rounded-md bg-[#f8b416] flex flex-col justify-center items-center  gap-1 p-4 "
               >
-                <motion.h1
-                  // onClick={() => handleRoute("1")}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 1.1 }}
-                  className="w-[8rem] z-30 font-bold text-[1.2rem] md:text-[1.2rem]  text-center bg-[#e9962a]  py-1 rounded-md  cursor-pointer px-3 select-none "
-                >
-                  Chapter 1
-                </motion.h1>
-                <motion.h1
-                  // onClick={() => handleRoute("2")}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 1.1 }}
-                  className="w-[8rem] z-30 font-bold text-[1.2rem] md:text-[1.2rem]  text-center bg-[#e9962a]  py-1 rounded-md  cursor-pointer px-3 select-none "
-                >
-                  Chapter 2
-                </motion.h1>
+                {mangaChapterList &&
+                  mangaChapterList.map((manga) => {
+                    return (
+                      <motion.h1
+                        key={manga.id}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 1.1 }}
+                        className="w-[8rem] z-30 font-bold text-[1.2rem] md:text-[1.2rem]  text-center bg-[#e9962a]  py-1 rounded-md  cursor-pointer px-3 select-none "
+                        onClick={() => handleChapterClick(manga.id)}
+                      >
+                        Chapter {manga.chapterNumber}
+                      </motion.h1>
+                    );
+                  })}
               </motion.div>
             ) : (
               <></>
             )}
           </div>
-          <div className="w-fit md:w-full  flex justify-center items-center gap-3 ">
+          <div className="w-fit md:w-full  flex justify-center items-center gap-3">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 1.1 }}
-              onClick={() => {
-                if (Number(mangaChapter && mangaChapter.chapterNumber) >= 2) {
-                  router.push(
-                    `/read/${mangaId}/${Number(mangaChapter && mangaChapter.chapterNumber) - 1}`,
-                  );
-                } else {
-                  toast.error("There is no Chapter 0");
-                }
-              }}
+              onClick={handleChapterClickPrevious}
               className="w-1/2 py-[5px] px-3 bg-[#8031ff] rounded-md flex justify-center items-center cursor-pointer "
             >
               <ChevronLeft />
@@ -131,15 +196,7 @@ const ReadPage = () => {
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 1.1 }}
-              onClick={() => {
-                if (Number(mangaChapter && mangaChapter.chapterNumber) <= 1) {
-                  router.push(
-                    `/read/${mangaId}/${Number(mangaChapter && mangaChapter.chapterNumber) + 1}`,
-                  );
-                } else {
-                  toast.error("There is no more than 2 Chapter");
-                }
-              }}
+              onClick={handleChapterClickNext}
               className="w-1/2 py-[5px] px-3 bg-[#8031ff] rounded-md flex justify-center items-center  cursor-pointer  "
             >
               <ChevronRight />
@@ -180,7 +237,8 @@ const ReadPage = () => {
           ) : (
             <>
               {slide ? (
-                mangaImage && mangaImage.map((manga) => {
+                mangaImage &&
+                mangaImage.map((manga) => {
                   return (
                     <>
                       <div
@@ -203,23 +261,24 @@ const ReadPage = () => {
                   <div className="max-h-[90%] w-full sm:w-[30rem] mx-auto mt-5 px-2 flex justify-center items-center overflow-hidden rounded-[15px] ">
                     <Carousel className="w-full flex justify-center items-center">
                       <CarouselContent>
-                        {mangaImage && mangaImage.map((manga) => {
-                          return (
-                            <>
-                              <CarouselItem>
-                                <div className="h-[80vh] md:h-fit w-full flex justify-center items-center ">
-                                  <Image
-                                    className="h-fit w-fit object-cover select-none rounded-[15px] "
-                                    src={manga.imageUrl}
-                                    alt={manga.imageUrl}
-                                    width={550}
-                                    height={550}
-                                  />
-                                </div>
-                              </CarouselItem>
-                            </>
-                          );
-                        })}
+                        {mangaImage &&
+                          mangaImage.map((manga) => {
+                            return (
+                              <>
+                                <CarouselItem>
+                                  <div className="h-[80vh] md:h-fit w-full flex justify-center items-center ">
+                                    <Image
+                                      className="h-fit w-fit object-cover select-none rounded-[15px] "
+                                      src={manga.imageUrl}
+                                      alt={manga.imageUrl}
+                                      width={550}
+                                      height={550}
+                                    />
+                                  </div>
+                                </CarouselItem>
+                              </>
+                            );
+                          })}
                       </CarouselContent>
                     </Carousel>
                   </div>

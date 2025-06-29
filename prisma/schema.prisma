@@ -28,8 +28,7 @@ model Manga {
   totalAvailableChapter Int              @default(0)
   genres                String[]
   mangaChapters         MangaChapter[]
-  categoryId            Int?
-  category              Category?        @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  mangaCategories       MangaCategory[]
 }
 
 model MangaChapter {
@@ -39,6 +38,7 @@ model MangaChapter {
   mangaId           Int
   manga             Manga               @relation(fields: [mangaId], references: [id], onDelete: Cascade)
   mangaChapterImages MangaChapterImage[]
+  @@unique([mangaId, chapterNumber])
 }
 
 model MangaChapterImage {
@@ -49,9 +49,20 @@ model MangaChapterImage {
 }
 
 model Category {
-  id        Int      @id @default(autoincrement())
-  name      String
-  mangas    Manga[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int             @id @default(autoincrement())
+  name      String          @unique
+  mangaCategories MangaCategory[]
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+}
+
+model MangaCategory {
+  id         Int      @id @default(autoincrement())
+  mangaId    Int
+  categoryId Int
+  manga      Manga    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([mangaId, categoryId])
 }
