@@ -8,6 +8,7 @@ import SideNav from "../Dashboard/SideNav";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Search } from "lucide-react";
 import DropMenuAtoZ from "../ui/Dropdown-Atoz";
+import MainAutoSearch from "../MainAutoSearch";
 
 interface NavbarMainProps {}
 
@@ -26,7 +27,7 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
             </div>
             <div className="2xl:flex gap-4 hidden ">
               <button
-                onClick={() => router.push("/")}
+                onClick={() => router.push("/dashboard")}
                 className=" font-semibold text-base"
               >
                 Home
@@ -37,14 +38,7 @@ const NavbarMain: React.FC<NavbarMainProps> = () => {
             </div>
           </div>
           <div className="h-full flex items-center gap-3 w-fit transition-all duration-300">
-            <div className="w-full h-full justify-center items-center gap-3 lg:flex hidden select-none">
-              <input
-                className="h-[4.5vh] w-[65vh] text-black dark:text-white bg-zinc-200 dark:bg-zinc-900 rounded-full border-none focus:border focus:outline-none pl-6 pr-4 md:text-none "
-                type="text"
-                placeholder="Search Manga..."
-              />
-            </div>
-            <Search className="h-8 w-8 text-[#c4c4c4] text-xl cursor-pointer" />
+            <MainAutoSearch />
             <div className="flex justify-evenly items-center gap-3">
               <Avatar
                 className="cursor-pointer border-[2px] hover:dark:border-white hover:border-black border-transparent duration-300 transition-ease-in  "

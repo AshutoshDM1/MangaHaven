@@ -4,10 +4,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 interface DropMenuProps {}
 
 const DropMenuGenres: React.FC<DropMenuProps> = () => {
+  const router = useRouter();
+  const AllGenres = ["Action", "Adventure", "Comedy", "Fantasy", "Demons", "Harem", "Horror", "Isekai", "Magic", "Romance", "Ecchi", "Mecha", "Space", "Slice of Life", "Shounen", "Mystery", "School", "Sports", "Supernatural", "Thriller", "Seinen", "Suspense"]    
   return (
     <>
       <div className="font-semibold text-base flex justify-center items-center ">
@@ -16,28 +19,11 @@ const DropMenuGenres: React.FC<DropMenuProps> = () => {
             Genres
           </DropdownMenuTrigger>
           <DropdownMenuContent className="ml-4 w-[15vw] grid grid-cols-2 gap-2">
-            <DropdownMenuItem>Action</DropdownMenuItem>
-            <DropdownMenuItem>Adventure</DropdownMenuItem>
-            <DropdownMenuItem>Comedy</DropdownMenuItem>
-            <DropdownMenuItem>Fantasy</DropdownMenuItem>
-            <DropdownMenuItem>Demons</DropdownMenuItem>
-            <DropdownMenuItem>Harem</DropdownMenuItem>
-            <DropdownMenuItem>Horror</DropdownMenuItem>
-            <DropdownMenuItem>Isekai</DropdownMenuItem>
-            <DropdownMenuItem>Magic</DropdownMenuItem>
-            <DropdownMenuItem>Romance</DropdownMenuItem>
-            <DropdownMenuItem>Ecchi</DropdownMenuItem>
-            <DropdownMenuItem>Mecha</DropdownMenuItem>
-            <DropdownMenuItem>Space</DropdownMenuItem>
-            <DropdownMenuItem>Slice of Life</DropdownMenuItem>
-            <DropdownMenuItem>Shounen</DropdownMenuItem>
-            <DropdownMenuItem>Mystery</DropdownMenuItem>
-            <DropdownMenuItem>School</DropdownMenuItem>
-            <DropdownMenuItem>Sports</DropdownMenuItem>
-            <DropdownMenuItem>Supernatural</DropdownMenuItem>
-            <DropdownMenuItem>Thriller</DropdownMenuItem>
-            <DropdownMenuItem>Seinen</DropdownMenuItem>
-            <DropdownMenuItem>Suspense</DropdownMenuItem>
+            {AllGenres.map((genre) => (
+              <DropdownMenuItem key={genre} onClick={() => router.push(`/dashboard/search?genre=${genre}`)}>
+                {genre}
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

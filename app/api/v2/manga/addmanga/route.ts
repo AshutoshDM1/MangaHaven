@@ -68,8 +68,8 @@ const POST = async (request: NextRequest) => {
 const DELETE = async (request: NextRequest) => {
   try {
     const body = await request.json();
-    const result = await prisma.manga.deleteMany({
-      where: { id: body.id },
+    const result = await prisma.manga.delete({
+      where: { id: Number(body.id) },
     });
     return NextResponse.json(
       { message: "Manga deleted successfully", result },

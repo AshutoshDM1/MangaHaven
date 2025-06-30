@@ -7,22 +7,53 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get("q");
+    const genre = searchParams.get("genre");
 
-    if (!query) {
+    if (!query && !genre) {
       return NextResponse.json(
-        { error: "Search query is required" },
+        { error: "Search query or genre is required" },
         { status: 400 }
       );
     }
 
-    // Search manga by title (case-insensitive partial match)
-    const mangas = await prisma.manga.findMany({
-      where: {
+    // Build where clause based on provided parameters
+    let whereClause: any = {};
+    if (query && genre) {
+      // Search by both title and genre
+      whereClause = {
+        AND: [
+          {
+            title: {
+              contains: query,
+              mode: "insensitive",
+            },
+          },
+          {
+            genres: {
+              has: genre,
+            },
+          },
+        ],
+      };
+    } else if (query) {
+      // Search by title only
+      whereClause = {
         title: {
           contains: query,
           mode: "insensitive",
         },
-      },
+      };
+    } else if (genre) {
+      // Search by genre only
+      whereClause = {
+        genres: {
+          has: genre,
+        },
+      };
+    }
+
+    const mangas = await prisma.manga.findMany({
+      where: whereClause,
       select: {
         id: true,
         title: true,
@@ -33,6 +64,9 @@ export async function GET(request: NextRequest) {
         genres: true,
       },
       take: 10, // Limit results to 10 for performance
+      orderBy: {
+        title: "asc",
+      },
     });
 
     return NextResponse.json(mangas);

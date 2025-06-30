@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -12,15 +12,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import axios from "axios";
-import { editProfile, UploadImage } from "@/services/api";
+import { editProfile, getProfile, UploadImage } from "@/services/apiv2.user";
 import { toast } from "sonner";
 
 export default function Profile() {
   const { data: session } = useSession();
-  const [username, setUsername] = useState(session?.user?.name || "");
+  const [firstName, setFirstName] = useState(session?.user?.firstName || "");
+  const [lastName, setLastName] = useState(session?.user?.lastName || "");
   const [image, setImage] = useState(session?.user?.image || "");
   const [file, setFile] = useState<File | null>(null);
+  const [disabled, setDisabled] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Handle file selection
@@ -29,6 +30,26 @@ export default function Profile() {
     setFile(selectedFile);
   };
 
+  const fetchProfile = async () => {
+    const response = await getProfile(session?.user?.email || "");
+    if (response !== null && response !== undefined) {
+      setFirstName(response.firstName);
+      setLastName(response.lastName);
+      setImage(response.image);
+      setDisabled(false);
+      console.log("Response", response);
+    }
+    else {
+      console.log("No response");
+      setDisabled(true);
+    }
+  };
+
+  useEffect(() => {
+    if (session) {
+      fetchProfile();
+    }
+  }, [session]);
   // Handle file upload to Cloudinary via your Next.js API route
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,7 +62,8 @@ export default function Profile() {
     try {
       toast.loading("Updating profile...");
       const imageUrl = await UploadImage(formData);
-      setImage(imageUrl);
+      console.log(imageUrl.url);
+      setImage(imageUrl.url);
     } catch (error) {
       console.error("Failed to upload image:", error);
     }
@@ -52,7 +74,12 @@ export default function Profile() {
     e.preventDefault();
     try {
       toast.loading("Updating profile...");
-      await editProfile(session?.user?.email || "", username, image);
+      await editProfile({
+        email: session?.user?.email || "",
+        firstName: firstName,
+        lastName: lastName,
+        image: image,
+      });
       await signOut({ callbackUrl: "/login" });
     } catch (error) {
       console.error("Failed to update profile:", error);
@@ -73,15 +100,16 @@ export default function Profile() {
             <Avatar className="h-fit w-[10vh] mx-auto object-cover ">
               <AvatarImage
                 src={image || "https://github.com/shadcn.png"}
-                alt={username}
+                alt={firstName}
               />
-              <AvatarFallback>{username.charAt(0)}</AvatarFallback>
+              <AvatarFallback>{firstName.charAt(0)}</AvatarFallback>
             </Avatar>
           </div>
           <div className="flex flex-col justify-center items-start gap-1">
             <div className="grid w-full max-w-sm items-center gap-1.5">
               <Label htmlFor="picture">Picture</Label>
               <Input
+                disabled={disabled}
                 ref={fileInputRef}
                 onChange={handleFileChange}
                 id="picture"
@@ -96,11 +124,21 @@ export default function Profile() {
             </Button>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="username">Username</Label>
+            <Label htmlFor="firstName">First Name</Label>
             <Input
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              disabled={disabled}
+              id="firstName"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="lastName">Last Name</Label>
+            <Input
+              disabled={disabled}
+              id="lastName"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
             />
           </div>
           <div className="space-y-2">
@@ -110,8 +148,8 @@ export default function Profile() {
         </form>
       </CardContent>
       <CardFooter>
-        <Button onClick={handleSubmit} className="w-full">
-          Save Changes
+        <Button onClick={handleSubmit} className="w-full" disabled={disabled}>
+          {!disabled ? "save Profile" : "Google/Github Profile can't be edited"}
         </Button>
       </CardFooter>
     </Card>

@@ -4,10 +4,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 interface DropMenuProps {}
 
 const DropMenuAtoZ: React.FC<DropMenuProps> = () => {
+
+  const router = useRouter();
+  const AllMangaByCharacter = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]    
+
   return (
     <>
       <div className="font-semibold text-base flex justify-center items-center ">
@@ -16,32 +21,11 @@ const DropMenuAtoZ: React.FC<DropMenuProps> = () => {
             A-Z
           </DropdownMenuTrigger>
           <DropdownMenuContent className="ml-4 w-[3vw] grid grid-cols-3 gap-2">
-            <DropdownMenuItem>A</DropdownMenuItem>
-            <DropdownMenuItem>B</DropdownMenuItem>
-            <DropdownMenuItem>C</DropdownMenuItem>
-            <DropdownMenuItem>D</DropdownMenuItem>
-            <DropdownMenuItem>E</DropdownMenuItem>
-            <DropdownMenuItem>F</DropdownMenuItem>
-            <DropdownMenuItem>G</DropdownMenuItem>
-            <DropdownMenuItem>H</DropdownMenuItem>
-            <DropdownMenuItem>I</DropdownMenuItem>
-            <DropdownMenuItem>J</DropdownMenuItem>
-            <DropdownMenuItem>K</DropdownMenuItem>
-            <DropdownMenuItem>L</DropdownMenuItem>
-            <DropdownMenuItem>M</DropdownMenuItem>
-            <DropdownMenuItem>N</DropdownMenuItem>
-            <DropdownMenuItem>O</DropdownMenuItem>
-            <DropdownMenuItem>P</DropdownMenuItem>
-            <DropdownMenuItem>Q</DropdownMenuItem>
-            <DropdownMenuItem>R</DropdownMenuItem>
-            <DropdownMenuItem>S</DropdownMenuItem>
-            <DropdownMenuItem>T</DropdownMenuItem>
-            <DropdownMenuItem>U</DropdownMenuItem>
-            <DropdownMenuItem>V</DropdownMenuItem>
-            <DropdownMenuItem>W</DropdownMenuItem>
-            <DropdownMenuItem>X</DropdownMenuItem>
-            <DropdownMenuItem>Y</DropdownMenuItem>
-            <DropdownMenuItem>Z</DropdownMenuItem>
+            {AllMangaByCharacter.map((character) => (
+              <DropdownMenuItem key={character} onClick={() => router.push(`/dashboard/search?character=${character}`)}>
+                {character}
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

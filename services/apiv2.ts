@@ -58,7 +58,7 @@ export const getMangaById = async (id: number): Promise<MangaSearchResult[]> => 
 };
 
 export const deleteManga = async (id: number) => {
-  const response = await apiV2().delete("/manga/addmanga", { data: id });
+  const response = await apiV2().delete("/manga/addmanga", { data: { id } });
   if (response.data.error) {
     handleError(response.data.error);
   }
@@ -79,6 +79,65 @@ export const searchManga = async (
   const response = await apiV2().get(
     `/manga/search?q=${encodeURIComponent(query)}`
   );
+  if (response.data.error) {
+    handleError(response.data.error);
+  }
+  return response.data;
+};
+
+export const searchMangaAdvanced = async (
+  options: { query?: string; genre?: string }
+): Promise<MangaSearchResult[]> => {
+  const params = new URLSearchParams();
+  if (options.query) params.append("q", options.query);
+  if (options.genre) params.append("genre", options.genre);
+  const response = await apiV2().get(`/manga/search?${params.toString()}`);
+  if (response.data.error) {
+    handleError(response.data.error);
+  }
+  return response.data;
+};
+
+export type SearchFilters = {
+  query?: string;
+  genre?: string;
+  type?: string;
+  character?: string;
+  page?: number;
+  limit?: number;
+};
+
+export type SearchResponse = {
+  data: MangaSearchResult[];
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    totalCount: number;
+    limit: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  };
+  filters: {
+    query: string | null;
+    genre: string | null;
+    type: string | null;
+    character: string | null;
+  };
+};
+
+export const searchMangaWithFilters = async (
+  filters: SearchFilters
+): Promise<SearchResponse> => {
+  const params = new URLSearchParams();
+  
+  if (filters.query) params.append("q", filters.query);
+  if (filters.genre) params.append("genre", filters.genre);
+  if (filters.type) params.append("type", filters.type);
+  if (filters.character) params.append("character", filters.character);
+  if (filters.page) params.append("page", filters.page.toString());
+  if (filters.limit) params.append("limit", filters.limit.toString());
+  
+  const response = await apiV2().get(`/manga/advance-search?${params.toString()}`);
   if (response.data.error) {
     handleError(response.data.error);
   }

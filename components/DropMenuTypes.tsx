@@ -6,10 +6,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 interface DropMenuProps {}
 
 const DropMenuTypes: React.FC<DropMenuProps> = () => {
+  const router = useRouter();
+  const AllTypes = ["Manga", "oneShot", "Novel", "One-Short", "Manhwa", "Manhua"]  
   return (
     <>
       <div className="ml-4 font-semibold text-base flex justify-center items-center ">
@@ -18,12 +21,11 @@ const DropMenuTypes: React.FC<DropMenuProps> = () => {
             Types
           </DropdownMenuTrigger>
           <DropdownMenuContent className="ml-4 w-[5vw]">
-            <DropdownMenuItem>Manga</DropdownMenuItem>
-            <DropdownMenuItem>oneShot</DropdownMenuItem>
-            <DropdownMenuItem>Novel</DropdownMenuItem>
-            <DropdownMenuItem>One-Short</DropdownMenuItem>
-            <DropdownMenuItem>Manhwa</DropdownMenuItem>
-            <DropdownMenuItem>Manhua</DropdownMenuItem>
+            {AllTypes.map((type) => (
+              <DropdownMenuItem key={type} onClick={() => router.push(`/dashboard/search?type=${type}`)}>
+                {type}
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
