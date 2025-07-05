@@ -211,4 +211,14 @@ export const getMangaChapterImage = async (mangaChapterId: number) => {
   return response;
 };
 
+export const deleteMangaChapter = async (mangaChapterId: number) => {
+  const response = await apiV2().delete(
+    `/manga/addmangachapter?mangaChapterId=${mangaChapterId}`
+  );
+  if (response.data.error) {
+    handleError(response.data.error);
+  }
+  return response;
+};
+
 

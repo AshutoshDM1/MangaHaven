@@ -285,7 +285,7 @@ export default function AdminPage() {
     onRowSelectionChange: setRowSelection,
     initialState: {
       pagination: {
-        pageSize: 5,
+        pageSize: 4,
       },
     },
     state: {
@@ -403,7 +403,7 @@ export default function AdminPage() {
             </DropdownMenu>
           </div>
           <div className="rounded-md border">
-            <Table className="min-h-[41vh]">
+            <Table className="min-h-[34vh]">
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
@@ -587,7 +587,7 @@ export default function AdminPage() {
                       color: "hsl(var(--chart-1))",
                     },
                   }}
-                  className="aspect-auto h-[250px] w-full"
+                  className="aspect-auto h-[273px] w-full"
                 >
                   <BarChart
                     accessibilityLayer

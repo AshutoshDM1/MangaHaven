@@ -1,14 +1,15 @@
 import { Dialog, DialogHeader, DialogTitle, DialogContent, DialogDescription, DialogFooter } from "../ui/dialog";
-import { getMangaChapter, getMangaChapterImage } from "@/services/apiv2";
+import { deleteMangaChapter, getMangaChapter, getMangaChapterImage } from "@/services/apiv2";
 import { useEffect, useState } from "react";
 import { MangaChapter, MangaChapterImage } from "@prisma/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import { Skeleton } from "../ui/skeleton";
-import { ChevronRight, BookOpen, Image as ImageIcon, Eye, AlertCircle } from "lucide-react";
+import { ChevronRight, BookOpen, Image as ImageIcon, Eye, AlertCircle, Trash } from "lucide-react";
 import Image from "next/image";
 import { Manga } from "@/app/admin/page";
+import { toast } from "sonner";
 
 interface MangaChapterWithImages extends MangaChapter {
   images?: MangaChapterImage[];
@@ -80,6 +81,20 @@ const ViewMangaChapter = ({
   const handleBackToChapters = () => {
     setSelectedChapter(null);
     setViewingImages(false);
+  };
+
+  const handleDeleteChapter = async (chapterId: number) => {
+    try {
+      const response = await deleteMangaChapter(chapterId);
+      if (response.status === 200) {
+        toast.success(response.data.message);
+        fetchChapterData();
+      } else {
+        toast.error(response.data.error);
+      }
+    } catch (error) {
+      console.error("Error deleting chapter:", error);
+    }
   };
 
   const renderChaptersList = () => (
@@ -169,7 +184,14 @@ const ViewMangaChapter = ({
                       <Eye className="w-4 h-4 mr-1" />
                       View Images
                     </Button>
-                    <ChevronRight className="w-4 h-4 text-zinc-500 group-hover:text-zinc-300 transition-colors" />
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => handleDeleteChapter(chapter.id)}
+                      className="text-zinc-400 hover:text-white hover:bg-zinc-800"
+                    >
+                      <Trash className="w-4 h-4 text-zinc-500 group-hover:text-zinc-300 transition-colors" />
+                    </Button>
                   </div>
                 </div>
               </CardContent>

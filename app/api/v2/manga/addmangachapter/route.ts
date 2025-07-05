@@ -63,4 +63,24 @@ const POST = async (request: NextRequest) => {
   }
 };
 
-export { GET, POST };
+const DELETE = async (request: NextRequest) => {
+  const mangaChapterId = request.nextUrl.searchParams.get("mangaChapterId");
+  try {
+    const result = await prisma.mangaChapter.delete({
+      where: { id: Number(mangaChapterId) },
+    });
+    const mangaTotalChapter = await prisma.manga.update({
+      where: { id: result.mangaId },
+      data: { totalChapter: { decrement: 1 } },
+    });
+    return NextResponse.json({ message: "Manga chapter deleted", result });
+  } catch (error) {
+    console.error("Error deleting manga chapters:", error);
+    return NextResponse.json(
+      { error: "Failed to delete manga chapters", errorData: error },
+      { status: 500 }
+    );
+  }
+};
+
+export { GET, POST, DELETE };
