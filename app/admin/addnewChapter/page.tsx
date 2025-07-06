@@ -118,51 +118,70 @@ const AddNewChapter = () => {
         return;
       }
 
-      // If there are more than 2 images, upload them to Cloudinary
+            // If there are more than 2 images, upload them to Cloudinary
       if (chapterImages.length > 2) {
-        // Upload each image and collect URLs
-        const formData = new FormData();
-        chapterImages.forEach((image) => {
-          formData.append("files", image as File);
-        });
-        // Add the path to the form data
-        formData.append(
-          "path",
-          `${chapterData.mangaTitle}/Chapter-${chapterData.chapterNumber}`
-        );
-        // Upload the images to Cloudinary
-        const imageUploadResponse = await apiV2().post(
-          "/upload/chapter-images",
-          formData
-        );
-
-        // Get the successful uploads URL
-        const Images = imageUploadResponse.data.successfulUploads;
-
-        // Create the image data using the successful uploads URL
-        const imageData: { imageUrl: string; mangaChapterId: number }[] = [];
-
-        // Add the image data to the array
-        Images.forEach((image: any) => {
-          imageData.push({
-            imageUrl: image.url,
-            mangaChapterId: mangaChapterId,
-          });
-        });
-
-        // Add the image data to the database
-        const imageResponse = await addMangaChapterImage(imageData);
+        // Upload each image and save to DB immediately
+        try {
+          let successfulUploads = 0;
+          
+          // Upload and save images sequentially to maintain order
+          for (let index = 0; index < chapterImages.length; index++) {
+            const image = chapterImages[index];
+            const formData = new FormData();
+            formData.append("file", image);
+            formData.append(
+              "path",
+              `${chapterData.mangaTitle}/Chapter-${chapterData.chapterNumber}`
+            );
+            
+            // Upload to Cloudinary
+            const uploadResponse = await apiV2().post(
+              "/upload/chapter-images",
+              formData
+            );
+            
+            if (uploadResponse.status === 200 && uploadResponse.data.success) {
+              toast.success(`Image ${index + 1} uploaded to Cloudinary`);
+              
+              // Immediately save to database
+              const imageResponse = await addMangaChapterImage([
+                {
+                  imageUrl: uploadResponse.data.url,
+                  mangaChapterId: mangaChapterId,
+                }
+              ]);
+              
+              if (imageResponse.status === 200) {
+                toast.success(`Image ${index + 1} saved to database`);
+                successfulUploads++;
+              } else {
+                throw new Error(`Failed to save image ${index + 1} to database`);
+              }
+            } else {
+              throw new Error(`Failed to upload image ${index + 1} to Cloudinary`);
+            }
+          }
+          
+          // Check if all images were processed successfully
+          if (successfulUploads === chapterImages.length) {
+            toast.success("All images uploaded and saved successfully!");
+            // Reset form
+            setChapterData({
+              ...chapterData,
+              chapterNumber: 0,
+              chapterTitle: "",
+            });
+            setChapterImages([]);
+            setSelectedFiles(null);
+          }
+        } catch (error) {
+          console.log(error);
+          toast.error("Failed to upload and save images. Please try again.");
+        }
 
         toast.success("Chapter Added Successfully", {
           description: `Chapter ${chapterData.chapterNumber} has been added to ${chapterData.mangaTitle}.`,
         });
-        console.log(imageResponse);
-        if (imageResponse.status === 200) {
-          // Reset form
-          setChapterData({...chapterData, chapterNumber: 0, chapterTitle: ""});
-          setChapterImages([]);
-          setSelectedFiles(null);
-        }
       }
     } catch (error) {
       console.log(error);

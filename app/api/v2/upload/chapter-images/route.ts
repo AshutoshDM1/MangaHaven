@@ -14,14 +14,6 @@ interface CloudinaryUploadResult {
   [key: string]: any;
 }
 
-interface UploadResponse {
-  success: boolean;
-  publicId?: string;
-  url?: string;
-  error?: string;
-  fileName?: string;
-}
-
 // Helper function to upload a single file to Cloudinary
 async function uploadToCloudinary(buffer: Buffer, fileName: string, path: string): Promise<CloudinaryUploadResult> {
   return new Promise((resolve, reject) => {
@@ -44,91 +36,40 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const path = formData.get("path") as string;
-    // Get all files from FormData
-    const files: File[] = [];
-    
-    // Handle both single file and multiple files
-    const fileEntries = formData.getAll("files"); // For multiple files
-    const singleFile = formData.get("file"); // For backward compatibility
-    
-    if (fileEntries.length > 0) {
-      // Multiple files case
-      fileEntries.forEach(entry => {
-        if (entry instanceof File) {
-          files.push(entry);
-        }
-      });
-    } else if (singleFile instanceof File) {
-      // Single file case (backward compatibility)
-      files.push(singleFile);
-    }
+    const file = formData.get("file") as File;
 
-    // Check if any files exist
-    if (files.length === 0) {
+    // Check if file exists
+    if (!file) {
       return NextResponse.json({ 
-        error: "No files found. Please upload at least one file." 
+        error: "No file found. Please upload a file." 
       }, { status: 400 });
     }
 
-    // Validate file types
-    const invalidFiles = files.filter(file => !file.type.startsWith("image/"));
-    if (invalidFiles.length > 0) {
+    // Validate file type
+    if (!file.type.startsWith("image/")) {
       return NextResponse.json({
-        error: `Invalid file types detected. Only images are allowed. Invalid files: ${invalidFiles.map(f => f.name).join(", ")}`
+        error: `Invalid file type. Only images are allowed. Received: ${file.type}`
       }, { status: 400 });
     }
 
-    // Upload all files to Cloudinary
-    const uploadPromises = files.map(async (file): Promise<UploadResponse> => {
-      try {
-        const bytes = await file.arrayBuffer();
-        const buffer = Buffer.from(bytes);
-        
-        const result = await uploadToCloudinary(buffer, file.name, path);
-        
-        return {
-          success: true,
-          publicId: result.public_id,
-          url: result.secure_url,
-          fileName: file.name
-        };
-      } catch (error) {
-        console.error(`Upload failed for file ${file.name}:`, error);
-        return {
-          success: false,
-          error: `Failed to upload ${file.name}: ${error instanceof Error ? error.message : 'Unknown error'}`,
-          fileName: file.name
-        };
-      }
-    });
-
-    // Wait for all uploads to complete
-    const results = await Promise.all(uploadPromises);
+    // Upload file to Cloudinary
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
     
-    // Separate successful and failed uploads
-    const successfulUploads = results.filter(result => result.success);
-    const failedUploads = results.filter(result => !result.success);
-
-    // Return comprehensive response
+    const result = await uploadToCloudinary(buffer, file.name, path);
+    
     return NextResponse.json({
-      totalFiles: files.length,
-      successCount: successfulUploads.length,
-      failCount: failedUploads.length,
-      successfulUploads: successfulUploads.map(upload => ({
-        publicId: upload.publicId,
-        url: upload.url,
-        fileName: upload.fileName
-      })),
-      failedUploads: failedUploads.map(upload => ({
-        fileName: upload.fileName,
-        error: upload.error
-      })),
-      message: `Successfully uploaded ${successfulUploads.length} out of ${files.length} files`
+      success: true,
+      publicId: result.public_id,
+      url: result.secure_url,
+      fileName: file.name,
+      message: "File uploaded successfully"
     }, { status: 200 });
 
   } catch (error) {
     console.error("Upload process failed:", error);
     return NextResponse.json({ 
+      success: false,
       error: "Upload process failed",
       details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
