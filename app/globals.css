@@ -1,225 +1,26 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-* {
-  font-family: "Poppins", sans-serif;
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
 
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
 }
 
 body {
-  letter-spacing: var(--tracking-normal);
-}
-
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
-    --primary: 266.7857 70% 68.6275%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 330 100.0000% 70.5882%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 90.1961%;
-    --muted-foreground: 0 0% 45.0980%;
-    --accent: 0 0% 90.1961%;
-    --accent-foreground: 0 0% 0%;
-    --destructive: 0 100% 65.0980%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 90.1961%;
-    --input: 0 0% 90.1961%;
-    --ring: 266.7857 70% 68.6275%;
-    --chart-1: 266.7857 70% 68.6275%;
-    --chart-2: 330 100.0000% 70.5882%;
-    --chart-3: 50.5882 100% 50%;
-    --chart-4: 120 60.7843% 50%;
-    --chart-5: 209.6000 100% 55.8824%;
-    --sidebar: 0 0% 100%;
-    --sidebar-foreground: 0 0% 0%;
-    --sidebar-primary: 266.7857 70% 68.6275%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 90.1961%;
-    --sidebar-accent-foreground: 0 0% 0%;
-    --sidebar-border: 0 0% 90.1961%;
-    --sidebar-ring: 266.7857 70% 68.6275%;
-    --font-sans: sans-serif;
-    --font-serif: serif;
-    --font-mono: monospace;
-    --radius: 0.5rem;
-    --shadow-2xs: 0 0 20px 0 hsl(0 0% 0% / 0.05);
-    --shadow-xs: 0 0 20px 0 hsl(0 0% 0% / 0.05);
-    --shadow-sm: 0 0 20px 0 hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
-    --shadow: 0 0 20px 0 hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
-    --shadow-md: 0 0 20px 0 hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
-    --shadow-lg: 0 0 20px 0 hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
-    --shadow-xl: 0 0 20px 0 hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
-    --shadow-2xl: 0 0 20px 0 hsl(0 0% 0% / 0.25);
-    --tracking-normal: 0;
-  }
-  
-  .dark {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-    --card: 0 0% 9.0196%;
-    --card-foreground: 0 0% 100%;
-    --popover: 0 0% 9.0196%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 266.7857 70% 68.6275%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 330 100.0000% 70.5882%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 14.9020%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 0 0% 20%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 100% 65.0980%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 14.9020%;
-    --input: 0 0% 14.9020%;
-    --ring: 266.7857 70% 68.6275%;
-    --chart-1: 266.7857 70% 68.6275%;
-    --chart-2: 330 100.0000% 70.5882%;
-    --chart-3: 50.5882 100% 50%;
-    --chart-4: 120 60.7843% 50%;
-    --chart-5: 209.6000 100% 55.8824%;
-    --sidebar: 0 0% 0%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 266.7857 70% 68.6275%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 20%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 14.9020%;
-    --sidebar-ring: 266.7857 70% 68.6275%;
-    --font-sans: sans-serif;
-    --font-serif: serif;
-    --font-mono: monospace;
-    --radius: 0.5rem;
-    --shadow-2xs: 0 0 20px 0 hsl(0 0% 0% / 0.05);
-    --shadow-xs: 0 0 20px 0 hsl(0 0% 0% / 0.05);
-    --shadow-sm: 0 0 20px 0 hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
-    --shadow: 0 0 20px 0 hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
-    --shadow-md: 0 0 20px 0 hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
-    --shadow-lg: 0 0 20px 0 hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
-    --shadow-xl: 0 0 20px 0 hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
-    --shadow-2xl: 0 0 20px 0 hsl(0 0% 0% / 0.25);
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-@layer components {
-  .group:hover .group-hover\:w-full::before,
-  .group:hover .group-hover\:w-full::after {
-    width: 50%;
-  }
-
-  .group-hover\:w-full::before,
-  .group-hover\:w-full::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    height: 2px;
-    background-color: white;
-    transition: width 0.3s ease-out;
-    width: 0;
-  }
-
-  .group-hover\:w-full::before {
-    left: 50%;
-  }
-
-  .group-hover\:w-full::after {
-    right: 50%;
-  }
-}
-
-@keyframes click {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(0.95);
-  }
-}
-
-@layer utilities {
-  .animate-click {
-    animation: click 0.7s ease-in-out;
-  }
-}
-
-.HomeH1 {
-  color: transparent;
-  background-clip: text;
-  background-image: linear-gradient(
-    to right,
-    #8800ff 0%,
-    #ffffff 50%,
-    #efc0ff 80%
-  );
-}
-::selection {
-  background-color: #d403a0; /* Custom background color for selected text */
-  color: #ffffff; /* Custom text color for selected text */
-}
-
-::-webkit-scrollbar {
-  width: 9px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #555;
-  cursor: pointer;
-  transition: all;
-  transition-duration: 600ms;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: #888;
-}
-
-::-webkit-scrollbar-corner {
-  background: transparent;
-}
-
-
-/* this is for the scrollbar in the search dropdown */
- .search-dropdown::-webkit-scrollbar {
-  width: 7px;
-}
-
-.search-dropdown::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.search-dropdown::-webkit-scrollbar-thumb {
-  background-color: #555;
-  cursor: pointer;
-  transition: all;
-  border-radius: 10px;
-
-  transition-duration: 600ms;
-}
-
-.search-dropdown::-webkit-scrollbar-thumb:hover {
-  background-color: #888;
-}
-
-.search-dropdown::-webkit-scrollbar-corner {
-  background: transparent;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
 }

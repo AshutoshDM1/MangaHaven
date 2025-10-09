@@ -1,7 +1,0 @@
-  "editor.tokenColorCustomizations": {
-    "[GitHub Dark Colorblind (Beta)]": {
-      "textMateRules": [
-        // ... existing rules ...
-      ]
-    }
-  }
