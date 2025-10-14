@@ -1,6 +1,6 @@
 <div align="center">
   
-  <img src="https://github.com/AshutoshDM1/MangaHaven/blob/developV2/public/MangaHaven%20Logo.png" alt="Manga Haven" width="50"/>
+  <img src="https://github.com/AshutoshDM1/MangaHaven/blob/main/public/MangaHaven%20Logo.png" alt="Manga Haven" width="50"/>
   
   # MangaHaven
   
@@ -27,7 +27,7 @@
 
 ## Tech Stack Map
 
-  <img src="https://github.com/AshutoshDM1/MangaHaven/blob/developV2/github%20assests/Manga%20Haven%20Map.png" alt="Manga Haven" width="600"/>
+  <img src="https://github.com/AshutoshDM1/MangaHaven/blob/main/github%20assests/Manga%20Haven%20Map.png" alt="Manga Haven" width="600"/>
 
 
 ## ✨ Overview
