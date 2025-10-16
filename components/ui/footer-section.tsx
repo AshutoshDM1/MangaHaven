@@ -23,7 +23,7 @@ import {
   Twitter,
 } from "lucide-react";
 
-function Footerdemo() {
+function FooterSection() {
   const [isDarkMode, setIsDarkMode] = React.useState(true);
   const [isChatOpen, setIsChatOpen] = React.useState(false);
 
@@ -261,4 +261,4 @@ function Footerdemo() {
   );
 }
 
-export { Footerdemo };
+export default FooterSection;
