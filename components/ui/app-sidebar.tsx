@@ -1,14 +1,8 @@
 "use client";
 import {
-  Calendar,
-  Home,
-  Inbox,
-  Search,
-  Settings,
   LayoutDashboard,
   Download,
   Users,
-  Plus,
   BookImage,
   ArrowLeft,
   BookOpen,

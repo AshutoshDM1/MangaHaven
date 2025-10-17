@@ -6,14 +6,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 
-interface DropMenuProps {}
-
-const DropMenuGenres: React.FC<DropMenuProps> = () => {
+const DropMenuGenres: React.FC = () => {
   const router = useRouter();
   const AllGenres = ["Action", "Adventure", "Comedy", "Fantasy", "Demons", "Harem", "Horror", "Isekai", "Magic", "Romance", "Ecchi", "Mecha", "Space", "Slice of Life", "Shounen", "Mystery", "School", "Sports", "Supernatural", "Thriller", "Seinen", "Suspense"]    
   return (
     <>
       <div className="font-semibold text-base flex justify-center items-center ">
+        img
         <DropdownMenu>
           <DropdownMenuTrigger className="focus:none select-none  focus:outline-none">
             Genres

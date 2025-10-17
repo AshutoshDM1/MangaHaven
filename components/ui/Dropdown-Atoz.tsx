@@ -6,9 +6,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 
-interface DropMenuProps {}
-
-const DropMenuAtoZ: React.FC<DropMenuProps> = () => {
+const DropMenuAtoZ: React.FC = () => {
 
   const router = useRouter();
   const AllMangaByCharacter = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]    
