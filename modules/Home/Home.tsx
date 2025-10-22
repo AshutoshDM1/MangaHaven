@@ -21,7 +21,7 @@ const Home = () => {
           <div className="absolute inset-0 z-0 w-full overflow-hidden">
             <Particles className="min-h-screen" />
           </div>
-          <div className="relative z-10">
+          <div className="relative z-10 flex flex-col justify-center items-center">
             <FlottingImages />
             <ShinyText />
             <HeroSectionContent />
