@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Search, BookOpen, Filter, X } from "lucide-react";
 import { searchMangaAdvanced, MangaSearchResult } from "@/services/apiv2";

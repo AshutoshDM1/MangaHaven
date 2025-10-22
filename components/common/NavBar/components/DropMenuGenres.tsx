@@ -6,9 +6,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 
-interface DropMenuProps {}
-
-const DropMenuGenres: React.FC<DropMenuProps> = () => {
+const DropMenuGenres: React.FC = () => {
   const router = useRouter();
   const AllGenres = ["Action", "Adventure", "Comedy", "Fantasy", "Demons", "Harem", "Horror", "Isekai", "Magic", "Romance", "Ecchi", "Mecha", "Space", "Slice of Life", "Shounen", "Mystery", "School", "Sports", "Supernatural", "Thriller", "Seinen", "Suspense"]    
   return (

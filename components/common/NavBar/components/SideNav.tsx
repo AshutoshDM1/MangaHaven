@@ -1,3 +1,4 @@
+// @typescript-eslint/no-explicit-any
 "use client";
 import { useState, useEffect } from "react";
 import {
@@ -32,9 +33,11 @@ const SideNav = () => {
   const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const closeSheet: any = () => setIsOpen(false);
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleRouteChange = () => closeSheet();
     // router.events.on("routeChangeComplete", handleRouteChange)
     return () => {

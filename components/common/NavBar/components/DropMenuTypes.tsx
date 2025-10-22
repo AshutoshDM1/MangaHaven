@@ -2,15 +2,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 
-interface DropMenuProps {}
-
-const DropMenuTypes: React.FC<DropMenuProps> = () => {
+const DropMenuTypes: React.FC = () => {
   const router = useRouter();
   const AllTypes = ["Manga", "oneShot", "Novel", "One-Short", "Manhwa", "Manhua"]  
   return (
