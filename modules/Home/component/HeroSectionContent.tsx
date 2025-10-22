@@ -16,7 +16,7 @@ const HeroSectionContent = () => {
         initial={{ opacity: 1 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}
-        className="block sm:hidden text-center text-6xl xl:text-7xl 2xl:text-9xl font-bold bg-gradient-to-r from-pink-500 via-purple-100 to-purple-900 bg-clip-text text-transparent text-clip "
+        className="block sm:hidden text-center text-7xl font-bold bg-gradient-to-r from-pink-500 via-purple-100 to-purple-900 bg-clip-text text-transparent text-clip mb-16"
       >
         Manga <br /> Haven
       </motion.h1>
