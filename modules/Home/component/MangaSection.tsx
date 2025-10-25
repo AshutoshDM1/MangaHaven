@@ -2,7 +2,7 @@
 import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
 import Image from "next/image";
 
-export function MangaSection() {
+export default function MangaSectionSlider() {
   const cards = data.map((card, index) => (
     <Card key={card.src} card={card} index={index} />
   ));

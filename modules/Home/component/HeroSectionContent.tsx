@@ -1,9 +1,10 @@
+"use client"
 import { motion } from "framer-motion";
 import Link from "next/link";
 
 const HeroSectionContent = () => {
   return (
-    <div className="flex flex-col justify-center items-center space-y-4 mt-5">
+    <div className="flex flex-col justify-center items-center space-y-4">
       <motion.h1
         initial={{ opacity: 1 }}
         animate={{ opacity: 1 }}
@@ -16,9 +17,9 @@ const HeroSectionContent = () => {
         initial={{ opacity: 1 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}
-        className="block sm:hidden text-center text-7xl font-bold bg-gradient-to-r from-pink-500 via-purple-100 to-purple-900 bg-clip-text text-transparent text-clip mb-16"
+        className="block sm:hidden text-center text-8xl font-bold bg-gradient-to-r from-pink-500 via-purple-100 to-purple-900 bg-clip-text text-transparent text-clip mb-16"
       >
-        Manga <br /> Haven
+        Manga <br /> <span className="text-7xl" >Haven</span>
       </motion.h1>
       <motion.h1
         initial={{ opacity: 1 }}

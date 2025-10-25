@@ -140,7 +140,7 @@ const FlottingImages = ({
   const rightImages = imagesData.slice(3, 6);
 
   return (
-    <div className={cn("absolute top-32 2xl:top-14 hidden lg:flex", className)}>
+    <div className={cn("absolute -top-20 2xl:-top-28 hidden lg:flex", className)}>
       <div className="flex flex-col gap-0  ">
         {leftImages.map((image, index) => (
           <motion.img
