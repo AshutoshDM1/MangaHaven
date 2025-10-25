@@ -1,6 +1,5 @@
-'use client';
-import SplineComponent from '@/components/splineComponent';
-import { MangaSection } from '@/modules/Home/component/MangaSection';
+"use client"
+import MangaSectionSlider from '@/modules/Home/component/MangaSection';
 import MangaCTA from '@/modules/Home/component/MangaCTA';
 import FooterSection from '@/components/ui/footer-section';
 import ShinyText from './component/ShinyText';
@@ -27,7 +26,7 @@ const Home = () => {
             <HeroSectionContent />
           </div>
         </RadialGradient>
-        <MangaSection />
+        <MangaSectionSlider />
         <MangaCTA />
         <FooterSection />
       </div>

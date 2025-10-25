@@ -6,7 +6,7 @@ const ShinyText = () => {
   return (
     <div
       className={cn(
-        "w-fit group rounded-full border text-base text-white transition-all ease-in hover:cursor-pointer border-white/5 bg-zinc-900 hover:bg-zinc-800 z-10 mb-40"
+        "w-fit group rounded-full border text-base text-white transition-all ease-in hover:cursor-pointer border-white/5 bg-zinc-900 hover:bg-zinc-800 z-10 mb-20"
       )}
     >
       <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-1 transition ease-out hover:duration-300 text-neutral-400 hover:text-neutral-300">
