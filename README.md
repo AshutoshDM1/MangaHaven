@@ -5,7 +5,7 @@
   # MangaHaven
   
   <p><em>Your ultimate destination for manga and anime content</em></p>
-  <p><em>Made with ❤️ by Shilesh and Ashutosh</em></p>
+  <p><em>Made with ❤️ by Shilesh and Ashutosh and EilteDev Team</em></p>
   <p><em>MangaHaven is a modern manga reading platform that combines stunning visuals with seamless performance. Our mission is to provide manga enthusiasts with an immersive reading experience through an intuitive interface and comprehensive library.</em></p>
   <br>
   <p><em>MangaHaven have a full blown admin pannel with a lot of features , add new manga , edit , delete , and a lot more</em></p>
