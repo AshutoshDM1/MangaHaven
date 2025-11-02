@@ -116,7 +116,7 @@ const FormLayout: React.FC<FormLayoutProps> = ({
               </>
             ))}
         </nav>
-        <div className="w-full h-full flex items-center justify-center">{children}</div>
+        <div className="w-full h-full flex items-center justify-center my-10">{children}</div>
       </div>
     </div>
   );
