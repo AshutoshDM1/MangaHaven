@@ -44,7 +44,7 @@ const SingleMangaDetail = ({ slug }: SingleMangaDetailProps) => {
   }
 
   return (
-    <Section>
+    <Section className='py-6' >
       <MangaHero manga={manga} />
       <MangaStats totalChapters={manga.totalChapter} />
       <MangaActions firstChapterUrl={firstChapterUrl} hasChapters={chapters.length > 0} />

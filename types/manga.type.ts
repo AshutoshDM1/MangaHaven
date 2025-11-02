@@ -16,3 +16,10 @@ export interface MangaChapter {
   mangaId: number;
   createdAt?: string;
 }
+
+export interface MangaChapterImage {
+  id: number;
+  imageUrl: string;
+  mangaChapterId: number;
+  createdAt?: string;
+}

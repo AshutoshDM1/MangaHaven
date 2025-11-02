@@ -53,7 +53,7 @@ export async function generateMangaMetadata({
 
     // Generate title and description based on whether this is a chapter page
     const title = chapterData
-      ? `${mangaTitle} - Chapter ${chapterData.chapterNumber}: ${chapterData.chapterTitle} | Read Online`
+      ? `${mangaTitle} - Chapter ${chapterData.chapterNumber}`
       : `${mangaTitle} | Read Manga Online`;
 
     const description = chapterData

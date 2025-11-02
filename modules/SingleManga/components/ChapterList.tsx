@@ -5,7 +5,7 @@ import { Search } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { MangaChapter } from '@/services/manga.services';
+import { MangaChapter } from '@/types/manga.type';
 
 interface ChapterListProps {
   chapters: MangaChapter[];
@@ -24,7 +24,7 @@ export const ChapterList = ({ chapters, mangaId, isLoading }: ChapterListProps) 
 
   if (isLoading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <div className="px-4 py-12">
         <div className="space-y-4">
           {[1, 2, 3, 4, 5].map((index) => (
             <Skeleton key={index} className="h-16 w-full rounded-lg" />
@@ -35,8 +35,8 @@ export const ChapterList = ({ chapters, mangaId, isLoading }: ChapterListProps) 
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
-      <div className="flex items-center justify-between mb-8">
+    <div className="px-4 py-12">
+      <div className="flex flex-col md:flex-row items-center justify-between space-y-4 mb-8">
         <div className="flex items-center gap-4">
           <h2 className="text-2xl font-bold text-foreground">CHAPTERS</h2>
           <Badge variant="secondary" className="bg-purple-500/10 text-purple-300">

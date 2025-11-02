@@ -1,271 +1,95 @@
 'use client';
-import { Skeleton } from '@/components/ui/skeleton';
-import { motion } from 'framer-motion';
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import { ChevronLeft, ChevronRight, GalleryHorizontal, GalleryVertical } from 'lucide-react';
-import Image from 'next/image';
-import { useParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
+import { useState, useMemo } from 'react';
+import { useParams } from 'next/navigation';
+import { useMangaDetail } from '@/hooks/manga/useMangaDetail';
+import { useMangaChapters } from '@/hooks/manga/useMangaChapters';
+import { useChapterDetail } from '@/hooks/manga/useChapterDetail';
+import { useChapterImages } from '@/hooks/manga/useChapterImages';
 import {
-  getMangaById,
-  getMangaChapter,
-  getMangaChapterImage,
-  getMangaChapterById,
-} from '@/services/apiv2';
-import { MangaChapter, MangaChapterImage } from '@prisma/client';
-import { Manga } from '@/types/manga.type';
+  ChapterSidebar,
+  ChapterNavigation,
+  ViewModeToggle,
+  ChapterImageViewer,
+} from '@/modules/SingleRead/components';
+import Navbar from '@/components/common/NavBar/Navbar';
+import Link from 'next/link';
+import BreadCrumb from './components/BreadCrumb';
 
-const ReadPage = () => {
+const SingleRead = () => {
   const { mangaId, mangaChapterId } = useParams();
-  const router = useRouter();
-  const [manga, setmanga] = useState<Manga | null>(null);
-  const [mangaChapter, setMangaChapter] = useState<MangaChapter | null>(null);
-  const [mangaChapterList, setMangaChapterList] = useState<MangaChapter[] | null>(null);
-  const [mangaImage, setMangaImage] = useState<MangaChapterImage[] | null>(null);
-  const [showChap, setShowChap] = useState<boolean>(false);
-  const [slide, setSlide] = useState<boolean>(true);
+  const [isVertical, setIsVertical] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const mangadata = await getMangaById(Number(mangaId));
-      const mangaChapterdata = await getMangaChapterById(Number(mangaId), Number(mangaChapterId));
-      const mangaChapterImagedata = await getMangaChapterImage(Number(mangaChapterId));
-      const mangaChapterListdata = await getMangaChapter(Number(mangaId));
+  // Parse IDs
+  const parsedMangaId = Number(mangaId);
+  const parsedChapterId = Array.isArray(mangaChapterId)
+    ? Number(mangaChapterId[0])
+    : Number(mangaChapterId);
 
-      setmanga(mangadata as unknown as Manga);
-      setMangaChapter(mangaChapterdata.data);
-      setMangaImage(mangaChapterImagedata.data);
-      setMangaChapterList(mangaChapterListdata.data);
+  // Fetch all data using TanStack Query
+  const { data: manga, isLoading: mangaLoading } = useMangaDetail(parsedMangaId);
+  const { data: allChapters = [], isLoading: chaptersLoading } = useMangaChapters(parsedMangaId);
+  const { data: currentChapter, isLoading: chapterLoading } = useChapterDetail(
+    parsedMangaId,
+    parsedChapterId
+  );
+  const { data: chapterImages = [], isLoading: imagesLoading } = useChapterImages(parsedChapterId);
+
+  // Calculate navigation URLs
+  const { previousChapterUrl, nextChapterUrl } = useMemo(() => {
+    if (!currentChapter || allChapters.length === 0) {
+      return { previousChapterUrl: null, nextChapterUrl: null };
+    }
+
+    const currentIndex = allChapters.findIndex((ch) => ch.id === currentChapter.id);
+
+    if (currentIndex === -1) {
+      return { previousChapterUrl: null, nextChapterUrl: null };
+    }
+
+    const previousChapter = currentIndex > 0 ? allChapters[currentIndex - 1] : null;
+    const nextChapter =
+      currentIndex < allChapters.length - 1 ? allChapters[currentIndex + 1] : null;
+
+    return {
+      previousChapterUrl: previousChapter ? `/read/${parsedMangaId}/${previousChapter.id}` : null,
+      nextChapterUrl: nextChapter ? `/read/${parsedMangaId}/${nextChapter.id}` : null,
     };
-    fetchData();
-  }, []);
-
-  const handleChapterClick = (chapterId: number) => {
-    router.push(`/read/${mangaId}/${chapterId}`);
-  };
-
-  const handleChapterClickPrevious = () => {
-    try {
-      const currentChapterId = mangaChapter?.id;
-      if (!currentChapterId) {
-        toast.error('There is no chapter');
-        return;
-      }
-      if (!mangaChapterList) {
-        toast.error('There are no chapters');
-        return;
-      }
-      const nextChapterIndex = mangaChapterList?.findIndex(
-        (chapter) => chapter.id === currentChapterId
-      );
-      if (nextChapterIndex === -1 || nextChapterIndex === undefined || nextChapterIndex === 0) {
-        toast.error('There is no more chapter');
-        return;
-      }
-      // console.log(mangaChapterList?.[nextChapterIndex - 1]);
-      router.push(`/read/${mangaId}/${mangaChapterList?.[nextChapterIndex - 1].id}`);
-    } catch (error) {
-      toast.error('There is no chapter');
-      return;
-    }
-  };
-
-  const handleChapterClickNext = () => {
-    try {
-      const currentChapterId = mangaChapter?.id;
-      if (!currentChapterId) {
-        toast.error('There is no chapter');
-        return;
-      }
-      if (!mangaChapterList) {
-        toast.error('There are no chapters');
-        return;
-      }
-      const nextChapterIndex = mangaChapterList?.findIndex(
-        (chapter) => chapter.id === currentChapterId
-      );
-      if (
-        nextChapterIndex === -1 ||
-        nextChapterIndex === undefined ||
-        nextChapterIndex === mangaChapterList.length - 1
-      ) {
-        toast.error('There is no more chapter');
-        return;
-      }
-      // console.log(mangaChapterList?.[nextChapterIndex - 1]);
-      router.push(`/read/${mangaId}/${mangaChapterList?.[nextChapterIndex + 1].id}`);
-    } catch (error) {
-      toast.error('There is no chapter');
-      return;
-    }
-  };
+  }, [currentChapter, allChapters, parsedMangaId]);
 
   return (
     <>
-      <div className="h-[92vh] w-full flex justify-center items-center flex-col md:flex-row overflow-hidden relative ">
-        <div
-          className="h-fit flex-wrap md:h-full w-full md:w-[40vh] md:bg-[#e9e9e9] md:dark:bg-gradient-to-r from-[#000000] to-[#363636] flex flex-row  md:flex-col justify-center md:justify-start  items-center p-3 px-5 md:pt-10 gap-4
-          "
-        >
-          {manga == null ? (
-            <>
-              <Skeleton className="h-[40vh] w-full hidden md:block " />
-            </>
-          ) : (
-            <>
-              <img
-                className="object-cover h-[40vh] hidden md:block rounded-[10px]  "
-                src={(manga && mangaChapter && manga.coverImageUrl) || ''}
-                alt="Naruto_lvhvkh.png"
-              />
-            </>
-          )}
-
-          <h1 className="w-full md:w-fit  text-xl font-bold text-center flex flex-col gap-2 items-center justify-center">
-            {manga && mangaChapter && manga.title}
-            <span className="text-primary text-lg font-medium">{mangaChapter?.chapterTitle}</span>
-          </h1>
-
-          <div className="w-fit md:w-full flex items-center justify-center relative ">
-            <h1
-              onClick={() => setShowChap(!showChap)}
-              className="w-full font-bold text-[1.2rem] md:text-[1.2rem]  text-center bg-[#e9962a]  py-1 rounded-md  cursor-pointer px-3 select-none "
-            >
-              Chapter {mangaChapter?.chapterNumber}
-            </h1>
-            {showChap ? (
-              <motion.div
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.2 }}
-                className="w-fit z-30 absolute top-10 min-h-fit rounded-md bg-[#f8b416] flex flex-col justify-center items-center  gap-1 p-4 "
-              >
-                {mangaChapterList &&
-                  mangaChapterList.map((manga) => {
-                    return (
-                      <motion.h1
-                        key={manga.id}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 1.1 }}
-                        className="w-[8rem] z-30 font-bold text-[1.2rem] md:text-[1.2rem]  text-center bg-[#e9962a]  py-1 rounded-md  cursor-pointer px-3 select-none "
-                        onClick={() => handleChapterClick(manga.id)}
-                      >
-                        Chapter {manga.chapterNumber}
-                      </motion.h1>
-                    );
-                  })}
-              </motion.div>
-            ) : (
-              <></>
-            )}
+      <div className="w-full">
+        <BreadCrumb
+          manga={manga || null}
+          currentChapter={currentChapter || null}
+          mangaId={parsedMangaId}
+        />
+        <div className="flex h-full justify-center overflow-hidden">
+          <div className="fixed top-[75px] left-0 w-fit h-full p-3 px-5 md:pt-10 space-y-5 hidden lg:flex flex-col bg-gradient-to-r from-[#000000] to-[#363636] ">
+            <ChapterSidebar
+              manga={manga || null}
+              currentChapter={currentChapter || null}
+              allChapters={allChapters}
+              mangaId={parsedMangaId}
+              isLoading={mangaLoading || chapterLoading}
+            />
+            <ChapterNavigation
+              previousChapterUrl={previousChapterUrl}
+              nextChapterUrl={nextChapterUrl}
+            />
+            <ViewModeToggle isVertical={isVertical} onToggle={setIsVertical} />
           </div>
-          <div className="w-fit md:w-full  flex justify-center items-center gap-3">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 1.1 }}
-              onClick={handleChapterClickPrevious}
-              className="w-1/2 py-[5px] px-3 bg-[#8031ff] rounded-md flex justify-center items-center cursor-pointer "
-            >
-              <ChevronLeft />
-            </motion.div>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 1.1 }}
-              onClick={handleChapterClickNext}
-              className="w-1/2 py-[5px] px-3 bg-[#8031ff] rounded-md flex justify-center items-center  cursor-pointer  "
-            >
-              <ChevronRight />
-            </motion.div>
+          <div className="w-fit h-full relative left-0 lg:left-60">
+            <ChapterImageViewer
+              images={chapterImages}
+              isVertical={isVertical}
+              isLoading={imagesLoading}
+            />
           </div>
-          <div className="w-fit md:w-full flex justify-center items-center gap-3 ">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 1.1 }}
-              onClick={() => {
-                setSlide(true);
-              }}
-              className={`w-1/2 py-[5px] px-3 bg-[#ec2f4b] ${
-                slide ? 'bg-[#ff2b2b]' : ''
-              } rounded-md flex justify-center items-center cursor-pointer `}
-            >
-              <GalleryVertical />
-            </motion.div>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 1.1 }}
-              onClick={() => {
-                setSlide(false);
-              }}
-              className={`w-1/2 py-[5px] px-3 bg-[#ec2f4b] ${
-                slide ? '' : 'bg-[#ff2b2b]'
-              } rounded-md flex justify-center items-center cursor-pointer `}
-            >
-              <GalleryHorizontal />
-            </motion.div>
-          </div>
-        </div>
-        <div className="h-full max-w-[50rem] mx-auto pt-5 overflow-y-auto relative ">
-          {mangaImage === null ? (
-            <>
-              <Skeleton className="h-[98%] lg:w-[65vh] md:w-[40vh] w-[30vh] " />
-            </>
-          ) : (
-            <>
-              {slide ? (
-                mangaImage &&
-                mangaImage.map((manga) => {
-                  return (
-                    <>
-                      <div
-                        key={manga.imageUrl}
-                        className="mx-auto max-w-[50rem] px-5 mb-5 h-fit flex justify-center items-start "
-                      >
-                        <Image
-                          className="object-cover select-none "
-                          src={manga.imageUrl}
-                          alt={manga.imageUrl}
-                          width={550}
-                          height={550}
-                        />
-                      </div>
-                    </>
-                  );
-                })
-              ) : (
-                <>
-                  <div className="max-h-[90%] w-full sm:w-[30rem] mx-auto mt-5 px-2 flex justify-center items-center overflow-hidden rounded-[15px] ">
-                    <Carousel className="w-full flex justify-center items-center">
-                      <CarouselContent>
-                        {mangaImage &&
-                          mangaImage.map((manga) => {
-                            return (
-                              <>
-                                <CarouselItem>
-                                  <div className="h-[80vh] md:h-fit w-full flex justify-center items-center ">
-                                    <Image
-                                      className="h-fit w-fit object-cover select-none rounded-[15px] "
-                                      src={manga.imageUrl}
-                                      alt={manga.imageUrl}
-                                      width={550}
-                                      height={550}
-                                    />
-                                  </div>
-                                </CarouselItem>
-                              </>
-                            );
-                          })}
-                      </CarouselContent>
-                    </Carousel>
-                  </div>
-                </>
-              )}
-            </>
-          )}
         </div>
       </div>
     </>
   );
 };
 
-export default ReadPage;
+export default SingleRead;

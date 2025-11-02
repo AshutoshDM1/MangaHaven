@@ -6,7 +6,7 @@ interface MangaStatsProps {
 
 export const MangaStats = ({ totalChapters }: MangaStatsProps) => {
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto px-4">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-4">
       <div className="text-center p-3 rounded-lg bg-card/50 border">
         <BookOpen className="h-6 w-6 text-purple-400 mx-auto mb-1" />
         <div className="text-2xl font-bold text-foreground">{totalChapters}</div>

@@ -3,19 +3,21 @@ import { generateMangaMetadata } from '@/lib/mangaMetadata';
 import SingleMangaDetail from '@/modules/SingleManga/SingleManga';
 
 interface SingleReadPageProps {
-  params: {
+  params: Promise<{
     mangaId: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: SingleReadPageProps) {
-  return generateMangaMetadata({ mangaId: params.mangaId });
+  const { mangaId } = await params;
+  return generateMangaMetadata({ mangaId });
 }
 
-export default function SingleReadPage({ params }: SingleReadPageProps) {
+export default async function SingleReadPage({ params }: SingleReadPageProps) {
+  const { mangaId } = await params;
   return (
     <Suspense>
-      <SingleMangaDetail slug={params.mangaId} />
+      <SingleMangaDetail slug={mangaId} />
     </Suspense>
   );
 }

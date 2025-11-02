@@ -3,22 +3,23 @@ import SingleRead from '@/modules/SingleRead/SingleRead';
 import { generateMangaMetadata } from '@/lib/mangaMetadata';
 
 interface SingleChapterReadPageProps {
-  params: {
+  params: Promise<{
     mangaId: string;
     mangaChapterId: string[];
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: SingleChapterReadPageProps) {
-  // Extract the chapter ID from the dynamic route (it's an array due to catch-all route)
-  const chapterId = params.mangaChapterId[0];
+  const resolvedParams = await params;
+  const chapterId = resolvedParams.mangaChapterId[0];
   return generateMangaMetadata({
-    mangaId: params.mangaId,
+    mangaId: resolvedParams.mangaId,
     chapterId: chapterId,
   });
 }
 
-export default function SingleChapterReadPage({ params }: SingleChapterReadPageProps) {
+export default async function SingleChapterReadPage({ params }: SingleChapterReadPageProps) {
+  await params; // Ensure params is awaited
   return (
     <Suspense>
       <SingleRead />

@@ -1,7 +1,7 @@
-import DashboardLayout from '@/modules/Dashboard/DashboardLayout';
+import SingleReadLayout from '@/modules/SingleRead/SingleReadLayout';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  return <DashboardLayout>{children}</DashboardLayout>;
+  return <SingleReadLayout>{children}</SingleReadLayout>;
 };
 
 export default Layout;

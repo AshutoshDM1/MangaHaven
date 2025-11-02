@@ -9,7 +9,7 @@ interface MangaActionsProps {
 
 export const MangaActions = ({ firstChapterUrl, hasChapters }: MangaActionsProps) => {
   return (
-    <div className="flex flex-wrap gap-4 max-w-7xl mx-auto px-4 py-6">
+    <div className="flex flex-wrap gap-4 px-4 py-6">
       {hasChapters && firstChapterUrl ? (
         <Link href={firstChapterUrl}>
           <Button className="bg-purple-500 hover:bg-purple-500/95 text-white px-8 py-3 text-lg font-medium">
