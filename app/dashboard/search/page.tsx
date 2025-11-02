@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { generateMetadata } from '@/lib/MetaData';
-import SearchPage from '@/modules/Search/components/Search';
+import SearchPage from '@/modules/Search/Search';
 
 export const metadata = generateMetadata('Search', '/dashboard/search');
 
