@@ -1,11 +1,11 @@
 <div align="center">
   
-  <img src="https://github.com/AshutoshDM1/MangaHaven/blob/main/public/MangaHaven%20Logo.png" alt="Manga Haven" width="50"/>
+  <img src="https://github.com/AshutoshDM1/MangaHaven/blob/production/public/favicon.webp" alt="Manga Haven" width="50"/>
   
   # MangaHaven
   
   <p><em>Your ultimate destination for manga and anime content</em></p>
-  <p><em>Made with ❤️ by Shilesh and Ashutosh</em></p>
+  <p><em>Made with ❤️ by Shilesh and Ashutosh/em></p>
   <p><em>MangaHaven is a modern manga reading platform that combines stunning visuals with seamless performance. Our mission is to provide manga enthusiasts with an immersive reading experience through an intuitive interface and comprehensive library.</em></p>
   <br>
   <p><em>MangaHaven have a full blown admin pannel with a lot of features , add new manga , edit , delete , and a lot more</em></p>
@@ -27,7 +27,7 @@
 
 ## Tech Stack Map
 
-  <img src="https://github.com/AshutoshDM1/MangaHaven/blob/main/github%20assests/Manga%20Haven%20Map.png" alt="Manga Haven" width="600"/>
+  <img src="https://github.com/AshutoshDM1/MangaHaven/blob/production/public/images/Manga-Haven-Map.png" alt="Manga Haven" width="600"/>
 
 
 ## ✨ Overview
