@@ -27,7 +27,7 @@ export default MangaSection;
 
 const MangaCard = ({ manga }: { manga: MangaSearchResult }) => {
   return (
-    <Link href={`/manga/${manga.id}`}>
+    <Link href={`/read/${manga.id}`}>
       <motion.div className="dark:border-[#3a3a3a] border dark:border dark:hover:bg-zinc-900 transform  bg-card rounded-lg shadow-xl overflow-hidden transition-transform h-full cursor-pointer">
         <div className="relative overflow-hidden group">
           <div className="relative">
