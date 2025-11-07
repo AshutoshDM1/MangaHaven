@@ -30,7 +30,7 @@ export async function middleware(req: NextRequest) {
       }
 
       // Check if the user has admin email
-      if (token.email !== "mangahaven.admin@gmail.com" && token.email !== "downlodemaster1@gmail.com") {
+      if (token.email !== "mangahaven.admin@gmail.com" && token.email !== "downlodemaster1@gmail.com" && token.email !== "9999shivamdon@gmail.com") {
         return NextResponse.redirect(new URL("/dashboard", req.url));
       }
     } catch (error) {
