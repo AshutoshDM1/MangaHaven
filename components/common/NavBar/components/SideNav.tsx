@@ -75,7 +75,7 @@ const SideNav = () => {
     { name: "Home", icon: BookOpen, path: "/" },
     { name: "Profile", icon: User, path: "/profile" },
     { name: "Log Out", icon: LogOut, path: "/logout" },
-    ...(session?.user?.email === "mangahaven.admin@gmail.com" || session?.user?.email === "downlodemaster1@gmail.com"
+    ...(session?.user?.email === "mangahaven.admin@gmail.com" || session?.user?.email === "downlodemaster1@gmail.com" || session?.user?.email === "9999shivamdon@gmail.com"
       ? [{ name: "Admin", icon: UserRoundCheck, path: "/admin" }]
       : []),
   ];
