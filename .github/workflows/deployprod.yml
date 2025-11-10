@@ -1,0 +1,70 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - devops
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/mangahaven:latest
+            ${{ secrets.DOCKER_USERNAME }}/mangahaven:${{ github.sha }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/mangahaven:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/mangahaven:buildcache,mode=max
+
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_PORT || 22 }}
+          script: |
+            # Pull the latest image
+            docker pull ${{ secrets.DOCKER_USERNAME }}/mangahaven:latest
+            
+            # Stop and remove old container
+            docker stop mangahaven || true
+            docker rm mangahaven || true
+            
+            # Run new container
+            docker run -d \
+              --name mangahaven \
+              --restart unless-stopped \
+              -p 3000:3000 \
+              --env-file /home/${{ secrets.SERVER_USERNAME }}/mangahaven/.env \
+              ${{ secrets.DOCKER_USERNAME }}/mangahaven:latest
+            
+            # Clean up old images
+            docker image prune -af
+
+      - name: Send deployment notification
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const status = '${{ job.status }}';
+            const emoji = status === 'success' ? '✅' : '❌';
+            console.log(`${emoji} Deployment ${status} for commit ${context.sha.substring(0, 7)}`);
+
