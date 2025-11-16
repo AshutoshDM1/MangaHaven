@@ -28,10 +28,10 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/mangahaven:latest
-            ${{ secrets.DOCKER_USERNAME }}/mangahaven:${{ github.sha }}
-          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/mangahaven:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/mangahaven:buildcache,mode=max
+            ${{ secrets.DOCKER_USERNAME }}/mangaheaven:latest
+            ${{ secrets.DOCKER_USERNAME }}/mangaheaven:${{ github.sha }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/mangaheaven:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/mangaheaven:buildcache,mode=max
 
       - name: Deploy to server
         uses: appleboy/ssh-action@v1.0.0
@@ -41,20 +41,23 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT || 22 }}
           script: |
+            # Change to project directory
+            cd /home/${{ secrets.SERVER_USERNAME }}/mangaheaven
+            
             # Pull the latest image
-            docker pull ${{ secrets.DOCKER_USERNAME }}/mangahaven:latest
+            docker pull ${{ secrets.DOCKER_USERNAME }}/mangaheaven:latest
             
             # Stop and remove old container
-            docker stop mangahaven || true
-            docker rm mangahaven || true
+            docker stop mangaheaven || true
+            docker rm mangaheaven || true
             
-            # Run new container
+            # Run new container (using .env from current directory)
             docker run -d \
-              --name mangahaven \
+              --name mangaheaven \
               --restart unless-stopped \
               -p 3000:3000 \
-              --env-file /home/${{ secrets.SERVER_USERNAME }}/mangahaven/.env \
-              ${{ secrets.DOCKER_USERNAME }}/mangahaven:latest
+              --env-file .env \
+              ${{ secrets.DOCKER_USERNAME }}/mangaheaven:latest
             
             # Clean up old images
             docker image prune -af
