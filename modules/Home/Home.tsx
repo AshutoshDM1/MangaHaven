@@ -9,6 +9,7 @@ import FlottingImages from './component/FlottingImages';
 import useSmoothScroll from '@/hooks/use-smoothScroll';
 import { Particles } from '@/components/ui/particles';
 import { usePageLoad } from '@/hooks/page-load';
+import FlottingImagesV2 from './component/FlottingImagesV2';
 
 const Home = () => {
   useSmoothScroll();
@@ -20,8 +21,8 @@ const Home = () => {
           <div className="absolute inset-0 z-0 w-full overflow-hidden">
             <Particles className="min-h-screen" />
           </div>
+            {/* <FlottingImagesV2 /> */}
           <div className="relative z-10 flex flex-col justify-center items-center">
-            <FlottingImages />
             <ShinyText />
             <HeroSectionContent />
           </div>
