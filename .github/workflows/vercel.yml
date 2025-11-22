@@ -1,4 +1,4 @@
-name: Deploy developV3 to Vercel (Hook + Promote)
+name: Deploy developV3 to Vercel
 
 on:
   push:
@@ -13,32 +13,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Trigger Vercel Deployment
-        id: deploy_hook
-        run: |
-          response=$(curl -X POST "${{ secrets.VERCEL_DEPLOY_HOOK_URL_DEVELOPV3 }}" \
-            -H "Content-Type: application/json" \
-            -w "\n%{http_code}" \
-            -s)
-          
-          http_code=$(echo "$response" | tail -n1)
-          body=$(echo "$response" | sed '$d')
-          
-          echo "HTTP Status Code: $http_code"
-          echo "Response Body: $body"
-          
-          if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
-            echo "✅ Deployment triggered successfully!"
-          else
-            echo "❌ Deployment trigger failed with status code: $http_code"
-            exit 1
-          fi
-          
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+        
+      - name: Install PNPM CLI
+        run: npm install -g pnpm
+
+      - name: Link Vercel Project
+        run: vercel link --yes --project=manga-haven-v3 --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy to Production
+        run: vercel --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
+
       - name: Deployment notification
         if: always()
         run: |
           if [ "${{ job.status }}" == "success" ]; then
-            echo "✅ Vercel deployment completed and promoted to production!"
+            echo "✅ Successfully deployed to Vercel and promoted to production!"
+            echo "🌐 URL: ${{ env.DEPLOYMENT_URL }}"
           else
-            echo "❌ Failed to deploy or promote"
+            echo "❌ Deployment failed"
           fi
