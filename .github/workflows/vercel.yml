@@ -1,0 +1,44 @@
+name: Deploy developV2 to Vercel (Hook + Promote)
+
+on:
+  push:
+    branches:
+      - developV2
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Trigger Vercel Deployment
+        id: deploy_hook
+        run: |
+          response=$(curl -X POST "${{ secrets.VERCEL_DEPLOY_HOOK_URL_DEVELOPV3 }}" \
+            -H "Content-Type: application/json" \
+            -w "\n%{http_code}" \
+            -s)
+          
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | sed '$d')
+          
+          echo "HTTP Status Code: $http_code"
+          echo "Response Body: $body"
+          
+          if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
+            echo "✅ Deployment triggered successfully!"
+          else
+            echo "❌ Deployment trigger failed with status code: $http_code"
+            exit 1
+          fi
+          
+      - name: Deployment notification
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ Vercel deployment completed and promoted to production!"
+          else
+            echo "❌ Failed to deploy or promote"
+          fi
