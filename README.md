@@ -1,19 +1,19 @@
-<div align="center">  
+<div align="center"> 
   
   <img src="https://github.com/AshutoshDM1/MangaHaven/blob/production/public/favicon.webp" alt="Manga Haven" width="50"/>
   
   # MangaHaven
-  
+
   <p><em>Your ultimate destination for manga and anime content</em></p>
-  <p><em>Made with ❤️ by Shilesh and Ashutosh/em></p>
+  <p><em>Made with ❤️ by Shilesh , Shivam and Ashutosh</em></p>
   <p><em>MangaHaven is a modern manga reading platform that combines stunning visuals with seamless performance. Our mission is to provide manga enthusiasts with an immersive reading experience through an intuitive interface and comprehensive library.</em></p>
   <br>
   <p><em>MangaHaven have a full blown admin pannel with a lot of features , add new manga , edit , delete , and a lot more</em></p>
 
-  [![wakatime](https://wakatime.com/badge/user/c34e365f-01c3-4480-a437-d477dc0aa67b/project/b9af7a61-33e3-4ee1-92f5-fc35bab59695.svg)](https://wakatime.com/badge/user/c34e365f-01c3-4480-a437-d477dc0aa67b/project/b9af7a61-33e3-4ee1-92f5-fc35bab59695)
-  ![License](https://img.shields.io/badge/license-MIT-blue)
-  ![Status](https://img.shields.io/badge/status-active-brightgreen)
-  
+[![wakatime](https://wakatime.com/badge/user/c34e365f-01c3-4480-a437-d477dc0aa67b/project/b9af7a61-33e3-4ee1-92f5-fc35bab59695.svg)](https://wakatime.com/badge/user/c34e365f-01c3-4480-a437-d477dc0aa67b/project/b9af7a61-33e3-4ee1-92f5-fc35bab59695)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Status](https://img.shields.io/badge/status-active-brightgreen)
+
 </div>
 
 ## 👥 Contributors
@@ -24,11 +24,31 @@
 <a href="https://github.com/shilesh-rk">
   <img src="https://github.com/ShaileshIshere.png" width="50px" alt="Shilesh" style="border-radius:50%" />
 </a>
+<a href="https://github.com/ShivamIT23">
+  <img src="https://github.com/ShivamIT23.png" width="50px" alt="Shivam" style="border-radius:50%" />
+</a>
 
-## Tech Stack Map
+## Low Level Design (LLD)
+
+  <img src="https://res.cloudinary.com/dnvl8mqba/image/upload/v1763819841/MangaHavenV2/MangaHeaven_LLD_chfofe.png" alt="Manga Haven LLD" />
+  
+- Prod Deployment [AWS EC2 + Docker] - https://mangaheaven.elitedev.tech
+- Develop V3 Deployment [Vercel] - https://manga-haven-v3.vercel.app
+- Develop V2 Development [Vercel] - https://manga-heaven-v2.vercel.app
+
+## Tech Stack Map 
+- 1 Sept 2024 - Started the project with Next.js 13 and Tailwind CSS and Prisma ORM and PostgreSQL Database with basic features like Login , Register , Manga Library , and Single Reading page, etc.
+- 30 Sept 2024 - MangaHaven V1 Done 
+- Update 20 Jan 2025 - Create New Landing Page with new UI and new features
+- Update 16 Apr 2025 - Added Full Blown Admin Pannel with a with added updating etc.. options for manga and chapters
+- Update 22 Apr 2025 - Added new features like Search , Filter , Sort , Pagination , etc..
+- 22 Apr 2025 - MangaHaven V2 Done 
+- Update 2 Oct 2025 - Migrated the Codebase to Next.js 15 and Turbopack 
+- Update 12 Oct 2025 - Added Zustand for state management , imporved Code Quality using modular approach 
+- Update 22 Oct 2025 - Deploy the codebase to AWS EC2 + Nginx and Docker and Added CI/CD Pipeline using Github Actions on Vercel and EC2
+- 22 Nov 2025 - MangaHaven V3 Done 
 
   <img src="https://github.com/AshutoshDM1/MangaHaven/blob/production/public/images/Manga-Haven-Map.png" alt="Manga Haven" width="600"/>
-
 
 ## ✨ Overview
 
