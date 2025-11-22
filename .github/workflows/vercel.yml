@@ -1,9 +1,9 @@
-name: Deploy developV2 to Vercel (Hook + Promote)
+name: Deploy developV3 to Vercel (Hook + Promote)
 
 on:
   push:
     branches:
-      - developV2
+      - developV3
 
 jobs:
   deploy:
