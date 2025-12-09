@@ -27,6 +27,12 @@ jobs:
         with:
           context: .
           push: true
+          build-args: |
+            NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID }}
+            NEXT_PUBLIC_GITHUB_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GITHUB_CLIENT_ID }}
+            NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
+            NEXT_PUBLIC_SITE_URL=${{ secrets.NEXT_PUBLIC_SITE_URL }}
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/mangaheaven:latest
             ${{ secrets.DOCKER_USERNAME }}/mangaheaven:${{ github.sha }}
