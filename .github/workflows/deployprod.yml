@@ -8,7 +8,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -27,7 +27,6 @@ jobs:
         with:
           context: .
           push: true
-          no-cache: true
           build-args: |
             NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID }}
             NEXT_PUBLIC_GITHUB_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GITHUB_CLIENT_ID }}
@@ -37,6 +36,8 @@ jobs:
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/mangaheaven:latest
             ${{ secrets.DOCKER_USERNAME }}/mangaheaven:${{ github.sha }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/mangaheaven:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/mangaheaven:buildcache,mode=max
 
       - name: Deploy to server
         uses: appleboy/ssh-action@v1.0.0
@@ -48,37 +49,27 @@ jobs:
           script: |
             # Change to project directory
             cd /home/${{ secrets.SERVER_USERNAME }}/mangaheaven
-            
+
+            # Remove the latest image if it exists
+            docker rmi ${{ secrets.DOCKER_USERNAME }}/mangaheaven:latest || true
+
             # Pull the latest image
             docker pull ${{ secrets.DOCKER_USERNAME }}/mangaheaven:latest
-            
+
             # Stop and remove old container
             docker stop mangaheaven || true
             docker rm mangaheaven || true
-            
-            # Run new container with environment variables from GitHub Secrets
+
+            # Run new container (using .env from current directory)
             docker run -d \
               --name mangaheaven \
               --restart unless-stopped \
               -p 3000:3000 \
-              -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
-              -e NEXTAUTH_SECRET="${{ secrets.NEXTAUTH_SECRET }}" \
-              -e NEXTAUTH_URL="${{ secrets.NEXTAUTH_URL }}" \
-              -e NEXT_PUBLIC_GOOGLE_CLIENT_ID="${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID }}" \
-              -e NEXT_GOOGLE_CLIENT_SECRET="${{ secrets.NEXT_GOOGLE_CLIENT_SECRET }}" \
-              -e NEXT_PUBLIC_GITHUB_CLIENT_ID="${{ secrets.NEXT_PUBLIC_GITHUB_CLIENT_ID }}" \
-              -e NEXT_GITHUB_CLIENT_SECRET="${{ secrets.NEXT_GITHUB_CLIENT_SECRET }}" \
-              -e NEXT_CLOUDINARY_CLOUD_NAME="${{ secrets.NEXT_CLOUDINARY_CLOUD_NAME }}" \
-              -e NEXT_CLOUDINARY_API_KEY="${{ secrets.NEXT_CLOUDINARY_API_KEY }}" \
-              -e NEXT_CLOUDINARY_API_SECRET="${{ secrets.NEXT_CLOUDINARY_API_SECRET }}" \
-              -e NEXT_PUBLIC_API_URL="${{ secrets.NEXT_PUBLIC_API_URL }}" \
-              -e NEXT_PUBLIC_SITE_URL="${{ secrets.NEXT_PUBLIC_SITE_URL }}" \
-              -e NODE_ENV="production" \
-              -e PORT="3000" \
+              --env-file .env \
               ${{ secrets.DOCKER_USERNAME }}/mangaheaven:latest
-            
+
             # Clean up old images
-            docker image prune -af
+            docker system prune -af --volumes
 
       - name: Send deployment notification
         if: always()
@@ -88,4 +79,3 @@ jobs:
             const status = '${{ job.status }}';
             const emoji = status === 'success' ? '✅' : '❌';
             console.log(`${emoji} Deployment ${status} for commit ${context.sha.substring(0, 7)}`);
-
