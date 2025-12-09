@@ -26,6 +26,10 @@ ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
 # DATABASE_URL needed for prisma generate
 ENV DATABASE_URL=$DATABASE_URL
 
+# Debug: Print environment variables (will show in build logs)
+RUN echo "Building with NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL"
+RUN echo "Building with NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL"
+
 RUN pnpm prisma generate
 
 RUN pnpm build

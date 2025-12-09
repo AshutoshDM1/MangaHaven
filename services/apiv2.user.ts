@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { toast } from "sonner";
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+const baseUrl = process.env.NEXT_PUBLIC_API_URL || "https://mangaheaven.app";
 
 const handleError = (error: any) => {
   console.error(error);
