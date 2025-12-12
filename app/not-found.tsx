@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -65,7 +66,7 @@ export default function NotFound() {
           transition={{ delay: 0.6, duration: 0.8 }}
           className="text-2xl md:text-3xl font-semibold text-white mb-6"
         >
-          Page Not Found on Manga Haven
+          Oops! This manga chapter seems  to have vanished <br /> into the void! ✨
         </motion.h2>
 
         <motion.p
@@ -83,12 +84,13 @@ export default function NotFound() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 1, duration: 0.8 }}
         >
-          <button
-            onClick={() => router.push("/")}
-            className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-full font-medium transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
-          >
-            Return Home
-          </button>
+          <Link href="/">
+            <button
+              className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-full font-medium transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 cursor-pointer"
+            >
+              Return Home
+            </button>
+          </Link>
         </motion.div>
       </motion.div>
 

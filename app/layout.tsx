@@ -1,6 +1,5 @@
 import type React from 'react';
 import type { Metadata } from 'next';
-import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import { Toaster } from '@/components/ui/sonner';
 import { Suspense } from 'react';
@@ -241,7 +240,7 @@ const structuredData = {
     '@type': 'WebPage',
     '@id': siteUrl,
   },
-  inLanguage: 'en-US',
+  inLanguage: 'en-In',
   audience: {
     '@type': 'Audience',
     audienceType: 'Manga Readers',
@@ -272,7 +271,6 @@ export default function RootLayout({
         <Suspense>
           <Providers>{children}</Providers>
           <Toaster />
-          <Analytics />
         </Suspense>
       </body>
     </html>

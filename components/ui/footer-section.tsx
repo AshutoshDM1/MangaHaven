@@ -36,7 +36,7 @@ function FooterSection() {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="relative">
             <h2 className="mb-4 text-3xl font-bold tracking-tight">
-              MangaHaven
+              MangaHeaven
             </h2>
             <p className="mb-6 text-muted-foreground">
               Your Favorite Manga and Anime at one place
@@ -215,7 +215,7 @@ function FooterSection() {
         </div>
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 text-center md:flex-row">
           <p className="text-sm text-muted-foreground">
-            © 2025 MangaHaven. All rights reserved.
+            © 2025 MangaHeaven. All rights reserved.
           </p>
           <p className="text-sm text-muted-foreground">
             Made with ❤️ by{" "}
@@ -223,7 +223,14 @@ function FooterSection() {
               href="https://github.com/ShaileshIshere"
               className="text-primary hover:text-purple-500 transition-all duration-300"
             >
-              shailesh
+              Shailesh
+            </a>{" "}
+            ,{" "}
+            <a
+              href="https://github.com/ShivamIT23"
+              className="text-primary hover:text-purple-500 transition-all duration-300"
+            >
+              Shivam
             </a>{" "}
             &{" "}
             <a
