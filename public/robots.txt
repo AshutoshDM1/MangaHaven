@@ -15,7 +15,7 @@ Allow: /Images/image.png
 Allow: /favicon.webp
 
 # Sitemap location  
-Sitemap: https://mangahaven.elitedev.tech/sitemap.xml
+Sitemap: https://mangaheaven.app/sitemap.xml
 
 # Crawl delay (optional)
 Crawl-delay: 1 

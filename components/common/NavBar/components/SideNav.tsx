@@ -117,7 +117,7 @@ const SideNav = () => {
                 className="w-10 mb-2 cover"
               />
             </span>
-            MangaHaven
+            MangaHeaven  
           </SheetTitle>
           <SheetDescription className="text-sm text-muted-foreground">
             Welcome to MangaHaven, your ultimate destination for the latest
@@ -181,7 +181,7 @@ const SideNav = () => {
         {status === "unauthenticated" && (
           <div className="mt-auto px-4 py-4 border-t border-gray-200 dark:border-gray-700">
             <p className="text-sm text-gray-600 dark:text-gray-400 text-center">
-              Login as admin to upload manga
+              Login and ask <a href="https://x.com/AshutoshDM_1" className="text-blue-500 hover:text-blue-600 underline" target="_blank" rel="noopener noreferrer">@ashutosh</a> to be added as an admin to upload manga 
             </p>
           </div>
         )}

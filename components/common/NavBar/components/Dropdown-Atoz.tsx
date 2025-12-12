@@ -13,9 +13,9 @@ const DropMenuAtoZ: React.FC = () => {
 
   return (
     <>
-      <div className="font-semibold text-base flex justify-center items-center ">
+      <div className="text-base flex justify-center items-center ">  
         <DropdownMenu>
-          <DropdownMenuTrigger className="focus:none focus:outline-none select-none">
+          <DropdownMenuTrigger className="focus:none focus:outline-none select-none cursor-pointer">
             A-Z
           </DropdownMenuTrigger>
           <DropdownMenuContent className="ml-4 w-[3vw] grid grid-cols-3 gap-2">

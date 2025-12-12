@@ -56,7 +56,7 @@ const Footer: React.FC = () => {
                 className="h-10 w-auto"
               />
             </div>
-            <h3 className="text-lg font-semibold mb-4">MangaHaven</h3>
+            <h3 className="text-lg font-semibold mb-4">MangaHeaven</h3>
             <p className="text-sm text-gray-600 dark:text-gray-400">
               Your ultimate destination for manga and anime content.
             </p>

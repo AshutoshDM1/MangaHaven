@@ -21,6 +21,7 @@ model User {
 
 model Manga {
   id                    Int              @id @default(autoincrement())
+  slug                  String?          @unique
   title                 String
   coverImageUrl         String
   description           String
@@ -33,6 +34,7 @@ model Manga {
 
 model MangaChapter {
   id                Int                 @id @default(autoincrement())
+  slug              String?             @unique
   chapterNumber     Int
   chapterTitle      String
   mangaId           Int
@@ -50,6 +52,7 @@ model MangaChapterImage {
 
 model Category {
   id        Int             @id @default(autoincrement())
+  slug      String?         @unique
   name      String          @unique
   mangaCategories MangaCategory[]
   createdAt DateTime        @default(now())

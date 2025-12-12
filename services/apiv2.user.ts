@@ -44,3 +44,13 @@ export const getProfile = async (email: string) => {
     handleError(error);
   }
 };
+
+export const deleteUser = async (email: string) => {
+  try {
+    const response = await apiV2User().delete("/user", { data: { email } });
+    toast.success("User deleted successfully");
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};

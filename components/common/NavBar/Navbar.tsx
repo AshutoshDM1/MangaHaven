@@ -1,14 +1,15 @@
-"use client";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import MangaIcon from "./components/MangaIcon";
-import DropMenuAtoZ from "./components/Dropdown-Atoz";
-import MainAutoSearch from "./components/MainAutoSearch";
-import SideNav from "./components/SideNav";
-import DropMenuTypes from "./components/DropMenuTypes";
-import DropMenuGenres from "./components/DropMenuGenres";
-import SideNavV2 from "./components/SideNavV2";
+'use client';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import MangaIcon from './components/MangaIcon';
+import DropMenuAtoZ from './components/Dropdown-Atoz';
+import MainAutoSearch from './components/MainAutoSearch';
+import SideNav from './components/SideNav';
+import DropMenuTypes from './components/DropMenuTypes';
+import DropMenuGenres from './components/DropMenuGenres';
+import SideNavV2 from './components/SideNavV2';
+import Link from 'next/link';
 
 const Navbar: React.FC = () => {
   const router = useRouter();
@@ -24,32 +25,28 @@ const Navbar: React.FC = () => {
               <MangaIcon />
             </div>
             <div className="2xl:flex gap-4 hidden ">
-              <button
-                onClick={() => router.push("/dashboard")}
-                className=" font-semibold text-base"
-              >
+              <Link className='text-base' href="/dashboard" >
                 Home
-              </button>
+              </Link>
               <DropMenuTypes />
               <DropMenuGenres />
               <DropMenuAtoZ />
             </div>
           </div>
           <div className="h-full flex items-center gap-3 w-fit transition-all duration-300">
-            <MainAutoSearch  />
+            <MainAutoSearch />
             <div className="flex justify-evenly items-center gap-3">
-              <Avatar 
-                className="cursor-pointer border-[2px] hover:dark:border-white hover:border-black border-transparent duration-300 transition-ease-in  "
-                onClick={() => router.push("/profile")}
-              >
-                <AvatarImage
-                  src={
-                    session.data?.user?.image || "https://github.com/shadcn.png"
-                  }
-                  alt="Avatar"
-                />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
+              <Link href="/profile">
+                <Avatar
+                  className="cursor-pointer border-[2px] hover:dark:border-white hover:border-black border-transparent duration-300 transition-ease-in  "
+                >
+                  <AvatarImage
+                    src={session.data?.user?.image || 'https://github.com/shadcn.png'}
+                    alt="Avatar"
+                  />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </Link>
             </div>
           </div>
         </div>
