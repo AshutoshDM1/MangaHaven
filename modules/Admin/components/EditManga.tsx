@@ -39,7 +39,7 @@ const EditManga = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[425px] select-none">
+      <DialogContent className="max-h-[90vh] h-[80vh] w-[90vw] lg:max-w-[50vw] select-none">
         <DialogHeader>
           <DialogTitle>Edit Manga</DialogTitle>
           <DialogDescription>
@@ -64,7 +64,7 @@ const EditManga = ({
             </Label>
             <Textarea
               id="description"
-              className="col-span-3"
+              className="col-span-3 h-[150px]"
               rows={3}
               value={manga.description}
               onChange={(e) =>

@@ -221,7 +221,7 @@ const AddMangaCategory = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter category name (e.g., Action, Romance, Horror)"
-                className="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-600 rounded-lg focus:ring-2 focus:border-transparent bg-white dark:bg-zinc-700 text-zinc-900 dark:text-white placeholder-zinc-500 dark:placeholder-zinc-400 transition-all duration-200"
+                className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent text-zinc-900 dark:text-white transition-all duration-200"
               />
             </div>
 
@@ -229,14 +229,14 @@ const AddMangaCategory = () => {
               <button
                 onClick={handleAddMangaCategory}
                 disabled={!name.trim() || isLoading}
-                className="w-full bg-primary hover:bg-primary/80 disabled:bg-zinc-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                className="w-full bg-purple-500 py-2 rounded-md cursor-pointer hover:bg-purple-500/80 flex justify-center items-center gap-2"
               >
                 {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
                 Create Category
               </button>
             </div>
 
-            <div className="bg-transparent border border-primary/20 dark:border-primary/80 rounded-lg p-4">
+            <div className="bg-transparent border border-zinc-200/30 rounded-lg p-4">
               <h3 className="text-sm font-medium text-primary dark:text-primary/80 mb-2">
                 Tips:
               </h3>
@@ -252,7 +252,7 @@ const AddMangaCategory = () => {
           </div>
 
           <div className="pt-4">
-            <div className="bg-white dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-700 overflow-hidden">
+            <div className=" rounded-lg border border-zinc-200 dark:border-zinc-700 overflow-hidden">
               <div className="px-6 py-4 border-b border-zinc-200 dark:border-zinc-700">
                 <h2 className="text-lg font-semibold text-zinc-800 dark:text-white">
                   Existing Categories
@@ -289,7 +289,7 @@ const AddMangaCategory = () => {
                             <div className="flex gap-2">
                               <Button
                                 onClick={() => handleOpenDialog(category as any)}
-                                className="bg-primary hover:bg-primary/80 text-white"
+                                className="bg-purple-500 hover:bg-purple-500/80 text-white"
                                 variant="outline"
                                 size="sm"
                               >
@@ -307,6 +307,12 @@ const AddMangaCategory = () => {
                               )}
                             </div>
                           </TableCell>
+                          {/* <TableCell className="text-muted-foreground">
+                            <Button variant="outline" size="sm">
+                              <Trash2 className="w-4 h-4 mr-2" />
+                              Delete
+                            </Button>
+                          </TableCell> */}
                         </TableRow>
                       ))}
                     </TableBody>
@@ -356,7 +362,7 @@ const AddMangaCategory = () => {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="h-4 w-4 p-0 hover:bg-destructive hover:text-destructive-foreground"
+                        className="h-4 w-4 p-0 bg-purple-500 hover:bg-destructive hover:text-destructive-foreground"
                         onClick={() => handleRemoveManga(manga.id)}
                       >
                         <X className="h-3 w-3" />

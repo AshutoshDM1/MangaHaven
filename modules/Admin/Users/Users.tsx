@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   Table,
   TableBody,
@@ -8,43 +8,48 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Loader, MoreHorizontal, ChevronDown } from "lucide-react";
-import { getAllUsers } from "@/services/apiv2";
-import { User } from "@/modules/Admin/types/Admin";
-import { getInitials } from "@/modules/Admin/constant/utils";
-import { USER_MESSAGES } from "@/modules/Admin/constant/validation";
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Loader, MoreHorizontal, ChevronDown } from 'lucide-react';
+import { getAllUsers } from '@/services/apiv2';
+import { User } from '@/modules/Admin/types/Admin';
+import { getInitials } from '@/modules/Admin/constant/utils';
+import { USER_MESSAGES } from '@/modules/Admin/constant/validation';
+import { deleteUser } from '@/services/apiv2.user';
+import { toast } from 'sonner';
 
 export default function Users() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [deleting, setDeleting] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const fetchUsers = async () => {
+    try {
+      const response = await getAllUsers();
+      setUsers(response.data);
+    } catch (error) {
+      console.error('Failed to fetch users:', error);
+      setUsers([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await getAllUsers();
-        setUsers(response.data);
-      } catch (error) {
-        console.error("Failed to fetch users:", error);
-        setUsers([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUsers();
-  }, []);
+    if (!deleting) {
+      fetchUsers();
+    }
+  }, [deleting]);
 
   const filteredUsers = users.filter(
     (user) =>
@@ -52,6 +57,21 @@ export default function Users() {
       user.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleDeleteUser = async (email: string) => {
+    try {
+      setDeleting(true);
+      const response = await deleteUser(email);
+      if (response.success) {
+        setUsers(users.filter((user) => user.email !== email));
+      }
+      setDeleting(false);
+    } catch (error) {
+      setDeleting(false);
+      console.error('Failed to delete user:', error);
+      toast.error('Failed to delete user');
+    }
+  };
 
   return (
     <div className="w-full container mx-auto py-8">
@@ -101,16 +121,14 @@ export default function Users() {
                 <TableRow key={user.id}>
                   <TableCell>
                     <Avatar>
-                      <AvatarImage src={user.image || ""} />
+                      <AvatarImage src={user.image || ''} />
                       <AvatarFallback>
-                        {getInitials(
-                          `${user.firstName || ""} ${user.lastName || ""}`.trim()
-                        )}
+                        {getInitials(`${user.firstName || ''} ${user.lastName || ''}`.trim())}
                       </AvatarFallback>
                     </Avatar>
                   </TableCell>
                   <TableCell className="font-medium">
-                    {`${user.firstName || ""} ${user.lastName || ""}`.trim() || "N/A"}
+                    {`${user.firstName || ''} ${user.lastName || ''}`.trim() || 'N/A'}
                   </TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.id}</TableCell>
@@ -127,14 +145,17 @@ export default function Users() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem className="cursor-pointer">
-                          View Profile
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer">
-                          Edit User
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer text-red-500 hover:text-red-400">
-                          Delete User
+                        {/* <DropdownMenuItem className="cursor-pointer">View Profile</DropdownMenuItem>
+                        <DropdownMenuItem className="cursor-pointer">Edit User</DropdownMenuItem> */}
+                        <DropdownMenuItem
+                          onClick={() => handleDeleteUser(user.email)}
+                          className="cursor-pointer text-red-500 hover:text-red-400"
+                        >
+                          {deleting ? (
+                            <Loader className="h-4 w-4 animate-spin mr-2" />
+                          ) : (
+                            'Delete User'
+                          )}
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -147,4 +168,4 @@ export default function Users() {
       </div>
     </div>
   );
-}   
+}
