@@ -83,6 +83,7 @@ export async function GET(request: NextRequest) {
         select: {
           id: true,
           title: true,
+          slug: true,
           coverImageUrl: true,
           description: true,
           totalChapter: true,

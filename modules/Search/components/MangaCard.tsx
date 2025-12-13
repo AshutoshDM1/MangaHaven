@@ -8,7 +8,7 @@ import Link from "next/link";
 
 interface MangaCardProps {
   manga: {
-    id: number;
+    slug: string;
     title: string;
     description: string;
     coverImageUrl: string;
@@ -23,7 +23,7 @@ export const MangaCard = ({ manga, viewMode }: MangaCardProps) => {
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow">
       <CardContent className="p-0">
-        <Link href={`/read/${manga.id}`}>
+        <Link href={`/read/${manga.slug}`}>
           {viewMode === 'grid' ? (
             <div className="space-y-3">
               <div className="relative h-80 w-full">

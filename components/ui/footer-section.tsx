@@ -95,11 +95,11 @@ function FooterSection() {
                 </p>
               </a>
               <a
-                href="https://www.instagram.com/ashutosh_dm_1/"
+                href="https://www.linkedin.com/in/ashutosh-tiwari-8931b82b8/"
                 target="_blank"
               >
                 <p className="hover:text-purple-500 transition-all duration-300">
-                  Instagram
+                  LinkedIn
                 </p>
               </a>
               <a

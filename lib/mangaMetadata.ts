@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
-import { getAllManga, getMangaById, getMangaChapterById } from '@/services/apiv2';
+import { getAllManga, getMangaById, getMangaBySlug, getMangaChapterById } from '@/services/apiv2';
 import siteUrl from './site';
+import { Manga } from '@prisma/client';
 
 interface MangaMetadataOptions {
   mangaId: string;
@@ -9,7 +10,7 @@ interface MangaMetadataOptions {
 
 /**
  * Generate dynamic metadata for manga pages (both manga detail and chapter pages)
- * @param options - Object containing mangaId and optional chapterId
+ * @param options - Object containing slug and optional chapterId
  * @returns Promise<Metadata> - Next.js metadata object
  */
 export async function generateMangaMetadata({
@@ -18,8 +19,7 @@ export async function generateMangaMetadata({
 }: MangaMetadataOptions): Promise<Metadata> {
   try {
     // Fetch manga data
-    const allManga = await getAllManga();
-    const manga = allManga.find((m) => m.id === Number(mangaId));
+    const manga = await getMangaBySlug(mangaId) as unknown as Manga;
 
     if (!manga) {
       return {
@@ -37,7 +37,7 @@ export async function generateMangaMetadata({
     if (chapterId) {
       try {
         const chapterResponse = await getMangaChapterById(
-          Number(mangaId),
+          manga.id,
           Number(chapterId)
         );
         chapterData = chapterResponse.data;

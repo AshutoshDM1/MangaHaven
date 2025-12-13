@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { MangaCard } from "./MangaCard";
 import { SearchPagination } from "./SearchPagination";
 import { useSearchStore } from "../../../store/searchStore";
-import type { SearchResponse } from "@/services/apiv2";
+import type { MangaSearchResult, SearchResponse } from "@/services/apiv2";
 
 interface SearchResultsGridProps {
   searchResults: SearchResponse;
@@ -50,7 +50,7 @@ export const SearchResultsGrid = ({
             }`}
           >
             {searchResults.data.map((manga) => (
-              <MangaCard key={manga.id} manga={manga} viewMode={viewMode} />
+              <MangaCard key={manga.slug} manga={manga} viewMode={viewMode} />
             ))}
           </div>
 

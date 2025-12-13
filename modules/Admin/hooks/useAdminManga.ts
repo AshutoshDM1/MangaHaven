@@ -11,7 +11,8 @@ export const useAdminManga = (
   const [manga, setManga] = useState<Manga[]>([]);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [mangaData, setMangaData] = useState<Manga>({
-    id: 0,
+    id: 0,  
+    slug: null,
     title: "",
     description: "",
     genres: [],
@@ -23,7 +24,7 @@ export const useAdminManga = (
   useEffect(() => {
     const fetchManga = async () => {
       const data = await getAllManga();
-      setManga(data);
+      setManga(data as unknown as Manga[]);
       setLoading(false);
     };
     fetchManga();

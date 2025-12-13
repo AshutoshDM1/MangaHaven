@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { MangaSearchResult } from '@/services/apiv2';
+import type { MangaSearchResult } from '@/services/apiv2';
 
 interface MangaHeroProps {
   manga: MangaSearchResult;

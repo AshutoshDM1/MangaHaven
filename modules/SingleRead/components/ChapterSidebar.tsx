@@ -2,13 +2,14 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Manga, MangaChapter } from '@/types/manga.type';
+import type { MangaSearchResult } from '@/services/apiv2';
+import type { MangaChapter } from '@/types/manga.type';
 
 interface ChapterSidebarProps {
-  manga: Manga | null;
+  manga: MangaSearchResult | null;
   currentChapter: MangaChapter | null;
   allChapters: MangaChapter[];
-  mangaId: number;
+  mangaSlug: string;
   isLoading?: boolean;
 }
 
@@ -16,11 +17,11 @@ export const ChapterSidebar = ({
   manga,
   currentChapter,
   allChapters,
-  mangaId,
+  mangaSlug,
   isLoading,
 }: ChapterSidebarProps) => {
   const [showChap, setShowChap] = useState(false);
-
+  console.log(manga);
   return (
     <div className="flex-wrap w-full md:w-[40vh] flex flex-row  md:flex-col justify-center md:justify-start  items-center gap-4">
       {/* Manga Cover */}
@@ -56,7 +57,7 @@ export const ChapterSidebar = ({
             className="w-fit z-30 absolute top-10 min-h-fit rounded-md bg-[#f8b416] flex flex-col justify-center items-center gap-1 p-4 max-h-[400px] overflow-y-auto"
           >
             {allChapters.map((chapter) => (
-              <Link key={chapter.id} href={`/read/${mangaId}/${chapter.id}`}>
+              <Link key={chapter.id} href={`/read/${mangaSlug}/${chapter.id}`}>
                 <motion.h1
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 1.1 }}

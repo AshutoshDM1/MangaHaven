@@ -1,13 +1,14 @@
 import Link from 'next/link';
-import { Manga, MangaChapter } from '@/types/manga.type';
+import type { MangaSearchResult } from '@/services/apiv2';
+import type { MangaChapter } from '@/types/manga.type';
 
 interface BreadCrumbProps {
-  manga: Manga | null;
+  manga: MangaSearchResult | null;
   currentChapter: MangaChapter | null;
-  mangaId: number;
+  mangaSlug: string;
 }
 
-const BreadCrumb = ({ manga, currentChapter, mangaId }: BreadCrumbProps) => {
+const BreadCrumb = ({ manga, currentChapter, mangaSlug }: BreadCrumbProps) => {
   return (
     <div className="block lg:hidden w-full px-4 py-3 bg-black border-b border-gray-200 dark:border-gray-700">
       <nav className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
@@ -16,7 +17,7 @@ const BreadCrumb = ({ manga, currentChapter, mangaId }: BreadCrumbProps) => {
         </Link>
         <span>/</span>
         <Link
-          href={`/read/${mangaId}`}
+          href={`/read/${mangaSlug}`}
           className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
         >
           {manga?.title || 'Manga'}

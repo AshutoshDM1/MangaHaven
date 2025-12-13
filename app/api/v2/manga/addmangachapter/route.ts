@@ -10,7 +10,15 @@ type MangaChapter = {
 const GET = async (request: NextRequest) => {
   const mangaId = request.nextUrl.searchParams.get("mangaId");
   const mangaChapterId = request.nextUrl.searchParams.get("mangaChapterId");
+  const slug = request.nextUrl.searchParams.get("slug");
   try {
+
+    if (slug) {
+      const result = await prisma.mangaChapter.findMany({
+        where: { manga: { slug: slug } },
+      });
+      return NextResponse.json(result);
+    }
     if (mangaChapterId) {
       const result = await prisma.mangaChapter.findUnique({
         where: { mangaId: Number(mangaId), id: Number(mangaChapterId) },

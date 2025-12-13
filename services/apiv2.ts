@@ -24,6 +24,7 @@ export type SendMangaData = {
 
 export type MangaSearchResult = {
   id: number;
+  slug: string;
   title: string;
   coverImageUrl: string;
   description: string;
@@ -51,6 +52,14 @@ export const getAllManga = async (): Promise<MangaSearchResult[]> => {
 
 export const getMangaById = async (id: number): Promise<MangaSearchResult[]> => {
   const response = await apiV2().get(`/manga/addmanga?mangaId=${id}`);
+  if (response.data.error) {
+    handleError(response.data.error);
+  }
+  return response.data;
+};
+
+export const getMangaBySlug = async (slug: string): Promise<MangaSearchResult[]> => {
+  const response = await apiV2().get(`/manga/addmanga?slug=${slug}`);  
   if (response.data.error) {
     handleError(response.data.error);
   }
@@ -184,6 +193,16 @@ export const getAllUsers = async () => {
 export const getMangaChapter = async (mangaId: number) => {
   const response = await apiV2().get(
     `/manga/addmangachapter?mangaId=${mangaId}`
+  );
+  if (response.data.error) {
+    handleError(response.data.error);
+  }
+  return response;
+};
+
+export const getMangaChaptersBySlug = async (slug: string) => {
+  const response = await apiV2().get(
+    `/manga/addmangachapter?slug=${encodeURIComponent(slug)}`
   );
   if (response.data.error) {
     handleError(response.data.error);

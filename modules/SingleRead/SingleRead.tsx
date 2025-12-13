@@ -11,50 +11,53 @@ import {
   ViewModeToggle,
   ChapterImageViewer,
 } from '@/modules/SingleRead/components';
-import Navbar from '@/components/common/NavBar/Navbar';
-import Link from 'next/link';
 import BreadCrumb from './components/BreadCrumb';
+import type { MangaSearchResult } from '@/services/apiv2';
+import type { MangaChapter, MangaChapterImage } from '@/types/manga.type';
 
 const SingleRead = () => {
   const { mangaId, mangaChapterId } = useParams();
   const [isVertical, setIsVertical] = useState(true);
 
   // Parse IDs
-  const parsedMangaId = Number(mangaId);
+  const parsedMangaSlug = mangaId as string;
   const parsedChapterId = Array.isArray(mangaChapterId)
     ? Number(mangaChapterId[0])
     : Number(mangaChapterId);
 
   // Fetch all data using TanStack Query
-  const { data: manga, isLoading: mangaLoading } = useMangaDetail(parsedMangaId);
-  const { data: allChapters = [], isLoading: chaptersLoading } = useMangaChapters(parsedMangaId);
+  const { data: mangaArray, isLoading: mangaLoading } = useMangaDetail(parsedMangaSlug);
+  const { data: chaptersResponse, isLoading: chaptersLoading } = useMangaChapters(parsedMangaSlug);
   const { data: currentChapter, isLoading: chapterLoading } = useChapterDetail(
-    parsedMangaId,
+    mangaArray?.[0]?.id || 0,
     parsedChapterId
   );
   const { data: chapterImages = [], isLoading: imagesLoading } = useChapterImages(parsedChapterId);
 
+  // Extract data from responses
+  const manga = mangaArray as unknown as MangaSearchResult;
+  const allChapters = chaptersResponse?.data || [];
+
   // Calculate navigation URLs
   const { previousChapterUrl, nextChapterUrl } = useMemo(() => {
-    if (!currentChapter || allChapters.length === 0) {
+    if (!currentChapter || allChapters.length === 0 || !manga?.slug) {
       return { previousChapterUrl: null, nextChapterUrl: null };
     }
 
-    const currentIndex = allChapters.findIndex((ch) => ch.id === currentChapter.id);
+    const currentIndex = allChapters.findIndex((ch : any) => ch.id === currentChapter.id);
 
     if (currentIndex === -1) {
       return { previousChapterUrl: null, nextChapterUrl: null };
     }
 
     const previousChapter = currentIndex > 0 ? allChapters[currentIndex - 1] : null;
-    const nextChapter =
-      currentIndex < allChapters.length - 1 ? allChapters[currentIndex + 1] : null;
+    const nextChapter = currentIndex < allChapters.length - 1 ? allChapters[currentIndex + 1] : null;
 
     return {
-      previousChapterUrl: previousChapter ? `/read/${parsedMangaId}/${previousChapter.id}` : null,
-      nextChapterUrl: nextChapter ? `/read/${parsedMangaId}/${nextChapter.id}` : null,
+      previousChapterUrl: previousChapter ? `/read/${manga.slug}/${previousChapter.id}` : null,
+      nextChapterUrl: nextChapter ? `/read/${manga.slug}/${nextChapter.id}` : null,
     };
-  }, [currentChapter, allChapters, parsedMangaId]);
+  }, [currentChapter, allChapters, manga?.slug]);
 
   return (
     <>
@@ -62,7 +65,7 @@ const SingleRead = () => {
         <BreadCrumb
           manga={manga || null}
           currentChapter={currentChapter || null}
-          mangaId={parsedMangaId}
+          mangaSlug={parsedMangaSlug}
         />
         <div className="flex h-full justify-center overflow-hidden">
           <div className="fixed top-[75px] left-0 w-fit h-full p-3 px-5 md:pt-10 space-y-5 hidden lg:flex flex-col bg-gradient-to-r from-[#000000] to-[#363636] ">
@@ -70,7 +73,7 @@ const SingleRead = () => {
               manga={manga || null}
               currentChapter={currentChapter || null}
               allChapters={allChapters}
-              mangaId={parsedMangaId}
+              mangaSlug={parsedMangaSlug}
               isLoading={mangaLoading || chapterLoading}
             />
             <ChapterNavigation
@@ -81,7 +84,7 @@ const SingleRead = () => {
           </div>
           <div className="w-fit h-full relative left-0 lg:left-60">
             <ChapterImageViewer
-              images={chapterImages}
+              images={chapterImages as MangaChapterImage[]}
               isVertical={isVertical}
               isLoading={imagesLoading}
             />

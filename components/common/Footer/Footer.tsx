@@ -36,7 +36,7 @@ const Footer: React.FC = () => {
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
-      className="py-8 border-t border-gray-200 dark:border-zinc-700"
+      className="py-8 border-t border-zinc-200 dark:border-zinc-700 mt-10"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
               />
             </div>
             <h3 className="text-lg font-semibold mb-4">MangaHeaven</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-zinc-600 dark:text-zinc-400">
               Your ultimate destination for manga and anime content.
             </p>
           </motion.div>
@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
               <li>
                 <a
                   href="#"
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200"
+                  className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-200"
                 >
                   Home
                 </a>
@@ -78,7 +78,7 @@ const Footer: React.FC = () => {
               <li>
                 <a
                   href="#"
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200"
+                  className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-200"
                 >
                   Browse Manga
                 </a>
@@ -86,7 +86,7 @@ const Footer: React.FC = () => {
               <li>
                 <a
                   href="#"
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200"
+                  className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-200"
                 >
                   Latest Updates
                 </a>
@@ -94,7 +94,7 @@ const Footer: React.FC = () => {
               <li>
                 <a
                   href="#"
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200"
+                  className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-200"
                 >
                   About Us
                 </a>
@@ -109,7 +109,7 @@ const Footer: React.FC = () => {
             <div className="flex space-x-4">
               <motion.a
                 href="#"
-                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200"
+                className="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-200"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -117,7 +117,7 @@ const Footer: React.FC = () => {
               </motion.a>
               <motion.a
                 href="#"
-                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200"
+                className="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-200"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -125,7 +125,7 @@ const Footer: React.FC = () => {
               </motion.a>
               <motion.a
                 href="#"
-                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200"
+                className="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-200"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -136,9 +136,9 @@ const Footer: React.FC = () => {
         </motion.div>
         <motion.div
           variants={itemVariants}
-          className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-8 text-center flex items-center justify-center gap-2"
+          className="mt-8 border-t border-zinc-200 dark:border-zinc-700 pt-8 text-center flex items-center justify-center gap-2"
         >
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">
             © {new Date().getFullYear()} MangaHaven. All rights reserved.
           </p>
           <p className="text-sm text-muted-foreground">
@@ -148,6 +148,10 @@ const Footer: React.FC = () => {
               className="text-primary"
             >
               shailesh
+            </a>
+            &{" "}
+            <a href="https://github.com/ShivamIT23" className="text-primary">
+              shivam
             </a>{" "}
             &{" "}
             <a href="https://github.com/AshutoshDM1" className="text-primary">
