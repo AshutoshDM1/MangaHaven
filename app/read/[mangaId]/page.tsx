@@ -10,11 +10,11 @@ interface SingleReadPageProps {
 
 export async function generateMetadata({ params }: SingleReadPageProps) {
   const { mangaId } = await params;
-  return generateMangaMetadata({ mangaId });
+  return generateMangaMetadata({ mangaId }); 
 }
 
 export default async function SingleReadPage({ params }: SingleReadPageProps) {
-  const { mangaId } = await params;
+  const { mangaId } = await params;  
   return (
     <Suspense>
       <SingleMangaDetail slug={mangaId} />

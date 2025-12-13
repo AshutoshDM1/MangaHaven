@@ -29,7 +29,7 @@ export const fetchChapterById = async (
 ): Promise<MangaChapter | null> => {
   try {
     const response = await apiV2().get<MangaChapter>(
-      `/manga/addmangachapter?mangaId=${mangaId}&mangaChapterId=${chapterId}`
+      `/manga/addmangachapter?slug=${mangaId}&mangaChapterId=${chapterId}` 
     );
     return response.data;
   } catch (error) {

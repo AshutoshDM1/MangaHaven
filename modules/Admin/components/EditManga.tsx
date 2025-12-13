@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState } from "react";
 import { Manga } from "../types/Admin";
 import { toast } from "sonner";
-import { updateManga } from "@/services/apiv2";
+import { MangaSearchResult, updateManga } from "@/services/apiv2";
 
 const EditManga = ({
   open,
@@ -30,7 +30,7 @@ const EditManga = ({
   const [manga, setManga] = useState<Manga>(mangaData);
 
   const handleSubmit = async () => {
-    const response = await updateManga(manga);
+    const response = await updateManga(manga as unknown as MangaSearchResult);
     if (response && response.status === 200) {
       toast.success("Manga updated successfully");
       setOpen(false);

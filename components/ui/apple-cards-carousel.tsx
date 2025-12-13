@@ -1,22 +1,13 @@
-"use client";
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  createContext,
-  useContext,
-  RefObject,
-} from "react";
-import {
-  IconArrowNarrowLeft,
-  IconArrowNarrowRight,
-  IconX,
-} from "@tabler/icons-react";
-import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "motion/react";
-import Image, { ImageProps } from "next/image";
-import { useOutsideClick } from "@/hooks/use-outside-click";
-import { useRouter } from "next/navigation";
+'use client';
+import React, { useEffect, useRef, useState, createContext, useContext, RefObject } from 'react';
+import { IconArrowNarrowLeft, IconArrowNarrowRight, IconX } from '@tabler/icons-react';
+import { cn } from '@/lib/utils';
+import { AnimatePresence, motion } from 'motion/react';
+import Image, { ImageProps } from 'next/image';
+import { useOutsideClick } from '@/hooks/use-outside-click';
+import { useRouter } from 'next/navigation';
+import { Manga } from '@prisma/client';
+import Link from 'next/link';
 
 interface CarouselProps {
   items: React.ReactNode[];
@@ -61,13 +52,13 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
 
   const scrollLeft = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -300, behavior: "smooth" });
+      carouselRef.current.scrollBy({ left: -300, behavior: 'smooth' });
     }
   };
 
   const scrollRight = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: 300, behavior: "smooth" });
+      carouselRef.current.scrollBy({ left: 300, behavior: 'smooth' });
     }
   };
 
@@ -78,7 +69,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
       const scrollPosition = (cardWidth + gap) * (index + 1);
       carouselRef.current.scrollTo({
         left: scrollPosition,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
       setCurrentIndex(index);
     }
@@ -89,9 +80,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
   };
 
   return (
-    <CarouselContext.Provider
-      value={{ onCardClose: handleCardClose, currentIndex }}
-    >
+    <CarouselContext.Provider value={{ onCardClose: handleCardClose, currentIndex }}>
       <div className="relative w-full">
         <div
           className="flex w-full overflow-x-scroll overscroll-x-auto scroll-smooth py-10 [scrollbar-width:none] md:py-20"
@@ -100,14 +89,14 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
         >
           <div
             className={cn(
-              "absolute right-0 z-[1000] h-auto w-[5%] overflow-hidden bg-gradient-to-l",
+              'absolute right-0 z-[1000] h-auto w-[5%] overflow-hidden bg-gradient-to-l'
             )}
           ></div>
 
           <div
             className={cn(
-              "flex flex-row justify-start gap-4 pl-4",
-              "mx-auto max-w-7xl", // remove max-w-4xl if you want the carousel to span the full width of its container
+              'flex flex-row justify-start gap-4 pl-4',
+              'mx-auto max-w-7xl' // remove max-w-4xl if you want the carousel to span the full width of its container
             )}
           >
             {items.map((item, index) => (
@@ -122,10 +111,10 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
                   transition: {
                     duration: 0.5,
                     delay: 0.2 * index,
-                    ease: "easeOut",
+                    ease: 'easeOut',
                   },
                 }}
-                key={"card" + index}
+                key={'card' + index}
                 className="rounded-3xl last:pr-[5%] md:last:pr-[33%]"
               >
                 {item}
@@ -155,11 +144,11 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
 };
 
 export const Card = ({
-  card,
+  manga,
   index,
   layout = false,
 }: {
-  card: Card;
+  manga: Manga;
   index: number;
   layout?: boolean;
 }) => {
@@ -167,7 +156,7 @@ export const Card = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const { onCardClose } = useContext(CarouselContext);
   const router = useRouter();
-  
+
   const handleClose = () => {
     setOpen(false);
     onCardClose(index);
@@ -175,19 +164,19 @@ export const Card = ({
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         handleClose();
       }
     }
 
     if (open) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto';
     }
 
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
   }, [open, handleClose]);
 
   useOutsideClick(containerRef as RefObject<HTMLDivElement>, () => handleClose());
@@ -212,7 +201,7 @@ export const Card = ({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               ref={containerRef}
-              layoutId={layout ? `card-${card.title}` : undefined}
+              layoutId={layout ? `card-${manga.title}` : undefined}
               className="relative z-[60] mx-auto my-10 h-fit max-w-5xl rounded-3xl bg-white p-4 font-sans md:p-10 dark:bg-neutral-900"
             >
               <button
@@ -222,86 +211,70 @@ export const Card = ({
                 <IconX className="h-6 w-6 text-neutral-100 dark:text-neutral-900" />
               </button>
               <motion.p
-                layoutId={layout ? `category-${card.title}` : undefined}
+                layoutId={layout ? `category-${manga.title}` : undefined}
                 className="text-base font-medium text-black dark:text-white"
               >
-                {card.category}
+                {manga.genres.join(', ')}
               </motion.p>
               <motion.p
-                onClick={() => {
-                  router.push(`/read/${card.title}/1`);
-                }}
-                layoutId={layout ? `title-${card.title}` : undefined}
+                layoutId={layout ? `title-${manga.title}` : undefined}
                 className="mt-4 text-2xl font-semibold text-neutral-700 md:text-5xl dark:text-white cursor-pointer"
               >
-                {card.title}
+                {manga.title}
               </motion.p>
-              <div
-                onClick={() => {
-                  router.push(`/read/${card.title}/1`);
-                }}
-                className="py-10 cursor-pointer"
-              >
-                {card.content}
-              </div>
+              <div className="py-10 cursor-pointer">{manga.description}</div>
             </motion.div>
           </div>
         )}
       </AnimatePresence>
       <motion.button
-        layoutId={layout ? `card-${card.title}` : undefined}
-        onClick={handleOpen}
-        className="relative z-10 flex h-80 w-56 flex-col items-start justify-start overflow-hidden rounded-3xl bg-gray-100 md:h-[40rem] md:w-96 dark:bg-neutral-900"
+        layoutId={layout ? `card-${manga.title}` : undefined}
+        className="relative z-10 flex h-80 w-56 flex-col items-start justify-start overflow-hidden rounded-3xl bg-gray-100 md:h-[40rem] md:w-96 dark:bg-neutral-900 cursor-pointer"
       >
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-full bg-gradient-to-b from-black/50 via-transparent to-transparent" />
-        <div className="relative z-40 p-8">
-          <motion.p
-            layoutId={layout ? `category-${card.category}` : undefined}
-            className="text-left font-sans text-sm font-medium text-white md:text-base"
-          >
-            {card.category}
-          </motion.p>
-          <motion.p
-            layoutId={layout ? `title-${card.title}` : undefined}
-            className="mt-2 max-w-xs text-left font-sans text-xl font-semibold [text-wrap:balance] text-white md:text-3xl"
-          >
-            {card.title}
-          </motion.p>
-        </div>
-        <BlurImage
-          src={card.src}
-          alt={card.title}
-          fill
-          className="absolute inset-0 z-10 object-cover"
-        />
+        <Link href={`/read/${manga.slug}`}>
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-full bg-gradient-to-b from-black/50 via-transparent to-transparent" />
+          <div className="relative z-40 p-8">
+            <motion.p
+              layoutId={layout ? `category-${manga.genres.join(', ')}` : undefined}
+              className="text-left font-sans text-sm font-medium text-white md:text-base"
+            >
+              {manga.genres.join(', ')}
+            </motion.p>
+            <motion.p
+              layoutId={layout ? `title-${manga.title}` : undefined}
+              className="mt-2 max-w-xs text-left font-sans text-xl font-semibold [text-wrap:balance] text-white md:text-3xl"
+            >
+              {manga.title}
+            </motion.p>
+          </div>
+          <BlurImage
+            src={manga.coverImageUrl}
+            alt={manga.title}
+            fill
+            className="absolute inset-0 z-10 object-cover"
+          />
+        </Link>
       </motion.button>
     </>
   );
 };
 
-export const BlurImage = ({
-  height,
-  width,
-  src,
-  className,
-  alt,
-  ...rest
-}: ImageProps) => {
+export const BlurImage = ({ height, width, src, className, alt, ...rest }: ImageProps) => {
   const [isLoading, setLoading] = useState(true);
   return (
     <Image
       className={cn(
-        "h-full w-full transition duration-300",
-        isLoading ? "blur-0" : "blur-0",
-        className,
+        'h-full w-full transition duration-300',
+        isLoading ? 'blur-0' : 'blur-0',
+        className
       )}
       onLoad={() => setLoading(false)}
       src={src as string}
       width={width as number}
       height={height as number}
       loading="lazy"
-      blurDataURL={typeof src === "string" ? src : undefined}
-      alt={alt ? alt : "Background of a beautiful view"}
+      blurDataURL={typeof src === 'string' ? src : undefined}
+      alt={alt ? alt : 'Background of a beautiful view'}
       {...rest}
     />
   );

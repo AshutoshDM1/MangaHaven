@@ -48,6 +48,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const allManga = await prisma.manga.findMany({
       select: {
         id: true,
+        slug: true,
         mangaChapters: {
           select: {
             id: true,
@@ -65,23 +66,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Generate manga detail pages
     const mangaDetailRoutes = allManga.map((manga) => ({
-      url: `${baseUrl}/read/${manga.id}`,
+      url: `${baseUrl}/read/${manga.slug}`,
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.7,
     }));
 
-    // Generate manga chapter pages
-    const chapterRoutes = allManga.flatMap((manga) =>
-      manga.mangaChapters.map((chapter) => ({
-        url: `${baseUrl}/read/${manga.id}/${chapter.id}`,
-        lastModified: new Date(),
-        changeFrequency: 'daily' as const,
-        priority: 0.6,
-      }))
-    );
 
-    mangaRoutes = [...mangaDetailRoutes, ...chapterRoutes];
+    mangaRoutes = [...mangaDetailRoutes];
   } catch (error) {
     console.error('Error generating sitemap:', error);
     // Return static routes only if database fetch fails

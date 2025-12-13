@@ -9,9 +9,13 @@ import FlottingImages from './component/FlottingImages';
 import useSmoothScroll from '@/hooks/use-smoothScroll';
 import { Particles } from '@/components/ui/particles';
 import { usePageLoad } from '@/hooks/page-load';
-import FlottingImagesV2 from './component/FlottingImagesV2';
+import { Manga } from '@prisma/client';
 
-const Home = () => {
+interface HomeProps {
+  mangas: Manga[]
+}
+
+const Home = ({ mangas }: HomeProps) => {
   useSmoothScroll();
   usePageLoad();
   return (
@@ -27,7 +31,7 @@ const Home = () => {
             <HeroSectionContent />
           </div>
         </RadialGradient>
-        <MangaSectionSlider />
+        <MangaSectionSlider mangas={mangas} />
         <MangaCTA />
         <FooterSection />
       </div>

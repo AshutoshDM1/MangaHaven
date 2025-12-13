@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchMangaChapters } from '@/services/manga.services';
+import { getMangaChaptersBySlug } from '@/services/apiv2';
 
-export const useMangaChapters = (mangaId: number) => {
+export const useMangaChapters = (slug: string) => {
   const query = useQuery({
-    queryKey: ['manga', 'chapters', mangaId],
-    queryFn: () => fetchMangaChapters(mangaId),
-    enabled: !!mangaId,
+    queryKey: ['manga', 'chapters', slug],
+    queryFn: () => getMangaChaptersBySlug(slug),
+    enabled: !!slug,
   });
 
   return query;

@@ -18,16 +18,22 @@ const GET = async (request: NextRequest) => {
   try {
     const mangaId = request.nextUrl.searchParams.get("mangaId");
     const categoryId = request.nextUrl.searchParams.get("categoryId");
+    const slug = request.nextUrl.searchParams.get("slug");
     if (mangaId) {
       const manga = await prisma.manga.findUnique({
         where: { id: Number(mangaId) },
       });
       return NextResponse.json(manga);
-    } else if (categoryId) {
+    } else if (categoryId) {  
       const mangas = await prisma.manga.findMany({
         where: { mangaCategories: { some: { categoryId: Number(categoryId) } } },
       });
       return NextResponse.json(mangas);
+    } else if (slug) {
+      const manga = await prisma.manga.findUnique({
+        where: { slug: slug },
+      });
+      return NextResponse.json(manga);
     } else {
       const mangas = await prisma.manga.findMany();
       return NextResponse.json(mangas);

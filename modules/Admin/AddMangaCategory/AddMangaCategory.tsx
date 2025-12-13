@@ -122,7 +122,7 @@ const AddMangaCategory = () => {
   };
 
   const handleOpenManageMangaDialog = (category: CategoryWithManga) => {
-    setSelectedCategory(category);
+    setSelectedCategory(category as unknown as Category);
     setIsManageMangaDialogOpen(true);
   };
 
@@ -442,7 +442,7 @@ const AddMangaCategory = () => {
               <Button
                 onClick={handleAddMangaToCategory}
                 disabled={selectedManga.length === 0 || isLoading}
-                className="bg-primary hover:bg-primary/80 text-white"
+                className="bg-purple-500 hover:bg-purple-500/80 text-white"
               >
                 {isLoading ? (
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />

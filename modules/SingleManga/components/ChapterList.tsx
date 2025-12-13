@@ -9,11 +9,11 @@ import { MangaChapter } from '@/types/manga.type';
 
 interface ChapterListProps {
   chapters: MangaChapter[];
-  mangaId: number;
+  mangaSlug: string | null;
   isLoading?: boolean;
 }
 
-export const ChapterList = ({ chapters, mangaId, isLoading }: ChapterListProps) => {
+export const ChapterList = ({ chapters, mangaSlug, isLoading }: ChapterListProps) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredChapters = chapters.filter(
@@ -72,7 +72,7 @@ export const ChapterList = ({ chapters, mangaId, isLoading }: ChapterListProps) 
           filteredChapters
             .sort((a, b) => b.chapterNumber - a.chapterNumber)
             .map((chapter, index) => (
-              <Link key={chapter.id} href={`/read/${mangaId}/${chapter.id}`}>
+              <Link key={chapter.id} href={`/read/${mangaSlug}/${chapter.id}`}>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}

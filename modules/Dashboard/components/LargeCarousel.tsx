@@ -64,7 +64,7 @@ const LargeCarousel: React.FC = () => {
               }`}
             >
               <Link
-                href={`/read/${data[currentIndex]?.id}`}
+                href={`/read/${data[currentIndex]?.slug}`}
                 style={{
                   boxShadow: '0 0 1rem rgba(0, 0, 0, 0.5)',
                   transition: 'background-color 0.3s ease, transform 0.3s ease',

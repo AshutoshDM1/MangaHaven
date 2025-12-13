@@ -124,7 +124,7 @@ const MangaCarousel: React.FC = () => {
                     {extendedItems.map((item, index) => (
                       <Link
                         className="lg:w-1/3 md:w-1/2 w-full flex-shrink-0 px-0 md:px-2 "
-                        href={`/read/${item.id}`}
+                        href={`/read/${item.slug}`}
                         key={index + 'manga-carousel-item'}
                       >
                         <motion.div variants={itemVariants}>

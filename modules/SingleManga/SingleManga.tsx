@@ -10,21 +10,28 @@ import {
   MangaDetailSkeleton,
 } from '@/modules/SingleManga/components';
 import Section from '@/components/common/Section/Section';
+import { Manga } from '@prisma/client';
+import { MangaSearchResult } from '@/services/apiv2';
 
 interface SingleMangaDetailProps {
   slug: string;
 }
 
 const SingleMangaDetail = ({ slug }: SingleMangaDetailProps) => {
-  const mangaId = Number(slug);
+  const { data: mangaArray, isLoading: mangaLoading, error: mangaError } = useMangaDetail(slug);
+  const { data: chaptersResponse, isLoading: chaptersLoading } = useMangaChapters(slug);
 
-  const { data: manga, isLoading: mangaLoading, error: mangaError } = useMangaDetail(mangaId);
-  const { data: chapters = [], isLoading: chaptersLoading } = useMangaChapters(mangaId);
+  // Extract manga from array (API returns array)
+  const manga = mangaArray as unknown as Manga;
+  const chapters = chaptersResponse?.data || [];
 
-  const firstChapterUrl = useMemo(
-    () => (chapters.length > 0 ? `/read/${mangaId}/${chapters[0].id}` : null),
-    [chapters, mangaId]
-  );
+  // Calculate first chapter URL
+  const firstChapterUrl = useMemo(() => {
+    if (chapters.length > 0 && manga?.slug) {
+      return `/read/${manga.slug}/${chapters[0].id}`;
+    }
+    return null;
+  }, [chapters, manga?.slug]);
 
   if (mangaLoading) {
     return <MangaDetailSkeleton />;
@@ -44,11 +51,11 @@ const SingleMangaDetail = ({ slug }: SingleMangaDetailProps) => {
   }
 
   return (
-    <Section className='py-6' >
-      <MangaHero manga={manga} />
-      <MangaStats totalChapters={manga.totalChapter} />
+    <Section className='py-6'>
+      <MangaHero manga={manga as unknown as MangaSearchResult } />
+      <MangaStats totalChapters={manga.totalChapter} /> 
       <MangaActions firstChapterUrl={firstChapterUrl} hasChapters={chapters.length > 0} />
-      <ChapterList chapters={chapters} mangaId={mangaId} isLoading={chaptersLoading} />
+      <ChapterList chapters={chapters} mangaSlug={manga.slug} isLoading={chaptersLoading} />
     </Section>
   );
 };
