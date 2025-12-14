@@ -1,11 +1,13 @@
 import { MetadataRoute } from 'next';
 import siteUrl from '@/lib/site';
-import prisma from '@/db/db';
+import axios from 'axios';
+import { Manga } from '@prisma/client';
 
 export const revalidate = 86400; // Revalidate sitemap every 24 hours
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteUrl;
+  console.log('🔍 Sitemap: Starting generation...');
 
   // Static routes
   const staticRoutes = [
@@ -45,27 +47,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let mangaRoutes: MetadataRoute.Sitemap = [];
   
   try {
-    const allManga = await prisma.manga.findMany({
-      select: {
-        id: true,
-        slug: true,
-        mangaChapters: {
-          select: {
-            id: true,
-            chapterNumber: true,
-          },
-          orderBy: {
-            chapterNumber: 'desc',
-          },
-        },
-      },
-      orderBy: {
-        id: 'desc',
-      },
-    });
+    const fetchManga = async () => {
+      const response = await axios.get('https://mangaheaven.app/api/v2/manga/addmanga');
+      return response.data;
+    };
+    const allManga = await fetchManga();
+    console.log(`✅ Sitemap: Successfully fetched ${allManga.length} manga(s)`);
 
     // Generate manga detail pages
-    const mangaDetailRoutes = allManga.map((manga) => ({
+    const mangaDetailRoutes = allManga.map((manga : Manga) => ({
       url: `${baseUrl}/read/${manga.slug}`,
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
@@ -75,10 +65,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     mangaRoutes = [...mangaDetailRoutes];
   } catch (error) {
-    console.error('Error generating sitemap:', error);
+    console.error('⚠️ Returning static routes only');
     // Return static routes only if database fetch fails
   }
 
+  console.log(`✅ Sitemap: Generated ${staticRoutes.length + mangaRoutes.length} total routes`);
   return [...staticRoutes, ...mangaRoutes];
 }
 

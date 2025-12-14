@@ -27,7 +27,6 @@ jobs:
         with:
           context: .
           push: true
-          no-cache: true
           build-args: |
             NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID }}
             NEXT_PUBLIC_GITHUB_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GITHUB_CLIENT_ID }}
@@ -37,6 +36,8 @@ jobs:
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/mangaheaven:latest
             ${{ secrets.DOCKER_USERNAME }}/mangaheaven:${{ github.sha }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/mangaheaven:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/mangaheaven:buildcache,mode=max
 
       - name: Deploy to server
         uses: appleboy/ssh-action@v1.0.0

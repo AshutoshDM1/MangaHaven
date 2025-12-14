@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getAllManga, getMangaById, getMangaBySlug, getMangaChapterById } from '@/services/apiv2';
+import { getMangaBySlug, getMangaChapterById } from '@/services/apiv2';
 import siteUrl from './site';
 import { Manga } from '@prisma/client';
 

@@ -1,6 +1,5 @@
 "use client";
 import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
-import Image from "next/image";
 import { Manga } from "@prisma/client";
 
 interface MangaSectionSliderProps {
@@ -21,19 +20,3 @@ export default function MangaSectionSlider({ mangas }: MangaSectionSliderProps) 
     </div>
   );
 }
-
-const DummyContent = ({ manga }: { manga: Manga }) => {
-  return (
-    <>
-      <div className="bg-transparent flex justify-center items-center">
-        <Image
-          src={manga.coverImageUrl}
-          alt={manga.title}
-          width={500}
-          height={100}
-          className="w-[20rem] object-cover cursor-pointer"
-        />
-      </div>
-    </>
-  );
-};
