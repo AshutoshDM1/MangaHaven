@@ -1,31 +1,31 @@
 import { Suspense } from 'react';
 import Home from '@/modules/Home/Home';
-import axios from 'axios';
+import prisma from '@/db/db';
 
-export const dynamic = 'force-static';
-export const revalidate = 86400;
+// Use ISR instead of force-static - data fetched at runtime, cached for 1 hour
+export const revalidate = 3600; // Revalidate every hour
 
 export default async function HomePage() {
   try {
-    const featuredManga = async () => {
-      const response = await axios.get('https://mangaheaven.app/api/v2/manga/addmanga?categoryId=6');
-      return response.data;
-    };
-    const mangas = await featuredManga();
+    console.log('🔍 HomePage: Fetching manga data...');
+    
+    const mangas = await prisma.manga.findMany({
+      where: { 
+        mangaCategories: { 
+          some: { categoryId: 6 } 
+        } 
+      },
+    });
 
-    if (mangas.length > 0) {
-      console.log("✅ Manga fetched successfully");
-    }
-    else {
-      console.error('❌ No manga fetched');
-    }
+    console.log(`✅ HomePage: Fetched ${mangas.length} manga(s)`);
+    
     return (
       <Suspense>
         <Home mangas={mangas} />
       </Suspense>
     );
   } catch (error) {
-    console.error('Error fetching manga:', error);
+    console.error('❌ Error fetching manga:', error);
     return (
       <Suspense>
         <Home mangas={[]} />
