@@ -1,6 +1,6 @@
 <div align="center">  
   
-  <img src="https://github.com/AshutoshDM1/MangaHaven/blob/production/public/favicon.webp" alt="Manga Haven" width="50"/>
+  <img src="https://github.com/AshutoshDM1/MangaHaven/blob/production/public/favicon.ico" alt="Manga Haven" width="50"/>
   
   # MangaHaven
 

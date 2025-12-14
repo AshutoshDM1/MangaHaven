@@ -5,7 +5,7 @@ import SearchPage from '@/modules/Search/Search';
 export const dynamic = 'force-static';
 export const revalidate = 86400; // 24 hours
 
-export const metadata = generateMetadata('Search', '/dashboard/search');
+export const metadata = generateMetadata('Search', 'dashboard/search');
 
 
 export default function Search() {

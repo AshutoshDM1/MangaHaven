@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
           >
             <div className="mb-4 flex justify-center">
               <Image
-                src="/favicon.webp"
+                src="/favicon.ico"
                 alt="MangaHaven Logo"
                 width={40}
                 height={40}

@@ -164,7 +164,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ config }) => {
       {/* Mobile Logo */}
       <div className="lg:hidden flex items-center justify-center gap-2 my-8">
         <div className="w-8 h-8 rounded-lg flex items-center justify-center">
-          <img src="/favicon.webp" alt="logo" className="w-full h-full object-cover" />
+          <img src="/favicon.ico" alt="logo" className="w-full h-full object-cover" />
         </div>
         <span className="text-xl font-semibold text-white">MangaHaven</span>
       </div>

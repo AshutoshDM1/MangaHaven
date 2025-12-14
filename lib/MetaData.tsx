@@ -58,7 +58,7 @@ export async function generateMetadata(
           width: 1200,
           height: 630,
           alt: `${pageName} | MangaHaven - Your Ultimate Manga Reading Destination`,
-          type: 'image/png',
+          type: 'image/webp',
         },
       ],
     },

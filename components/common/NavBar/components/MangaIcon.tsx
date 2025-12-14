@@ -9,7 +9,7 @@ const MangaIcon = () => {
         className="h-full w-fit justify-center items-center cursor-pointer flex"
       >
         <Image
-          src="/favicon.webp"
+          src="/favicon.ico"
           alt="MangaHaven Logo"
           width={35}
           height={35}

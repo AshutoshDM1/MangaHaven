@@ -72,7 +72,7 @@ const FormLayout: React.FC<FormLayoutProps> = ({
         <div className="relative z-10 flex flex-col justify-between p-12 text-white">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center">
-              <img src="/favicon.webp" alt="logo" className="w-full h-full object-cover" />
+              <img src="/favicon.ico" alt="logo" className="w-full h-full object-cover" />
             </div>
             {title && <span className="text-xl font-semibold tracking-wide">{title}</span>}
           </div>

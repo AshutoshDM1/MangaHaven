@@ -112,7 +112,7 @@ const SideNav = () => {
           <SheetTitle className="text-2xl font-bold text-primary flex gap-1 justify-start items-center">
             <span>
               <img
-                src="/favicon.webp"
+                src="/favicon.ico"
                 alt="logo"
                 className="w-10 mb-2 cover"
               />

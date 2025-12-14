@@ -12,7 +12,7 @@ Disallow: /api/
 
 # Allow specific image files for social sharing
 Allow: /Images/image.png
-Allow: /favicon.webp
+Allow: /favicon.ico
 
 # Sitemap location  
 Sitemap: https://mangaheaven.app/sitemap.xml
