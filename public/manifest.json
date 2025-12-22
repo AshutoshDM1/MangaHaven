@@ -1,7 +1,7 @@
 {
-  "name": "MangaHaven - Your Ultimate Manga Reading Destination",
-  "short_name": "MangaHaven",
-  "description": "Discover, read, and enjoy thousands of manga titles at MangaHaven. Your go-to platform for the latest manga chapters, popular series, and hidden gems.",
+  "name": "MangaHeaven - Your Ultimate Manga Reading Destination",
+  "short_name": "MangaHeaven",
+  "description": "Discover, read, and enjoy thousands of manga titles at MangaHeaven. Your go-to platform for the latest manga chapters, popular series, and hidden gems.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0d0d0d",
@@ -12,15 +12,15 @@
   "categories": ["entertainment", "books", "comics"],
   "icons": [
     {
-      "src": "/favicon.ico",  
-      "sizes": "192x192",
-      "type": "image/png",
+      "src": "/favicon.ico?v=3",  
+      "sizes": "48x48",
+      "type": "image/ico",  
       "purpose": "maskable any"
     },
     {
-      "src": "/favicon.ico",
-      "sizes": "512x512",
-      "type": "image/png",
+      "src": "/favicon.ico?v=3",
+      "sizes": "48x48",
+      "type": "image/ico",
       "purpose": "maskable any"
     }
   ],
@@ -30,7 +30,7 @@
       "sizes": "1200x630",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "MangaHaven Dashboard"
+      "label": "MangaHeaven Dashboard"
     }
   ],
   "shortcuts": [
@@ -39,14 +39,14 @@
       "short_name": "Dashboard",
       "description": "View your manga dashboard",
       "url": "/dashboard",
-      "icons": [{ "src": "/favicon.ico", "sizes": "96x96" }]
+      "icons": [{ "src": "/favicon.ico?v=3", "sizes": "48x48" }]
     },
     {
       "name": "Profile",
       "short_name": "Profile",
       "description": "View your profile",
       "url": "/profile",
-      "icons": [{ "src": "/favicon.ico", "sizes": "96x96" }]
+      "icons": [{ "src": "/favicon.ico?v=3", "sizes": "48x48" }]  
     }
   ],
   "related_applications": [],

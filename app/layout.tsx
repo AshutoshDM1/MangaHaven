@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/sonner';
 import { Suspense } from 'react';
-import { SUSE , Rubik} from 'next/font/google';
+import { SUSE, Rubik } from 'next/font/google';
 import { Providers } from '@/lib/Providers';
 import siteUrl from '@/lib/site';
 
@@ -22,13 +22,13 @@ const rubik = Rubik({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'MangaHaven - Read Manga Online Free',
-    template: '%s | MangaHaven - Ultimate Manga Reading Destination',
+    default: 'MangaHeaven - Read Manga Online Free',
+    template: '%s | MangaHeaven - Ultimate Manga Reading Destination',
   },
   description:
-    'Read your favorite manga online for free at MangaHaven. Discover thousands of manga with high-quality scans, regular updates, and a seamless reading experience.',
+    'Read your favorite manga online for free at MangaHeaven. Discover thousands of manga with high-quality scans, regular updates, and a seamless reading experience.',
   keywords: [
-    'MangaHaven',
+    'MangaHeaven',
     'manga',
     'read manga online',
     'manga online',
@@ -62,10 +62,10 @@ export const metadata: Metadata = {
     'adventure manga',
     'manga series',
   ],
-  authors: [{ name: 'MangaHaven', url: siteUrl }],
-  creator: 'MangaHaven',
-  publisher: 'MangaHaven',
-  applicationName: 'MangaHaven',
+  authors: [{ name: 'MangaHeaven', url: siteUrl }],
+  creator: 'MangaHeaven',
+  publisher: 'MangaHeaven',
+  applicationName: 'MangaHeaven',
   referrer: 'origin-when-cross-origin',
   formatDetection: {
     email: false,
@@ -91,62 +91,39 @@ export const metadata: Metadata = {
     // bing: "your-bing-verification-code", // Uncomment and add if needed
   },
   icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: '16x16', type: 'image/ico' }, 
-      { url: '/favicon.ico', sizes: '32x32', type: 'image/ico' },
-      { url: '/favicon.ico', sizes: '96x96', type: 'image/ico' },
-    ],
-    apple: [
-      { url: '/favicon.ico', sizes: '57x57', type: 'image/ico' },
-      { url: '/favicon.ico', sizes: '60x60', type: 'image/ico' },
-      { url: '/favicon.ico', sizes: '72x72', type: 'image/png' },
-      { url: '/favicon.ico', sizes: '76x76', type: 'image/ico' },
-      { url: '/favicon.ico', sizes: '114x114', type: 'image/ico' },
-      { url: '/favicon.ico', sizes: '120x120', type: 'image/png' },
-      { url: '/favicon.ico', sizes: '144x144', type: 'image/ico' },
-      { url: '/favicon.ico', sizes: '152x152', type: 'image/ico' },
-      { url: '/favicon.ico', sizes: '180x180', type: 'image/ico' },
-    ],
-    shortcut: '/favicon.ico',
-    other: [
-      {
-        rel: 'mask-icon',
-        url: '/favicon.ico',
-        color: '#000000',
-      },
-    ],
+    icon: [{ url: '/favicon.ico?v=3', sizes: '48x48', type: 'image/ico' }],
   },
   manifest: '/manifest.json',
   openGraph: {
     type: 'website',
     locale: 'en_IN',
     url: siteUrl,
-    title: 'MangaHaven - Read Manga Online Free',
+    title: 'MangaHeaven - Read Manga Online Free',
     description:
       'Your ultimate destination for reading manga online. Access thousands of manga titles with high-quality scans, daily updates, and an amazing reading experience. Read shounen, shoujo, seinen, manhwa, and more!',
-    siteName: 'MangaHaven',
+    siteName: 'MangaHeaven',
     images: [
       {
         url: '/og-image.webp',
         width: 1200,
         height: 630,
-        alt: 'MangaHaven - Read Manga Online Free',
+        alt: 'MangaHeaven - Read Manga Online Free',
         type: 'image/webp',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'MangaHaven - Read Manga Online Free',
+    title: 'MangaHeaven - Read Manga Online Free',
     description:
-      'Read your favorite manga online for free. Thousands of titles, daily updates, and seamless reading experience on MangaHaven.',
-    site: '@mangahaven',
-    creator: '@mangahaven',
+      'Read your favorite manga online for free. Thousands of titles, daily updates, and seamless reading experience on MangaHeaven.',
+    site: '@MangaHeaven',
+    creator: '@MangaHeaven',
     images: [
       {
         url: '/og-image.webp',
-        alt: 'MangaHaven - Read Manga Online Free',
-        type: 'image/webp', 
+        alt: 'MangaHeaven - Read Manga Online Free',
+        type: 'image/webp',
       },
     ],
   },
@@ -173,8 +150,8 @@ export const metadata: Metadata = {
     'mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
-    'apple-mobile-web-app-title': 'MangaHaven',
-    'application-name': 'MangaHaven',
+    'apple-mobile-web-app-title': 'MangaHeaven',
+    'application-name': 'MangaHeaven',
     'msapplication-TileColor': '#000000',
     'msapplication-config': '/browserconfig.xml',
   },
@@ -184,16 +161,16 @@ export const metadata: Metadata = {
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'MangaHaven',
+  name: 'MangaHeaven',
   description:
-    'Read your favorite manga online for free at MangaHaven. Discover thousands of manga titles with high-quality scans, regular updates, and a seamless reading experience.',
+    'Read your favorite manga online for free at MangaHeaven. Discover thousands of manga titles with high-quality scans, regular updates, and a seamless reading experience.',
   url: siteUrl,
   publisher: {
     '@type': 'Organization',
-    name: 'MangaHaven',
+    name: 'MangaHeaven',
     logo: {
       '@type': 'ImageObject',
-      url: `${siteUrl}/favicon.ico`,
+      url: `${siteUrl}/favicon.ico?v=3`,
     },
   },
   potentialAction: {
