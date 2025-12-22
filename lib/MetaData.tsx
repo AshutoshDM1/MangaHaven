@@ -51,7 +51,7 @@ export async function generateMetadata(
       description:
         'Manage your manga collection, track reading progress, and discover new titles. Access your personalized manga dashboard with advanced features and seamless reading experience.',
       siteName: 'MangaHaven',
-      locale: 'en_US',
+      locale: 'en_IN',
       images: [
         {
           url: '/og-image.webp',
