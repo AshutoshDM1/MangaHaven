@@ -1,4 +1,4 @@
-<div align="center">  
+<div align="center"> 
   
   <img src="https://github.com/AshutoshDM1/MangaHaven/blob/production/public/favicon.ico" alt="Manga Haven" width="50"/>
   
