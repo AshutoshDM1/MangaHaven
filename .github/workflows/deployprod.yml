@@ -48,7 +48,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT || 22 }}
           script: |
             # Change to project directory
-            cd /home/${{ secrets.SERVER_USERNAME }}/mangaheaven
+            cd ~/mangaheaven/
 
             # Remove the latest image if it exists
             docker rmi ${{ secrets.DOCKER_USERNAME }}/mangaheaven:latest || true
