@@ -64,7 +64,7 @@ jobs:
             docker run -d \
               --name mangaheaven \
               --restart unless-stopped \
-              -p 3000:3000 \
+              -p 4000:3000 \
               --env-file .env \
               ${{ secrets.DOCKER_USERNAME }}/mangaheaven:latest
 
