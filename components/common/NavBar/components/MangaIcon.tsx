@@ -15,9 +15,9 @@ const MangaIcon = () => {
           height={35}
           style={{ width: "auto", height: "auto" }}
         />
-        <div className="ml-2 flex flex-col">
+        <div className="ml-2 flex">
           <span className=" font-medium text-[1.2rem]">Manga</span>
-          <span className=" font-medium text-[1.2rem] -mt-2">Heaven</span>
+          <span className=" font-medium text-[1.2rem]">Heaven</span>
         </div>
       </div>
       </Link>
