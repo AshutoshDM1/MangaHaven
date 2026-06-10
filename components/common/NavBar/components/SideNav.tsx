@@ -104,7 +104,7 @@ const SideNav = () => {
           size="icon"
           aria-label="Open menu"
         >
-          <AlignJustify className="h-14 w-14" />
+          <AlignJustify className="size-8" />
         </Button>
       </SheetTrigger>
       <SheetContent side="left">

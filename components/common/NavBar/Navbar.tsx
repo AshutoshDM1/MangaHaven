@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
               <MangaIcon />
             </div>
             <div className="2xl:flex gap-4 hidden ">
-              <Link className='text-base' href="/dashboard" >
+              <Link className='text-sm' href="/dashboard" >
                 Home
               </Link>
               <DropMenuTypes />

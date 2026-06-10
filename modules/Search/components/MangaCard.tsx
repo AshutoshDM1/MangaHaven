@@ -26,7 +26,7 @@ export const MangaCard = ({ manga, viewMode }: MangaCardProps) => {
         <Link href={`/read/${manga.slug}`}>
           {viewMode === 'grid' ? (
             <div className="space-y-3">
-              <div className="relative h-80 w-full">
+              <div className="relative h-[330px] w-full">
                 <Image
                   src={manga.coverImageUrl}
                   alt={manga.title}

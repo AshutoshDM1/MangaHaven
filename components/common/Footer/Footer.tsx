@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
-import { FaSquareXTwitter, FaReddit, FaDiscord } from "react-icons/fa6";
 import { motion, useInView } from "framer-motion";
-import Image from "next/image";
+import FooterBrand from "./components/FooterBrand";
+import FooterLinks from "./components/FooterLinks";
+import FooterSocials from "./components/FooterSocials";
+import FooterCredits from "./components/FooterCredits";
 
 const Footer: React.FC = () => {
   const ref = React.useRef(null);
@@ -43,122 +45,11 @@ const Footer: React.FC = () => {
           className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center"
           variants={containerVariants}
         >
-          <motion.div
-            className="flex flex-col items-center"
-            variants={itemVariants}
-          >
-            <div className="mb-4 flex justify-center">
-              <Image
-                src="/favicon.ico"
-                alt="MangaHaven Logo"
-                width={40}
-                height={40}
-                className="h-10 w-auto"
-              />
-            </div>
-            <h3 className="text-lg font-semibold mb-4">MangaHeaven</h3>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              Your ultimate destination for manga and anime content.
-            </p>
-          </motion.div>
-          <motion.div
-            className="flex flex-col items-center"
-            variants={itemVariants}
-          >
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li>
-                <a
-                  href="#"
-                  className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-200"
-                >
-                  Home
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-200"
-                >
-                  Browse Manga
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-200"
-                >
-                  Latest Updates
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-200"
-                >
-                  About Us
-                </a>
-              </li>
-            </ul>
-          </motion.div>
-          <motion.div
-            className="flex flex-col items-center"
-            variants={itemVariants}
-          >
-            <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
-            <div className="flex space-x-4">
-              <motion.a
-                href="#"
-                className="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-200"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <FaSquareXTwitter className="w-6 h-6" />
-              </motion.a>
-              <motion.a
-                href="#"
-                className="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-200"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <FaReddit className="w-6 h-6" />
-              </motion.a>
-              <motion.a
-                href="#"
-                className="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-200"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <FaDiscord className="w-6 h-6" />
-              </motion.a>
-            </div>
-          </motion.div>
+          <FooterBrand variants={itemVariants} />
+          <FooterLinks variants={itemVariants} />
+          <FooterSocials variants={itemVariants} />
         </motion.div>
-        <motion.div
-          variants={itemVariants}
-          className="mt-8 border-t border-zinc-200 dark:border-zinc-700 pt-8 text-center flex items-center justify-center gap-2"
-        >
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">
-            © {new Date().getFullYear()} MangaHaven. All rights reserved.
-          </p>
-          <p className="text-sm text-muted-foreground">
-            Made with ❤️ by{" "}
-            <a
-              href="https://github.com/ShaileshIshere"
-              className="text-primary"
-            >
-              shailesh
-            </a>
-            &{" "}
-            <a href="https://github.com/ShivamIT23" className="text-primary">
-              shivam
-            </a>{" "}
-            &{" "}
-            <a href="https://github.com/AshutoshDM1" className="text-primary">
-              Ashutosh
-            </a>
-          </p>
-        </motion.div>
+        <FooterCredits variants={itemVariants} />
       </div>
     </motion.footer>
   );

@@ -11,7 +11,7 @@ const DropMenuGenres: React.FC = () => {
   const AllGenres = ["Action", "Adventure", "Comedy", "Fantasy", "Demons", "Harem", "Horror", "Isekai", "Magic", "Romance", "Ecchi", "Mecha", "Space", "Slice of Life", "Shounen", "Mystery", "School", "Sports", "Supernatural", "Thriller", "Seinen", "Suspense"]    
   return (
     <>
-      <div className="text-base flex justify-center items-center ">
+      <div className="text-sm flex justify-center items-center ">
         <DropdownMenu>
           <DropdownMenuTrigger className="focus:none select-none  focus:outline-none cursor-pointer ">
             Genres

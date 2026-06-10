@@ -9,15 +9,15 @@ const MangaIcon = () => {
         className="h-full w-fit justify-center items-center cursor-pointer flex"
       >
         <Image
-          src="/favicon.ico"
+          src="/logo.png"
           alt="MangaHaven Logo"
-          width={35}
-          height={35}
-          style={{ width: "auto", height: "auto" }}
+          className="flex-shrink-0 size-8"
+          width={105}
+          height={105}
         />
         <div className="ml-2 flex">
-          <span className=" font-medium text-[1.2rem]">Manga</span>
-          <span className=" font-medium text-[1.2rem]">Heaven</span>
+          <span className=" font-medium text-lg">Manga</span>
+          <span className=" font-medium text-lg">Heaven</span>
         </div>
       </div>
       </Link>

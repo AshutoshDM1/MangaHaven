@@ -1,7 +1,6 @@
 "use client"
 import MangaSectionSlider from '@/modules/Home/component/MangaSection';
 import MangaCTA from '@/modules/Home/component/MangaCTA';
-import FooterSection from '@/components/ui/footer-section';
 import ShinyText from './component/ShinyText';
 import HeroSectionContent from './component/HeroSectionContent';
 import RadialGradient from './component/RadialGradient';
@@ -10,6 +9,7 @@ import useSmoothScroll from '@/hooks/use-smoothScroll';
 import { Particles } from '@/components/ui/particles';
 import { usePageLoad } from '@/hooks/page-load';
 import { Manga } from '@prisma/client';
+import Footer from '@/components/common/Footer/Footer';
 
 interface HomeProps {
   mangas: Manga[]
@@ -33,7 +33,7 @@ const Home = ({ mangas }: HomeProps) => {
         </RadialGradient>
         <MangaSectionSlider mangas={mangas} />
         <MangaCTA />
-        <FooterSection />
+        <Footer />
       </div>
     </>
   );

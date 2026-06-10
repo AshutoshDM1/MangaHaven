@@ -50,10 +50,7 @@ jobs:
             # Change to project directory
             cd ~/mangaheaven/
 
-            # Remove the latest image if it exists
-            docker rmi ${{ secrets.DOCKER_USERNAME }}/mangaheaven:latest || true
-
-            # Pull the latest image
+            # Pull the latest image (done first to minimize downtime)
             docker pull ${{ secrets.DOCKER_USERNAME }}/mangaheaven:latest
 
             # Stop and remove old container
