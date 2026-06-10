@@ -53,9 +53,16 @@ jobs:
             # Pull the latest image (done first to minimize downtime)
             docker pull ${{ secrets.DOCKER_USERNAME }}/mangaheaven:latest
 
-            # Stop and remove old container
+            # Stop and remove old container by name
             docker stop mangaheaven || true
             docker rm mangaheaven || true
+
+            # Stop and remove any other container using port 4000
+            CONTAINER_ID=$(docker ps -a -q --filter publish=4000)
+            if [ -n "$CONTAINER_ID" ]; then
+              docker stop $CONTAINER_ID || true
+              docker rm $CONTAINER_ID || true
+            fi
 
             # Run new container (using .env from current directory)
             docker run -d \

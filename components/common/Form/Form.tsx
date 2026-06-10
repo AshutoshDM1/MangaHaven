@@ -16,19 +16,20 @@ import Link from 'next/link';
 
 export type FormType = 'login' | 'signup';
 
-interface FormField {
+interface FormFieldItem {
   name: string;
   label: string;
   type: string;
   placeholder: string;
   required?: boolean;
+  halfWidth?: boolean;
 }
 
 interface FormConfig {
   type: FormType;
   title: string;
   subtitle: React.ReactNode;
-  fields: FormField[];
+  fields: FormFieldItem[];
   submitButtonText: string;
   schema: z.ZodSchema;
   showTerms?: boolean;
@@ -179,22 +180,67 @@ const AuthForm: React.FC<AuthFormProps> = ({ config }) => {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Form Fields */}
         <div className="space-y-4">
-          {config.fields.map((field) => (
-            <FormField
-              key={field.name}
-              id={field.name}
-              name={field.name}
-              label={field.label}
-              type={field.type}
-              placeholder={field.placeholder}
-              value={formData[field.name] || ''}
-              onChange={handleInputChange}
-              onBlur={handleBlur}
-              error={errors[field.name]}
-              touched={touched[field.name]}
-              required={field.required}
-            />
-          ))}
+          {(() => {
+            const renderedFields: React.ReactNode[] = [];
+            let i = 0;
+            while (i < config.fields.length) {
+              const field = config.fields[i];
+              const nextField = config.fields[i + 1];
+
+              if (field.halfWidth && nextField && nextField.halfWidth) {
+                renderedFields.push(
+                  <div key={`${field.name}-${nextField.name}`} className="grid grid-cols-2 gap-4">
+                    <FormField
+                      id={field.name}
+                      name={field.name}
+                      label={field.label}
+                      type={field.type}
+                      placeholder={field.placeholder}
+                      value={formData[field.name] || ''}
+                      onChange={handleInputChange}
+                      onBlur={handleBlur}
+                      error={errors[field.name]}
+                      touched={touched[field.name]}
+                      required={field.required}
+                    />
+                    <FormField
+                      id={nextField.name}
+                      name={nextField.name}
+                      label={nextField.label}
+                      type={nextField.type}
+                      placeholder={nextField.placeholder}
+                      value={formData[nextField.name] || ''}
+                      onChange={handleInputChange}
+                      onBlur={handleBlur}
+                      error={errors[nextField.name]}
+                      touched={touched[nextField.name]}
+                      required={nextField.required}
+                    />
+                  </div>
+                );
+                i += 2;
+              } else {
+                renderedFields.push(
+                  <FormField
+                    key={field.name}
+                    id={field.name}
+                    name={field.name}
+                    label={field.label}
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    value={formData[field.name] || ''}
+                    onChange={handleInputChange}
+                    onBlur={handleBlur}
+                    error={errors[field.name]}
+                    touched={touched[field.name]}
+                    required={field.required}
+                  />
+                );
+                i++;
+              }
+            }
+            return renderedFields;
+          })()}
         </div>
 
         {/* Forgot Password Link */}

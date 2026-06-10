@@ -33,7 +33,7 @@ export const FormField: React.FC<FormFieldProps> = ({
   required = false,
 }) => {
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <label htmlFor={id} className="text-sm font-medium text-gray-300">
         {label}
         {required && <span className="text-red-500 ml-1">*</span>}
@@ -47,9 +47,8 @@ export const FormField: React.FC<FormFieldProps> = ({
         onChange={onChange}
         onBlur={onBlur}
         className={cn(
-          'h-12 bg-zinc-800 text-white placeholder:text-gray-400 ',
-          'focus:border-purple-500 focus:ring-purple-500',
-          error && touched && 'border-red-500 focus:border-red-500 focus:ring-red-500',
+          'h-9 bg-zinc-800 text-white placeholder:text-gray-400 ',
+          'focus:border-purple-500 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 ',
           className
         )}
       />

@@ -26,6 +26,7 @@ const Signup: React.FC = () => {
         type: 'text',
         placeholder: 'First name',
         required: true,
+        halfWidth: true,
       },
       {
         name: 'lastName',
@@ -33,6 +34,7 @@ const Signup: React.FC = () => {
         type: 'text',
         placeholder: 'Last name',
         required: true,
+        halfWidth: true,
       },
       {
         name: 'email',
