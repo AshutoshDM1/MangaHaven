@@ -8,17 +8,17 @@ export const revalidate = 3600; // Revalidate every hour
 export default async function HomePage() {
   try {
     console.log('🔍 HomePage: Fetching manga data...');
-    
+
     const mangas = await prisma.manga.findMany({
-      where: { 
-        mangaCategories: { 
-          some: { categoryId: 6 } 
-        } 
+      where: {
+        mangaCategories: {
+          some: { categoryId: 6 },
+        },
       },
     });
 
     console.log(`✅ HomePage: Fetched ${mangas.length} manga(s)`);
-    
+
     return (
       <Suspense>
         <Home mangas={mangas} />

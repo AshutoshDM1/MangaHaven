@@ -12,11 +12,11 @@ function VerticalGraph() {
         },
         desktop: {
           label: "Desktop",
-          color: "hsl(var(--chart-1))",
+          color: "#AD46FF",
         },
         mobile: {
           label: "Mobile",
-          color: "hsl(var(--chart-2))",
+          color: "#2B7FFF",
         },
       } satisfies ChartConfig;
 
