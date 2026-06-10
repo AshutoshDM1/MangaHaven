@@ -1,9 +1,9 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { SocialLink, SOCIAL_LINKS } from "../footerData";
 
 interface FooterSocialsProps {
-  variants?: any;
+  variants?: Variants;
   title?: string;
   socials?: SocialLink[];
 }

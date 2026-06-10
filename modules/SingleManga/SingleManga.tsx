@@ -43,7 +43,7 @@ const SingleMangaDetail = ({ slug }: SingleMangaDetailProps) => {
         <div className="text-center">
           <h1 className="text-3xl font-bold text-foreground mb-4">Manga Not Found</h1>
           <p className="text-muted-foreground">
-            The manga you're looking for doesn't exist or has been removed.
+            {"The manga you're looking for doesn't exist or has been removed."}
           </p>
         </div>
       </div>

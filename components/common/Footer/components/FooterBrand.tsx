@@ -1,9 +1,9 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 
 interface FooterBrandProps {
-  variants?: any;
+  variants?: Variants;
   logoSrc?: string;
   logoAlt?: string;
   title?: string;

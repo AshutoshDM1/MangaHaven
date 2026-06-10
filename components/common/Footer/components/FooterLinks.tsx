@@ -1,9 +1,9 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { FooterLink, QUICK_LINKS } from "../footerData";
 
 interface FooterLinksProps {
-  variants?: any;
+  variants?: Variants;
   title?: string;
   links?: FooterLink[];
 }

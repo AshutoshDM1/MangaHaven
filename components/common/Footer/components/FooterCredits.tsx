@@ -1,9 +1,9 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Creator, CREATORS } from "../footerData";
 
 interface FooterCreditsProps {
-  variants?: any;
+  variants?: Variants;
   companyName?: string;
   creators?: Creator[];
 }
