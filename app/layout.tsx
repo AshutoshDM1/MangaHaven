@@ -6,6 +6,7 @@ import { Suspense } from 'react';
 import { SUSE, Rubik } from 'next/font/google';
 import { Providers } from '@/lib/Providers';
 import siteUrl from '@/lib/site';
+import { Analytics } from "@vercel/analytics/next"
 
 const suse = SUSE({
   subsets: ['latin'],
@@ -229,6 +230,7 @@ export default function RootLayout({
       </head>
       <body className={`${suse.variable} ${rubik.variable} scroll-smooth bg-[#070707] `}>
         <Suspense>
+          <Analytics />
           <Providers>{children}</Providers>
           <Toaster />
         </Suspense>

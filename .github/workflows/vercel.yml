@@ -3,7 +3,7 @@ name: Deploy developV3 to Vercel (Hook + Promote)
 on:
   push:
     branches:
-      - developV3
+      - production
 
 jobs:
   deploy:
