@@ -1,4 +1,4 @@
-name: Deploy developV3 to Vercel (Hook + Promote)
+name: Deploy on Vercel Production - MangaHaven
 
 on:
   push:
